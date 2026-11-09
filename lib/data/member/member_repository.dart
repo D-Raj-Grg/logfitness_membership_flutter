@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'package:logfitness_membership_flutter/data/member/current_member.dart';
+import 'package:logfitness_membership_flutter/data/member/my_card.dart';
 import 'package:logfitness_membership_flutter/data/repository_guard.dart';
 import 'package:logfitness_membership_flutter/domain/errors/app_failure.dart';
 import 'package:logfitness_membership_flutter/supabase/supabase_providers.dart';
@@ -24,6 +25,15 @@ class MemberRepository {
       return null;
     }
     return CurrentMember.fromJson(rows.first as Map<String, dynamic>);
+  });
+
+  /// The member's live printed card via `my_card()`. Never null: a member
+  /// with no card gets [MyCard.none].
+  Future<MyCard> myCard() => guardFailures(() async {
+    final Object? data = await _client.rpc('my_card');
+    return data is Map<String, dynamic>
+        ? MyCard.fromJson(data)
+        : const MyCard.none();
   });
 }
 
@@ -50,4 +60,11 @@ final memberSelfProvider = FutureProvider<CurrentMember>((ref) async {
     );
   }
   return me;
+});
+
+/// The live printed card. Home and Profile treat a failure here as "no card
+/// to show" so it never takes the screen down.
+final myCardProvider = FutureProvider<MyCard>((ref) {
+  ref.watch(sessionProvider.select((Session? s) => s?.user.id));
+  return ref.watch(memberRepositoryProvider).myCard();
 });

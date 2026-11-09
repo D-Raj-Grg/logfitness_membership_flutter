@@ -1,0 +1,23 @@
+{
+  "profileTitle": "Profile",
+  "profileSectionDetails": "Your details",
+  "profileSectionPreferences": "Preferences",
+  "profileSectionAbout": "About",
+  "profileMemberCode": "Member code",
+  "profileCardNo": "Card number",
+  "profileNoCard": "No card yet",
+  "profileBranch": "Home branch",
+  "profilePhone": "Phone",
+  "profileLanguage": "Language",
+  "profileLanguageEnglish": "English",
+  "profileLanguageNepali": "नेपाली",
+  "profileTheme": "Appearance",
+  "profileThemeSystem": "System",
+  "profileThemeLight": "Light",
+  "profileThemeDark": "Dark",
+  "profileVersion": "App version",
+  "profileMessages": "Messages",
+  "profileSignOut": "Sign out",
+  "profileSignOutConfirmTitle": "Sign out?",
+  "profileSignOutConfirmBody": "You'll need your card number or phone and your PIN to sign in again."
+}

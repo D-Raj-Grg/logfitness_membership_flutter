@@ -49,10 +49,10 @@ Build and test these in `../logfitness_saas` (migrations through Supabase MCP, S
 
 ## Phase 2 — Auth (needs Phase 0)
 
-- [ ] `MemberAuthRepository`: `login(identifier, pin)` → `member-login`; maps `ok / invalid / locked / rate_limited` to a sealed result; sets the session; **does not retain the PIN**.
-- [ ] Login screen: one "Card number or phone" field (numeric), one PIN field (obscured, numeric, no autofill, screenshots blocked), submit, loading and error states; one generic failure message; `locked` shows "try again in N minutes"; `rate_limited` shows a wait message; "Forgot PIN? Ask the front desk" help text with the gym's phone number.
+- [x] `MemberAuthRepository`: `login(identifier, pin)` → `member-login`; maps `ok / invalid / locked / rate_limited` to a sealed result; sets the session; **does not retain the PIN**.
+- [x] Login screen: one "Card number or phone" field (numeric), one PIN field (obscured, numeric, no autofill, screenshots blocked), submit, loading and error states; one generic failure message; `locked` shows "try again in N minutes"; `rate_limited` shows a wait message; "Forgot PIN? Ask the front desk" help text with the gym's phone number.
 - [ ] Session restore on cold start; handle an expired/revoked refresh token by returning to login with a neutral message.
-- [ ] `/not-member` screen (member left / org inactive / unlinked): contact copy, call button, sign-out.
+- [x] `/not-member` screen (member left / org inactive / unlinked): contact copy, call button, sign-out.
 - [ ] Sign-out (secure storage cleared; push token revoked once Phase 7 lands).
 - [ ] Tests: result mapping, redirect guard for each principal, PIN never present in provider state or logs, lockout copy.
 
@@ -60,11 +60,11 @@ Build and test these in `../logfitness_saas` (migrations through Supabase MCP, S
 
 ## Phase 3 — Home & profile
 
-- [ ] Home: status chip (`active / expiring / expired / frozen / upcoming / none` — weight/outline, never colour alone), **days left** as the headline (status first, then days: expired shows "Expired N days ago", frozen shows "Frozen", upcoming shows "Starts soon"), plan name, end date, amount due (sum of non-void `due_paisa`), **card number** (`NO. 0004`).
-- [ ] **Request renewal** button → `request_renewal`; pending state ("Requested <time> — the front desk will call you"); `too_soon` and org-cap copy; optional phone/note sheet.
-- [ ] Pull-to-refresh; last-known value with "last updated" when offline.
-- [ ] Profile: name, member code, card number, home branch, phone, language switch, theme, app version, sign-out. Read-only otherwise.
-- [ ] Tests: headline logic per status (including expired-with-sessions-used and frozen), renewal pending/too_soon, formatter edge cases.
+- [x] Home: status chip (`active / expiring / expired / frozen / upcoming / none` — weight/outline, never colour alone), **days left** as the headline (status first, then days: expired shows "Expired N days ago", frozen shows "Frozen", upcoming shows "Starts soon"), plan name, end date, amount due (sum of non-void `due_paisa`), **card number** (`NO. 0004`).
+- [x] **Request renewal** button → `request_renewal`; pending state ("Requested <time> — the front desk will call you"); `too_soon` and org-cap copy; optional phone/note sheet.
+- [x] Pull-to-refresh; last-known value with "last updated" when offline.
+- [x] Profile: name, member code, card number, home branch, phone, language switch, theme, app version, sign-out. Read-only otherwise.
+- [x] Tests: headline logic per status (including expired-with-sessions-used and frozen), renewal pending/too_soon, formatter edge cases.
 
 ---
 
@@ -132,6 +132,12 @@ Build and test these in `../logfitness_saas` (migrations through Supabase MCP, S
 - [ ] **2026-11-09** The staff app's member shell has no tests. Everything ported from it gets tests in this repo (Phases 3–6); do not copy untested code across without them.
 - [ ] **2026-11-09** The staff app's push is declared but unwired and the FCM send path is unverified upstream. Treat push as new work with a verification gate, not a port.
 - [ ] **2026-11-09** Files copied from the staff app can drift. When a bug is fixed in a copied file in either repo, add a line here (or in `../logfitness_flutter/TASKS.md`) naming the counterpart.
+
+- [ ] **2026-11-09** Login screen blocks screenshots on Android only (`FLAG_SECURE` via `MainActivity` channel `com.lordofgyms.member/screen_security`). iOS has no per-screen equivalent; the PIN field is `obscureText` and a snapshot hides typed digits. Revisit before release (secure-text-field overlay or `UIScreen.isCaptured` blur).
+- [ ] **2026-11-09** `attendance_snapshot` returns no dates (`membership_id, membership_status, plan_name, days_to_expiry, sessions_remaining, due_paisa, banner`), so `AttendanceRepository.fetchSnapshot` also reads `start_date,end_date` from the member's own `memberships` row by id (RLS). A member-safe `my_snapshot()` wrapper that includes the dates would remove the second round trip. Unverified live: that `attendance_snapshot` is callable by a member token for their own id (Phase 0 item).
+- [ ] **2026-11-09** Phase 2 leftovers: session restore on an expired/revoked refresh token should return to login with a neutral message (not built); sign-out does not yet revoke the push token (Phase 7); redirect-guard tests per principal already exist in `test/app/router_test.dart`; the login "PIN never in provider state" property is covered structurally (local controller) not by a log-capture test.
+- [ ] **2026-11-09** Renewal "pending" is in-memory only (resets on app restart; the server's `too_soon` answer re-establishes it). Showing a persisted pending state needs a member-readable source for `renewal_requests` (none today).
+- [ ] **2026-11-09** Login help text has no gym phone number (it is not known before sign-in). Add a build-time `SUPPORT_PHONE` define or org setting if the gym wants a tap-to-call.
 
 ---
 

@@ -1,0 +1,23 @@
+{
+  "profileTitle": "प्रोफाइल",
+  "profileSectionDetails": "तपाईंको विवरण",
+  "profileSectionPreferences": "रोजाइ",
+  "profileSectionAbout": "बारेमा",
+  "profileMemberCode": "सदस्य कोड",
+  "profileCardNo": "कार्ड नम्बर",
+  "profileNoCard": "कार्ड अझै छैन",
+  "profileBranch": "मुख्य शाखा",
+  "profilePhone": "फोन",
+  "profileLanguage": "भाषा",
+  "profileLanguageEnglish": "English",
+  "profileLanguageNepali": "नेपाली",
+  "profileTheme": "रूपरङ",
+  "profileThemeSystem": "फोन अनुसार",
+  "profileThemeLight": "उज्यालो",
+  "profileThemeDark": "अँध्यारो",
+  "profileVersion": "एपको संस्करण",
+  "profileMessages": "सन्देशहरू",
+  "profileSignOut": "साइन आउट",
+  "profileSignOutConfirmTitle": "साइन आउट गर्ने?",
+  "profileSignOutConfirmBody": "फेरि साइन इन गर्न कार्ड नम्बर वा फोन र पिन चाहिन्छ।"
+}
