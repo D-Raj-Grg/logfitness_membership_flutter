@@ -10,12 +10,28 @@
   "authSigningIn": "Signing in",
   "authErrorInvalid": "Card number or PIN is wrong.",
   "authErrorLocked": "Too many tries. Try again in {minutes, plural, =1{1 minute} other{{minutes} minutes}}.",
-  "@authErrorLocked": { "placeholders": { "minutes": { "type": "int" } } },
+  "@authErrorLocked": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "authErrorRateLimited": "Too many attempts from this phone. Please wait a few minutes and try again.",
   "authErrorOffline": "No connection. Check your internet and try again.",
   "authErrorUnknown": "Couldn't sign in right now. Please try again.",
   "authForgotPin": "Forgot your PIN? Ask the front desk. They can set a new one for you.",
   "authNotMemberTitle": "Membership not active",
   "authNotMemberBody": "Your membership is no longer active. Please contact the front desk.",
-  "authSignOut": "Sign out"
+  "authSignOut": "Sign out",
+  "authPinHelper": "Enter the 6-digit PIN from the front desk",
+  "authPinSemantics": "PIN, {count} of 6 digits entered",
+  "authIdentifierInvalid": "Enter a card number (1 to 4 digits) or a phone number.",
+  "@authPinSemantics": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }

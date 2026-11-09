@@ -104,6 +104,10 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authIdentifierHint => '0004 or 98XXXXXXXX';
 
   @override
+  String get authIdentifierInvalid =>
+      'Enter a card number (1 to 4 digits) or a phone number.';
+
+  @override
   String get authIdentifierLabel => 'Card number or phone';
 
   @override
@@ -114,7 +118,15 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authNotMemberTitle => 'Membership not active';
 
   @override
+  String get authPinHelper => 'Enter the 6-digit PIN from the front desk';
+
+  @override
   String get authPinLabel => 'PIN';
+
+  @override
+  String authPinSemantics(int count) {
+    return 'PIN, $count of 6 digits entered';
+  }
 
   @override
   String get authShowPin => 'Show PIN';

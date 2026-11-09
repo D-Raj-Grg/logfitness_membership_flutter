@@ -78,10 +78,20 @@
   "authForgotPin": "पिन बिर्सनुभयो? फ्रन्ट डेस्कलाई सोध्नुहोस्। उहाँहरूले नयाँ पिन राखिदिनुहुन्छ।",
   "authHidePin": "पिन लुकाउनुहोस्",
   "authIdentifierHint": "0004 वा 98XXXXXXXX",
+  "authIdentifierInvalid": "कार्ड नम्बर (१ देखि ४ अंक) वा फोन नम्बर राख्नुहोस्।",
   "authIdentifierLabel": "कार्ड नम्बर वा फोन",
   "authNotMemberBody": "तपाईंको सदस्यता अब सक्रिय छैन। कृपया फ्रन्ट डेस्कमा सम्पर्क गर्नुहोस्।",
   "authNotMemberTitle": "सदस्यता सक्रिय छैन",
+  "authPinHelper": "फ्रन्ट डेस्कले दिएको ६ अंकको पिन राख्नुहोस्",
   "authPinLabel": "पिन",
+  "authPinSemantics": "पिन, ६ मध्ये {count} अंक भरिएको",
+  "@authPinSemantics": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "authShowPin": "पिन देखाउनुहोस्",
   "authSignIn": "साइन इन",
   "authSignOut": "साइन आउट",

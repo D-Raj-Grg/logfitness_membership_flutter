@@ -49,8 +49,19 @@ final class LoginFailed extends LoginResult {
   final AppFailure failure;
 }
 
+/// The PIN is exactly this many digits. The server rejects anything else, so
+/// the client never sends anything else.
+const int memberPinLength = 6;
+
+final RegExp _pinShape = RegExp('^[0-9]{$memberPinLength}\$');
+
+/// True for exactly [memberPinLength] ASCII digits.
+bool isValidMemberPin(String pin) => _pinShape.hasMatch(pin);
+
 abstract interface class MemberAuthRepository {
   /// [identifier]: digits only; 1-4 digits = printed card number, 7+ = phone.
+  /// [pin]: exactly [memberPinLength] digits; anything else is [LoginInvalid]
+  /// without a network call.
   Future<LoginResult> login({
     required String identifier,
     required String pin,
@@ -113,6 +124,9 @@ class SupabaseMemberAuthRepository implements MemberAuthRepository {
     required String identifier,
     required String pin,
   }) async {
+    if (!isValidMemberPin(pin)) {
+      return const LoginInvalid();
+    }
     try {
       // `functions.invoke` POSTs JSON to `${SUPABASE_URL}/functions/v1/member-login`
       // with `apikey` = publishable key and `Authorization: Bearer <session

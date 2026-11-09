@@ -104,6 +104,10 @@ class AppLocalizationsNe extends AppLocalizations {
   String get authIdentifierHint => '0004 वा 98XXXXXXXX';
 
   @override
+  String get authIdentifierInvalid =>
+      'कार्ड नम्बर (१ देखि ४ अंक) वा फोन नम्बर राख्नुहोस्।';
+
+  @override
   String get authIdentifierLabel => 'कार्ड नम्बर वा फोन';
 
   @override
@@ -114,7 +118,15 @@ class AppLocalizationsNe extends AppLocalizations {
   String get authNotMemberTitle => 'सदस्यता सक्रिय छैन';
 
   @override
+  String get authPinHelper => 'फ्रन्ट डेस्कले दिएको ६ अंकको पिन राख्नुहोस्';
+
+  @override
   String get authPinLabel => 'पिन';
+
+  @override
+  String authPinSemantics(int count) {
+    return 'पिन, ६ मध्ये $count अंक भरिएको';
+  }
 
   @override
   String get authShowPin => 'पिन देखाउनुहोस्';
