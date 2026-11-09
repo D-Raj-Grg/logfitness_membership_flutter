@@ -4,6 +4,73 @@
   "@appName": {
     "description": "Store name of the app."
   },
+  "attendanceCellSemantics": "{date}, {status}",
+  "@attendanceCellSemantics": {
+    "description": "Screen-reader label for one calendar day, e.g. '3 November, present'.",
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "attendanceDayMonth": "{day} {month}",
+  "@attendanceDayMonth": {
+    "description": "A day and month name, e.g. '3 November'.",
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "attendanceEmptyMonth": "No visits recorded this month. Your attendance will show up here once you start checking in.",
+  "attendanceHolidayNamed": "Holiday: {name}",
+  "@attendanceHolidayNamed": {
+    "description": "Cell description for a holiday that has a name.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "attendanceHolidaySheetHint": "The gym is closed on this day.",
+  "attendanceMonthYear": "{month} {year}",
+  "@attendanceMonthYear": {
+    "description": "Calendar header, e.g. 'November 2026'. Year is shown with ASCII digits.",
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "attendanceNextMonth": "Next month",
+  "attendancePreviousMonth": "Previous month",
+  "attendanceStatusAbsent": "Absent",
+  "attendanceStatusHoliday": "Holiday",
+  "attendanceStatusNone": "No record",
+  "attendanceStatusOff": "Day off",
+  "attendanceStatusPresent": "Present",
+  "attendanceSummarySemantics": "{present} present, {absent} absent",
+  "@attendanceSummarySemantics": {
+    "description": "Screen-reader summary of the month's counts.",
+    "placeholders": {
+      "present": {
+        "type": "int"
+      },
+      "absent": {
+        "type": "int"
+      }
+    }
+  },
+  "attendanceSummaryTitle": "Month summary",
   "authErrorInvalid": "Card number or PIN is wrong.",
   "authErrorLocked": "Too many tries. Try again in {minutes, plural, =1{1 minute} other{{minutes} minutes}}.",
   "@authErrorLocked": {
@@ -214,7 +281,6 @@
     }
   },
   "homeEndsLabel": "Ends",
-  "homeExpired": "Expired",
   "homeExpiredAgoLabel": "{count, plural, =1{day ago} other{days ago}}",
   "@homeExpiredAgoLabel": {
     "placeholders": {
@@ -224,7 +290,6 @@
     }
   },
   "homeExpiredHint": "Request a renewal and the front desk will get you back in.",
-  "homeExpiredPrefix": "Expired",
   "homeExpiringHint": "Your plan ends soon. Request a renewal so you don't miss a day.",
   "homeFrozen": "Frozen",
   "homeFrozenHint": "Your membership is paused. Ask the front desk to resume it.",
@@ -246,6 +311,7 @@
       }
     }
   },
+  "homeMembershipEnded": "Membership ended",
   "homeMessages": "Messages",
   "homeMessagesSubtitle": "Notes from the gym",
   "homeNoPlan": "No active plan",
@@ -265,6 +331,17 @@
   },
   "homeRenewRequestedButton": "Request sent",
   "homeRenewRequestedNow": "Requested just now. The front desk will call you.",
+  "homeRenewRequestedOn": "Requested {date} at {time}. The front desk will call you.",
+  "@homeRenewRequestedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "time": {
+        "type": "String"
+      }
+    }
+  },
   "homeRenewSend": "Send request",
   "homeRenewSending": "Sending",
   "homeRenewSent": "Request sent. The front desk will call you.",

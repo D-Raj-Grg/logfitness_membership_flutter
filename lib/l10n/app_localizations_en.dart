@@ -12,6 +12,62 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'LOG Fitness';
 
   @override
+  String attendanceCellSemantics(String date, String status) {
+    return '$date, $status';
+  }
+
+  @override
+  String attendanceDayMonth(int day, String month) {
+    return '$day $month';
+  }
+
+  @override
+  String get attendanceEmptyMonth =>
+      'No visits recorded this month. Your attendance will show up here once you start checking in.';
+
+  @override
+  String attendanceHolidayNamed(String name) {
+    return 'Holiday: $name';
+  }
+
+  @override
+  String get attendanceHolidaySheetHint => 'The gym is closed on this day.';
+
+  @override
+  String attendanceMonthYear(String month, String year) {
+    return '$month $year';
+  }
+
+  @override
+  String get attendanceNextMonth => 'Next month';
+
+  @override
+  String get attendancePreviousMonth => 'Previous month';
+
+  @override
+  String get attendanceStatusAbsent => 'Absent';
+
+  @override
+  String get attendanceStatusHoliday => 'Holiday';
+
+  @override
+  String get attendanceStatusNone => 'No record';
+
+  @override
+  String get attendanceStatusOff => 'Day off';
+
+  @override
+  String get attendanceStatusPresent => 'Present';
+
+  @override
+  String attendanceSummarySemantics(int present, int absent) {
+    return '$present present, $absent absent';
+  }
+
+  @override
+  String get attendanceSummaryTitle => 'Month summary';
+
+  @override
   String get authErrorInvalid => 'Card number or PIN is wrong.';
 
   @override
@@ -419,9 +475,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeEndsLabel => 'Ends';
 
   @override
-  String get homeExpired => 'Expired';
-
-  @override
   String homeExpiredAgoLabel(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -435,9 +488,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get homeExpiredHint =>
       'Request a renewal and the front desk will get you back in.';
-
-  @override
-  String get homeExpiredPrefix => 'Expired';
 
   @override
   String get homeExpiringHint =>
@@ -465,6 +515,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String homeLastUpdated(String time) {
     return 'Updated $time';
   }
+
+  @override
+  String get homeMembershipEnded => 'Membership ended';
 
   @override
   String get homeMessages => 'Messages';
@@ -505,6 +558,11 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get homeRenewRequestedNow =>
       'Requested just now. The front desk will call you.';
+
+  @override
+  String homeRenewRequestedOn(String date, String time) {
+    return 'Requested $date at $time. The front desk will call you.';
+  }
 
   @override
   String get homeRenewSend => 'Send request';

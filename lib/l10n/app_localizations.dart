@@ -104,6 +104,96 @@ abstract class AppLocalizations {
   /// **'LOG Fitness'**
   String get appName;
 
+  /// Screen-reader label for one calendar day, e.g. '3 November, present'.
+  ///
+  /// In en, this message translates to:
+  /// **'{date}, {status}'**
+  String attendanceCellSemantics(String date, String status);
+
+  /// A day and month name, e.g. '3 November'.
+  ///
+  /// In en, this message translates to:
+  /// **'{day} {month}'**
+  String attendanceDayMonth(int day, String month);
+
+  /// No description provided for @attendanceEmptyMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'No visits recorded this month. Your attendance will show up here once you start checking in.'**
+  String get attendanceEmptyMonth;
+
+  /// Cell description for a holiday that has a name.
+  ///
+  /// In en, this message translates to:
+  /// **'Holiday: {name}'**
+  String attendanceHolidayNamed(String name);
+
+  /// No description provided for @attendanceHolidaySheetHint.
+  ///
+  /// In en, this message translates to:
+  /// **'The gym is closed on this day.'**
+  String get attendanceHolidaySheetHint;
+
+  /// Calendar header, e.g. 'November 2026'. Year is shown with ASCII digits.
+  ///
+  /// In en, this message translates to:
+  /// **'{month} {year}'**
+  String attendanceMonthYear(String month, String year);
+
+  /// No description provided for @attendanceNextMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Next month'**
+  String get attendanceNextMonth;
+
+  /// No description provided for @attendancePreviousMonth.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous month'**
+  String get attendancePreviousMonth;
+
+  /// No description provided for @attendanceStatusAbsent.
+  ///
+  /// In en, this message translates to:
+  /// **'Absent'**
+  String get attendanceStatusAbsent;
+
+  /// No description provided for @attendanceStatusHoliday.
+  ///
+  /// In en, this message translates to:
+  /// **'Holiday'**
+  String get attendanceStatusHoliday;
+
+  /// No description provided for @attendanceStatusNone.
+  ///
+  /// In en, this message translates to:
+  /// **'No record'**
+  String get attendanceStatusNone;
+
+  /// No description provided for @attendanceStatusOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Day off'**
+  String get attendanceStatusOff;
+
+  /// No description provided for @attendanceStatusPresent.
+  ///
+  /// In en, this message translates to:
+  /// **'Present'**
+  String get attendanceStatusPresent;
+
+  /// Screen-reader summary of the month's counts.
+  ///
+  /// In en, this message translates to:
+  /// **'{present} present, {absent} absent'**
+  String attendanceSummarySemantics(int present, int absent);
+
+  /// No description provided for @attendanceSummaryTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Month summary'**
+  String get attendanceSummaryTitle;
+
   /// No description provided for @authErrorInvalid.
   ///
   /// In en, this message translates to:
@@ -764,12 +854,6 @@ abstract class AppLocalizations {
   /// **'Ends'**
   String get homeEndsLabel;
 
-  /// No description provided for @homeExpired.
-  ///
-  /// In en, this message translates to:
-  /// **'Expired'**
-  String get homeExpired;
-
   /// No description provided for @homeExpiredAgoLabel.
   ///
   /// In en, this message translates to:
@@ -781,12 +865,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Request a renewal and the front desk will get you back in.'**
   String get homeExpiredHint;
-
-  /// No description provided for @homeExpiredPrefix.
-  ///
-  /// In en, this message translates to:
-  /// **'Expired'**
-  String get homeExpiredPrefix;
 
   /// No description provided for @homeExpiringHint.
   ///
@@ -829,6 +907,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Updated {time}'**
   String homeLastUpdated(String time);
+
+  /// No description provided for @homeMembershipEnded.
+  ///
+  /// In en, this message translates to:
+  /// **'Membership ended'**
+  String get homeMembershipEnded;
 
   /// No description provided for @homeMessages.
   ///
@@ -901,6 +985,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Requested just now. The front desk will call you.'**
   String get homeRenewRequestedNow;
+
+  /// No description provided for @homeRenewRequestedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested {date} at {time}. The front desk will call you.'**
+  String homeRenewRequestedOn(String date, String time);
 
   /// No description provided for @homeRenewSend.
   ///
