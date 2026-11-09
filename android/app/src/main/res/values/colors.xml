@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Tar Road: the LOG brand's near-black. Launcher icon + splash background. -->
+    <color name="ic_launcher_background">#17181D</color>
+    <color name="launch_background">#17181D</color>
+</resources>

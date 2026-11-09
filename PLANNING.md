@@ -64,7 +64,7 @@ Decided 2026-11-09. Staff set a PIN for the member from the console (member page
 ### 4.1 Identifier and PIN
 - **Identifier:** digits only. **1–4 digits** = the printed card number (`NO. 0004`, 1–9999); **7+ digits** = the phone number on file. The server disambiguates by length; anything else is "wrong".
 - **The PIN belongs to the member, not the card.** A card is reusable stock and resolves to its *current holder*. Return or replace the card and card-number login stops for the old holder; phone login keeps working. Staff reissuing a card never locks a member out.
-- **PIN:** 4–6 digits (final length: open question §10), stored only as a bcrypt hash (pgcrypto) in `member_pins`. Staff set or reset it; the console can generate one and show it once.
+- **PIN:** exactly 6 digits (decided 2026-11-09; the app signs in on the 6th digit), stored only as a bcrypt hash (pgcrypto) in `member_pins`. Staff set or reset it; the console can generate one and show it once.
 
 ### 4.2 Flow
 1. Member enters identifier + PIN → app calls the **`member-login`** Edge Function (`verify_jwt` off; org taken from the build's `ORG_SLUG`, never from user input).
@@ -168,7 +168,7 @@ Any staff feature; online payment, card-on-file, QR/UPI payment; self-service pl
 ## 10. Open questions
 
 - **Final bundle id and store name** (`com.lordofgyms.member` / "LOG Fitness" are placeholders); Apple/Google accounts and team ids for the new app.
-- **PIN length** — fixed 4, or 4–6? A longer PIN resists guessing; a shorter one suits gym-floor use.
+- ~~PIN length~~ — decided 2026-11-09: exactly 6 digits.
 - **Can the member change their own PIN in the app?** Reduces desk load but needs the current PIN and another RPC. Not in v1 unless decided.
 - **Firebase project** and who owns it; the `FCM_SERVICE_ACCOUNT_JSON` secret; notification categories members can mute.
 - **Nepali copy review** — who at the gym signs off the strings.

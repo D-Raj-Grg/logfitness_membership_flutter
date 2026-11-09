@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:logfitness_membership_flutter/app/brand.dart';
 import 'package:logfitness_membership_flutter/data/auth/member_auth_repository.dart';
-import 'package:logfitness_membership_flutter/features/auth/log_monogram.dart';
+import 'package:logfitness_membership_flutter/features/common/log_mark.dart';
 import 'package:logfitness_membership_flutter/features/common/failure_snackbar.dart';
 import 'package:logfitness_membership_flutter/l10n/app_localizations.dart';
 
@@ -48,7 +48,7 @@ class _NotMemberScreenState extends ConsumerState<NotMemberScreen> {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: <Widget>[
-                  const LogMonogram(size: 72),
+                  const LogMark(size: 72, withTile: true),
                   const SizedBox(height: Brand.spaceLg),
                   Text(
                     l10n.authNotMemberTitle,

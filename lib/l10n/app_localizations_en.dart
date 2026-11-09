@@ -94,14 +94,11 @@ class AppLocalizationsEn extends AppLocalizations {
       'Couldn\'t sign in right now. Please try again.';
 
   @override
-  String get authForgotPin =>
-      'Forgot your PIN? Ask the front desk. They can set a new one for you.';
+  String get authForgotPin => 'Forgot your PIN? Ask the front desk.';
 
   @override
-  String get authHidePin => 'Hide PIN';
-
-  @override
-  String get authIdentifierHint => '0004 or 98XXXXXXXX';
+  String get authIdentifierInvalid =>
+      'Enter a card number (1 to 4 digits) or a phone number.';
 
   @override
   String get authIdentifierLabel => 'Card number or phone';
@@ -114,10 +111,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get authNotMemberTitle => 'Membership not active';
 
   @override
-  String get authPinLabel => 'PIN';
-
-  @override
-  String get authShowPin => 'Show PIN';
+  String authPinSemantics(int count) {
+    return 'PIN, $count of 6 digits entered';
+  }
 
   @override
   String get authSignIn => 'Sign in';
@@ -127,13 +123,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authSigningIn => 'Signing in';
-
-  @override
-  String get authSubtitle =>
-      'Sign in with the card number or phone number the front desk gave you.';
-
-  @override
-  String get authTagline => 'Your membership, in your pocket';
 
   @override
   String get bookingsCancel => 'Cancel booking';
