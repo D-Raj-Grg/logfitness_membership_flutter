@@ -771,6 +771,9 @@ class AppLocalizationsNe extends AppLocalizations {
   String get snackRetry => 'फेरि गर्नुहोस्';
 
   @override
+  String get tabAttendance => 'उपस्थिति';
+
+  @override
   String get tabCheckin => 'चेक-इन';
 
   @override

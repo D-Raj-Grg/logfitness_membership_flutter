@@ -1334,6 +1334,12 @@ abstract class AppLocalizations {
   /// **'Retry'**
   String get snackRetry;
 
+  /// No description provided for @tabAttendance.
+  ///
+  /// In en, this message translates to:
+  /// **'Attendance'**
+  String get tabAttendance;
+
   /// No description provided for @tabCheckin.
   ///
   /// In en, this message translates to:

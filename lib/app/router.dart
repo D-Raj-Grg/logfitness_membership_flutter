@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
+import 'package:logfitness_membership_flutter/app/features.dart';
+import 'package:logfitness_membership_flutter/features/attendance/attendance_screen.dart';
 import 'package:logfitness_membership_flutter/features/auth/login_screen.dart';
 import 'package:logfitness_membership_flutter/features/auth/not_member_screen.dart';
 import 'package:logfitness_membership_flutter/features/auth/splash_screen.dart';
 import 'package:logfitness_membership_flutter/features/bookings/bookings_screen.dart';
+import 'package:logfitness_membership_flutter/features/checkin/scan_screen.dart';
 import 'package:logfitness_membership_flutter/features/classes/classes_screen.dart';
 import 'package:logfitness_membership_flutter/features/home/home_screen.dart';
 import 'package:logfitness_membership_flutter/features/messages/messages_screen.dart';
@@ -25,6 +28,7 @@ abstract final class AppRoutes {
   // Shell tabs (bottom navigation, in order).
   static const String home = '/home';
   static const String classes = '/classes';
+  static const String attendance = '/attendance';
   static const String checkin = '/checkin';
   static const String payments = '/payments';
   static const String profile = '/profile';
@@ -95,46 +99,7 @@ final goRouterProvider = Provider<GoRouter>((ref) {
       StatefulShellRoute.indexedStack(
         builder: (context, state, shell) => MemberShell(navigationShell: shell),
         branches: <StatefulShellBranch>[
-          StatefulShellBranch(
-            routes: <RouteBase>[
-              GoRoute(
-                path: AppRoutes.home,
-                builder: (context, state) => const HomeScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: <RouteBase>[
-              GoRoute(
-                path: AppRoutes.classes,
-                builder: (context, state) => const ClassesScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: <RouteBase>[
-              GoRoute(
-                path: AppRoutes.checkin,
-                builder: (context, state) => const QrScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: <RouteBase>[
-              GoRoute(
-                path: AppRoutes.payments,
-                builder: (context, state) => const PaymentsScreen(),
-              ),
-            ],
-          ),
-          StatefulShellBranch(
-            routes: <RouteBase>[
-              GoRoute(
-                path: AppRoutes.profile,
-                builder: (context, state) => const ProfileScreen(),
-              ),
-            ],
-          ),
+          for (final MemberTab tab in enabledTabs) _branchFor(tab),
         ],
       ),
       // Pushed over the shell: reachable from Home / Profile.
@@ -143,13 +108,36 @@ final goRouterProvider = Provider<GoRouter>((ref) {
         parentNavigatorKey: rootNavigatorKey,
         builder: (context, state) => const MessagesScreen(),
       ),
-      GoRoute(
-        path: AppRoutes.bookings,
-        parentNavigatorKey: rootNavigatorKey,
-        builder: (context, state) => const BookingsScreen(),
-      ),
+      if (kClassesEnabled)
+        GoRoute(
+          path: AppRoutes.bookings,
+          parentNavigatorKey: rootNavigatorKey,
+          builder: (context, state) => const BookingsScreen(),
+        ),
     ],
   );
   ref.onDispose(router.dispose);
   return router;
 });
+
+StatefulShellBranch _branchFor(MemberTab tab) {
+  final (String path, Widget Function() screen) = switch (tab) {
+    MemberTab.home => (AppRoutes.home, () => const HomeScreen()),
+    MemberTab.classes => (AppRoutes.classes, () => const ClassesScreen()),
+    MemberTab.attendance => (
+      AppRoutes.attendance,
+      () => const AttendanceScreen(),
+    ),
+    MemberTab.checkin => (
+      AppRoutes.checkin,
+      () => kShowMemberQr ? const QrScreen() : const ScanCheckInScreen(),
+    ),
+    MemberTab.payments => (AppRoutes.payments, () => const PaymentsScreen()),
+    MemberTab.profile => (AppRoutes.profile, () => const ProfileScreen()),
+  };
+  return StatefulShellBranch(
+    routes: <RouteBase>[
+      GoRoute(path: path, builder: (context, state) => screen()),
+    ],
+  );
+}

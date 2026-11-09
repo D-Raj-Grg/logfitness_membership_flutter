@@ -769,6 +769,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get snackRetry => 'Retry';
 
   @override
+  String get tabAttendance => 'Attendance';
+
+  @override
   String get tabCheckin => 'Check-in';
 
   @override
