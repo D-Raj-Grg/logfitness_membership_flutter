@@ -19,12 +19,13 @@
   "authNotMemberBody": "तपाईंको सदस्यता अब सक्रिय छैन। कृपया फ्रन्ट डेस्कमा सम्पर्क गर्नुहोस्।",
   "authSignOut": "साइन आउट",
   "authPinSemantics": "पिन, ६ मध्ये {count} अंक भरिएको",
-  "authIdentifierInvalid": "कार्ड नम्बर (१ देखि ४ अंक) वा फोन नम्बर राख्नुहोस्।",
+  "authIdentifierInvalid": "कार्ड नम्बर (१ देखि ४ अंक) वा तपाईंको १० अंकको फोन नम्बर राख्नुहोस्।",
   "@authPinSemantics": {
     "placeholders": {
       "count": {
         "type": "int"
       }
     }
-  }
+  },
+  "authKeyboardDone": "भयो"
 }

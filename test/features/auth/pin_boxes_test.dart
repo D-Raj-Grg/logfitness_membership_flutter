@@ -24,9 +24,9 @@ Future<TextEditingController> _pump(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       builder: (BuildContext context, Widget? child) => MediaQuery(
-        data: MediaQuery.of(context).copyWith(
-          textScaler: TextScaler.linear(textScale),
-        ),
+        data: MediaQuery.of(
+          context,
+        ).copyWith(textScaler: TextScaler.linear(textScale)),
         child: child!,
       ),
       home: Scaffold(
@@ -51,7 +51,9 @@ Finder _dots() => find.byKey(const ValueKey<String>('pin-dot'));
 Finder _digits() => find.byKey(const ValueKey<String>('pin-digit'));
 
 void main() {
-  testWidgets('typing fills boxes left to right and shows dots by default', (tester) async {
+  testWidgets('typing fills boxes left to right and shows dots by default', (
+    tester,
+  ) async {
     final TextEditingController c = await _pump(tester);
     expect(_dots(), findsNothing);
     await tester.enterText(find.byKey(_fieldKey), '123');
@@ -74,7 +76,9 @@ void main() {
     expect(find.text('6'), findsOneWidget);
   });
 
-  testWidgets('only digits are accepted and never more than six', (tester) async {
+  testWidgets('only digits are accepted and never more than six', (
+    tester,
+  ) async {
     final TextEditingController c = await _pump(tester);
     await tester.enterText(find.byKey(_fieldKey), '12a-3 4');
     await tester.pump();
@@ -85,9 +89,14 @@ void main() {
     expect(_dots(), findsNWidgets(6));
   });
 
-  testWidgets('pasting six digits fills everything and completes once', (tester) async {
+  testWidgets('pasting six digits fills everything and completes once', (
+    tester,
+  ) async {
     int completed = 0;
-    final TextEditingController c = await _pump(tester, onCompleted: () => completed++);
+    final TextEditingController c = await _pump(
+      tester,
+      onCompleted: () => completed++,
+    );
     await tester.enterText(find.byKey(_fieldKey), '987654');
     await tester.pump();
     expect(c.text, '987654');
@@ -113,10 +122,16 @@ void main() {
     expect(_dots(), findsNWidgets(5));
   });
 
-  testWidgets('tapping anywhere on the boxes focuses the input', (tester) async {
+  testWidgets('tapping anywhere on the boxes focuses the input', (
+    tester,
+  ) async {
     await _pump(tester);
-    EditableText editable() =>
-        tester.widget(find.descendant(of: find.byKey(_fieldKey), matching: find.byType(EditableText)));
+    EditableText editable() => tester.widget(
+      find.descendant(
+        of: find.byKey(_fieldKey),
+        matching: find.byType(EditableText),
+      ),
+    );
     expect(editable().focusNode.hasFocus, isFalse);
     final Rect r = tester.getRect(find.byKey(_fieldKey));
     await tester.tapAt(r.centerLeft + const Offset(8, 0));
@@ -131,17 +146,32 @@ void main() {
 
   testWidgets('the input is a hardened numeric field', (tester) async {
     await _pump(tester);
-    final TextField f = tester.widget(find.byKey(_fieldKey));
-    expect(f.obscureText, isTrue);
+    final EditableText f = tester.widget(
+      find.descendant(
+        of: find.byKey(_fieldKey),
+        matching: find.byType(EditableText),
+      ),
+    );
     expect(f.keyboardType, TextInputType.number);
-    expect(f.maxLength, 6);
     expect(f.autocorrect, isFalse);
     expect(f.enableSuggestions, isFalse);
-    expect(f.autofillHints, isEmpty);
     expect(f.enableIMEPersonalizedLearning, isFalse);
+    expect(f.autofillHints, isNull);
+    // Not a secure field on purpose (iOS secure fields misbehave on delete);
+    // the dots are drawn by the boxes and the field text is never shown.
+    expect(f.obscureText, isFalse);
+    expect(
+      f.inputFormatters!
+          .whereType<LengthLimitingTextInputFormatter>()
+          .single
+          .maxLength,
+      6,
+    );
   });
 
-  testWidgets('screen readers hear the count, never the digits', (tester) async {
+  testWidgets('screen readers hear the count, never the digits', (
+    tester,
+  ) async {
     final SemanticsHandle handle = tester.ensureSemantics();
     await _pump(tester, obscure: false);
     await tester.enterText(find.byKey(_fieldKey), '123');
@@ -156,7 +186,9 @@ void main() {
     handle.dispose();
   });
 
-  testWidgets('fits a 280 dp wide phone with big text, light and dark', (tester) async {
+  testWidgets('fits a 280 dp wide phone with big text, light and dark', (
+    tester,
+  ) async {
     for (final bool dark in <bool>[false, true]) {
       await _pump(tester, width: 280, dark: dark, textScale: 2, obscure: false);
       await tester.enterText(find.byKey(_fieldKey), '888888');
@@ -170,10 +202,50 @@ void main() {
 
   testWidgets('keyboard formatter list contains digitsOnly', (tester) async {
     await _pump(tester);
-    final TextField f = tester.widget(find.byKey(_fieldKey));
+    final EditableText f = tester.widget(
+      find.descendant(
+        of: find.byKey(_fieldKey),
+        matching: find.byType(EditableText),
+      ),
+    );
     expect(
       f.inputFormatters!.whereType<FilteringTextInputFormatter>(),
       isNotEmpty,
     );
+  });
+
+  testWidgets('there is no dash and the six boxes are one equal row', (
+    tester,
+  ) async {
+    await _pump(tester);
+    final Finder boxes = find.byKey(const ValueKey<String>('pin-empty'));
+    expect(boxes, findsNWidgets(6));
+    final List<double> tops = <double>[
+      for (int i = 0; i < 6; i++) tester.getTopLeft(boxes.at(i)).dy,
+    ];
+    expect(tops.toSet().length, 1); // all on one line
+    // Six equal gaps between neighbouring dots: no wider gap in the middle.
+    final List<double> gaps = <double>[
+      for (int i = 1; i < 6; i++)
+        tester.getTopLeft(boxes.at(i)).dx -
+            tester.getTopLeft(boxes.at(i - 1)).dx,
+    ];
+    for (final double g in gaps) {
+      expect(g, closeTo(gaps.first, 0.5));
+    }
+  });
+
+  testWidgets('deleting one digit at a time empties the boxes one by one', (
+    tester,
+  ) async {
+    final TextEditingController c = await _pump(tester);
+    await tester.enterText(find.byKey(_fieldKey), '123456');
+    await tester.pump();
+    for (int n = 5; n >= 0; n--) {
+      await tester.enterText(find.byKey(_fieldKey), '123456'.substring(0, n));
+      await tester.pump();
+      expect(c.text.length, n);
+      expect(_dots(), findsNWidgets(n));
+    }
   });
 }

@@ -17,6 +17,7 @@ const Key loginIdentifierFieldKey = Key('login-identifier');
 const Key loginPinFieldKey = Key('login-pin');
 const Key loginSubmitKey = Key('login-submit');
 const Key loginErrorKey = Key('login-error');
+const Key loginKeyboardDoneKey = Key('login-keyboard-done');
 
 /// Which message the form shows. Deliberately coarse: wrong card, wrong PIN,
 /// unknown member and unassigned card are all [invalid] (CLAUDE.md: one
@@ -63,11 +64,17 @@ LoginError? loginErrorFor(LoginResult result) => switch (result) {
         : const LoginErrorUnknown(),
 };
 
-/// 1-4 digits = printed card number, 7-15 = phone (PLANNING 4.1). Anything
-/// else can never match, so it is never sent.
+/// Longest printed card number (0001-9999).
+const int kCardNumberMaxDigits = 4;
+
+/// A phone number is exactly ten digits (every LOG member's is).
+const int kPhoneDigits = 10;
+
+/// 1-4 digits = printed card number, exactly 10 = phone (PLANNING 4.1).
+/// Anything else can never match, so it is never sent.
 bool isPlausibleIdentifier(String digits) {
   final int n = digits.length;
-  return (n >= 1 && n <= 4) || (n >= 7 && n <= 15);
+  return (n >= 1 && n <= kCardNumberMaxDigits) || n == kPhoneDigits;
 }
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -85,6 +92,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final TextEditingController _identifier = TextEditingController();
   final TextEditingController _pin = TextEditingController();
   final FocusNode _pinFocus = FocusNode();
+  final FocusNode _identifierFocus = FocusNode();
 
   Timer? _autoSubmit;
   bool _busy = false;
@@ -95,24 +103,43 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   void initState() {
     super.initState();
     ScreenSecurity.setSecure(true);
-    _identifier.addListener(_onChanged);
+    _identifier.addListener(_onIdentifierChanged);
     _pin.addListener(_onChanged);
+    _identifierFocus.addListener(_onChanged);
+    _pinFocus.addListener(_onChanged);
   }
 
   @override
   void dispose() {
     ScreenSecurity.setSecure(false);
     _autoSubmit?.cancel();
-    _identifier.removeListener(_onChanged);
+    _identifier.removeListener(_onIdentifierChanged);
     _pin.removeListener(_onChanged);
+    _identifierFocus.removeListener(_onChanged);
+    _pinFocus.removeListener(_onChanged);
     _pin.clear();
     _pin.dispose();
     _identifier.dispose();
     _pinFocus.dispose();
+    _identifierFocus.dispose();
     super.dispose();
   }
 
   void _onChanged() => setState(() {});
+
+  /// The tenth digit completes a phone number: carry on into the PIN boxes.
+  /// (A card number is 1-4 digits, so it cannot be told apart from a half
+  /// typed phone; those members tap the boxes.)
+  void _onIdentifierChanged() {
+    setState(() {});
+    if (_identifier.text.length == kPhoneDigits && _identifierFocus.hasFocus) {
+      _pinFocus.requestFocus();
+    }
+  }
+
+  bool get _keyboardOpen => _identifierFocus.hasFocus || _pinFocus.hasFocus;
+
+  void _dismissKeyboard() => FocusManager.instance.primaryFocus?.unfocus();
 
   bool get _identifierValid => isPlausibleIdentifier(_identifier.text.trim());
 
@@ -125,6 +152,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   /// Fires when the 6th digit is typed or pasted. Only submits if the card or
   /// phone is already valid; otherwise the button does it later.
   void _onPinCompleted() {
+    // Six digits in: the keyboard has nothing more to do.
+    _pinFocus.unfocus();
     if (!_identifierValid || _busy) {
       return;
     }
@@ -170,6 +199,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       }
     });
     if (error != null) {
+      unawaited(HapticFeedback.mediumImpact());
       _pin.clear();
       // The boxes are disabled until this frame is built; focus after it.
       WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -196,10 +226,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     return Theme(
       data: appDarkTheme,
       child: Builder(
-        builder: (BuildContext context) => AnnotatedRegion<SystemUiOverlayStyle>(
-          value: SystemUiOverlayStyle.light,
-          child: _buildBody(context),
-        ),
+        builder: (BuildContext context) =>
+            AnnotatedRegion<SystemUiOverlayStyle>(
+              value: SystemUiOverlayStyle.light,
+              child: _buildBody(context),
+            ),
       ),
     );
   }
@@ -214,119 +245,211 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final bool identifierProblem =
         _pinComplete && _identifier.text.isNotEmpty && !_identifierValid;
 
+    final bool kb = _keyboardOpen;
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: SingleChildScrollView(
-            keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-            padding: const EdgeInsets.symmetric(
-              horizontal: Brand.gutter,
-              vertical: Brand.spaceLg,
-            ),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 420),
-              child: TweenAnimationBuilder<double>(
-                tween: Tween<double>(begin: 0, end: 1),
-                duration: still ? Duration.zero : const Duration(milliseconds: 600),
-                curve: Brand.motionCurve,
-                builder: (BuildContext context, double t, Widget? child) =>
-                    Opacity(
-                      opacity: t,
-                      child: Transform.translate(
-                        offset: Offset(0, (1 - t) * 24),
-                        child: child,
-                      ),
+      body: GestureDetector(
+        // A tap on empty space puts the keyboard away. (Taps on the fields are
+        // handled by the fields first.)
+        behavior: HitTestBehavior.translucent,
+        onTap: _dismissKeyboard,
+        child: Column(
+          children: <Widget>[
+            Expanded(
+              child: SafeArea(
+                bottom: !kb,
+                child: Center(
+                  child: SingleChildScrollView(
+                    keyboardDismissBehavior:
+                        ScrollViewKeyboardDismissBehavior.onDrag,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: Brand.gutter,
+                      vertical: Brand.spaceLg,
                     ),
-                child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: <Widget>[
-                    const Center(child: LogMark(size: 168)),
-                    const SizedBox(height: 64),
-                    TextField(
-                      key: loginIdentifierFieldKey,
-                      controller: _identifier,
-                      enabled: !_busy,
-                      keyboardType: TextInputType.number,
-                      textInputAction: TextInputAction.next,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      autofillHints: const <String>[],
-                      enableIMEPersonalizedLearning: false,
-                      maxLength: 15,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                      onSubmitted: (_) => _pinFocus.requestFocus(),
-                      decoration: InputDecoration(
-                        hintText: l10n.authIdentifierLabel,
-                        errorText: identifierProblem
-                            ? l10n.authIdentifierInvalid
-                            : null,
-                        counterText: '',
-                      ),
-                    ),
-                    const SizedBox(height: Brand.spaceMd),
-                    PinBoxes(
-                      fieldKey: loginPinFieldKey,
-                      controller: _pin,
-                      focusNode: _pinFocus,
-                      enabled: !_busy,
-                      obscure: true,
-                      hasError: _error != null && _pin.text.isEmpty,
-                      shakeTrigger: _shake,
-                      onCompleted: _onPinCompleted,
-                      onSubmitted: _submit,
-                    ),
-                    AnimatedSize(
-                      duration: still ? Duration.zero : Brand.motionBase,
-                      curve: Brand.motionCurve,
-                      alignment: Alignment.topCenter,
-                      child: _error == null
-                          ? const SizedBox(width: double.infinity)
-                          : Padding(
-                              padding: const EdgeInsets.only(top: Brand.spaceMd),
-                              child: _ErrorBanner(
-                                message: _message(l10n, _error!),
+                    child: ConstrainedBox(
+                      constraints: const BoxConstraints(maxWidth: 420),
+                      child: TweenAnimationBuilder<double>(
+                        tween: Tween<double>(begin: 0, end: 1),
+                        duration: still
+                            ? Duration.zero
+                            : const Duration(milliseconds: 600),
+                        curve: Brand.motionCurve,
+                        builder:
+                            (BuildContext context, double t, Widget? child) =>
+                                Opacity(
+                                  opacity: t,
+                                  child: Transform.translate(
+                                    offset: Offset(0, (1 - t) * 24),
+                                    child: child,
+                                  ),
+                                ),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
+                          children: <Widget>[
+                            // The mark shrinks while the keyboard is up, so the field,
+                            // the boxes and the button all stay on screen.
+                            Center(
+                              child: TweenAnimationBuilder<double>(
+                                tween: Tween<double>(end: kb ? 88 : 168),
+                                duration: still
+                                    ? Duration.zero
+                                    : Brand.motionBase,
+                                curve: Brand.motionCurve,
+                                builder:
+                                    (
+                                      BuildContext context,
+                                      double size,
+                                      Widget? _,
+                                    ) => LogMark(size: size),
                               ),
                             ),
-                    ),
-                    const SizedBox(height: Brand.spaceLg),
-                    SizedBox(
-                      height: Brand.buttonHeight,
-                      child: FilledButton(
-                        key: loginSubmitKey,
-                        onPressed: _canSubmit ? _submit : null,
-                        child: _busy
-                            ? Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: <Widget>[
-                                  SizedBox(
-                                    width: 20,
-                                    height: 20,
-                                    child: CircularProgressIndicator(
-                                      strokeWidth: 2.5,
-                                      color: scheme.onPrimary,
+                            AnimatedContainer(
+                              duration: still
+                                  ? Duration.zero
+                                  : Brand.motionBase,
+                              curve: Brand.motionCurve,
+                              height: kb ? 28 : 64,
+                            ),
+                            TextField(
+                              key: loginIdentifierFieldKey,
+                              controller: _identifier,
+                              focusNode: _identifierFocus,
+                              enabled: !_busy,
+                              keyboardType: TextInputType.number,
+                              textInputAction: TextInputAction.next,
+                              autocorrect: false,
+                              enableSuggestions: false,
+                              autofillHints: const <String>[],
+                              enableIMEPersonalizedLearning: false,
+                              maxLength: kPhoneDigits,
+                              inputFormatters: <TextInputFormatter>[
+                                FilteringTextInputFormatter.digitsOnly,
+                              ],
+                              onSubmitted: (_) => _pinFocus.requestFocus(),
+                              decoration: InputDecoration(
+                                hintText: l10n.authIdentifierLabel,
+                                errorText: identifierProblem
+                                    ? l10n.authIdentifierInvalid
+                                    : null,
+                                counterText: '',
+                              ),
+                            ),
+                            const SizedBox(height: Brand.spaceMd),
+                            PinBoxes(
+                              fieldKey: loginPinFieldKey,
+                              controller: _pin,
+                              focusNode: _pinFocus,
+                              enabled: !_busy,
+                              obscure: true,
+                              hasError: _error != null && _pin.text.isEmpty,
+                              shakeTrigger: _shake,
+                              onCompleted: _onPinCompleted,
+                              onSubmitted: _submit,
+                            ),
+                            AnimatedSize(
+                              duration: still
+                                  ? Duration.zero
+                                  : Brand.motionBase,
+                              curve: Brand.motionCurve,
+                              alignment: Alignment.topCenter,
+                              child: _error == null
+                                  ? const SizedBox(width: double.infinity)
+                                  : Padding(
+                                      padding: const EdgeInsets.only(
+                                        top: Brand.spaceMd,
+                                      ),
+                                      child: _ErrorBanner(
+                                        message: _message(l10n, _error!),
+                                      ),
                                     ),
-                                  ),
-                                  const SizedBox(width: Brand.spaceSm + 4),
-                                  Text(l10n.authSigningIn),
-                                ],
-                              )
-                            : Text(l10n.authSignIn),
+                            ),
+                            const SizedBox(height: Brand.spaceLg),
+                            SizedBox(
+                              height: Brand.buttonHeight,
+                              child: FilledButton(
+                                key: loginSubmitKey,
+                                onPressed: _canSubmit ? _submit : null,
+                                child: _busy
+                                    ? Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: <Widget>[
+                                          SizedBox(
+                                            width: 20,
+                                            height: 20,
+                                            child: CircularProgressIndicator(
+                                              strokeWidth: 2.5,
+                                              color: scheme.onPrimary,
+                                            ),
+                                          ),
+                                          const SizedBox(
+                                            width: Brand.spaceSm + 4,
+                                          ),
+                                          Text(l10n.authSigningIn),
+                                        ],
+                                      )
+                                    : Text(l10n.authSignIn),
+                              ),
+                            ),
+                            const SizedBox(height: Brand.spaceLg),
+                            Text(
+                              l10n.authForgotPin,
+                              textAlign: TextAlign.center,
+                              style: theme.textTheme.bodyMedium?.copyWith(
+                                color: scheme.onSurfaceVariant,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                    const SizedBox(height: Brand.spaceLg),
-                    Text(
-                      l10n.authForgotPin,
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: scheme.onSurfaceVariant,
-                      ),
-                    ),
-                  ],
+                  ),
                 ),
               ),
+            ),
+            if (kb)
+              _KeyboardDoneBar(
+                key: loginKeyboardDoneKey,
+                label: l10n.authKeyboardDone,
+                onPressed: _dismissKeyboard,
+              ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+/// A slim bar docked above the keyboard. The iPhone number pad has no Return
+/// key, so without this there is no way to put the keyboard away.
+class _KeyboardDoneBar extends StatelessWidget {
+  const _KeyboardDoneBar({
+    required this.label,
+    required this.onPressed,
+    super.key,
+  });
+
+  final String label;
+  final VoidCallback onPressed;
+
+  @override
+  Widget build(BuildContext context) {
+    final ColorScheme scheme = Theme.of(context).colorScheme;
+    return Material(
+      color: scheme.surfaceContainerHigh,
+      child: SizedBox(
+        height: 44,
+        width: double.infinity,
+        child: Align(
+          alignment: Alignment.centerRight,
+          child: TextButton(
+            onPressed: onPressed,
+            style: TextButton.styleFrom(
+              minimumSize: const Size(72, 44),
+              padding: const EdgeInsets.symmetric(horizontal: Brand.gutter),
+            ),
+            child: Text(
+              label,
+              style: const TextStyle(fontWeight: FontWeight.w700),
             ),
           ),
         ),

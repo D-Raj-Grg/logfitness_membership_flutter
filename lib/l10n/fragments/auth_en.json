@@ -19,12 +19,13 @@
   "authNotMemberBody": "Your membership is no longer active. Please contact the front desk.",
   "authSignOut": "Sign out",
   "authPinSemantics": "PIN, {count} of 6 digits entered",
-  "authIdentifierInvalid": "Enter a card number (1 to 4 digits) or a phone number.",
+  "authIdentifierInvalid": "Enter a card number (1 to 4 digits) or your 10-digit phone number.",
   "@authPinSemantics": {
     "placeholders": {
       "count": {
         "type": "int"
       }
     }
-  }
+  },
+  "authKeyboardDone": "Done"
 }

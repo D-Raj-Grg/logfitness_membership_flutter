@@ -98,10 +98,13 @@ class AppLocalizationsNe extends AppLocalizations {
 
   @override
   String get authIdentifierInvalid =>
-      'कार्ड नम्बर (१ देखि ४ अंक) वा फोन नम्बर राख्नुहोस्।';
+      'कार्ड नम्बर (१ देखि ४ अंक) वा तपाईंको १० अंकको फोन नम्बर राख्नुहोस्।';
 
   @override
   String get authIdentifierLabel => 'कार्ड नम्बर वा फोन';
+
+  @override
+  String get authKeyboardDone => 'भयो';
 
   @override
   String get authNotMemberBody =>

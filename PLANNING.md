@@ -30,6 +30,7 @@ A member opens it to see: *is my membership active, how many days are left, what
 | Models | `freezed` + `json_serializable` | Generated, committed. Unknown JSON keys are ignored so an additive backend change never breaks a shipped build. |
 | Session storage | `flutter_secure_storage` | Refresh token only. The PIN is never stored (see §4). |
 | QR | `qr_flutter` | Renders the minted check-in token. |
+| PIN input | `pinput` | Six-box code entry (smooth delete, paste, haptics, closes the keyboard when complete); boxes drawn by us, field is not an `obscureText` field (iOS). |
 | i18n | Flutter `gen-l10n` (`.arb`, `en` + `ne`) | Every string. Dates/numbers via `intl`, in the org's timezone. |
 | Push | `firebase_core` + `firebase_messaging` | **Its own Firebase project** for this bundle id. Not wired until Phase 7. |
 | Preferences | `shared_preferences` | Theme mode, language override. |
