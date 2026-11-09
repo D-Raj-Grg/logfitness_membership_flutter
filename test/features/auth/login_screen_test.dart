@@ -58,8 +58,14 @@ Future<void> _signIn(WidgetTester tester, String id, String pin) async {
   await tester.pumpAndSettle();
 }
 
-String _pinText(WidgetTester tester) =>
-    tester.widget<TextField>(find.byKey(loginPinFieldKey)).controller!.text;
+EditableText _pinEditable(WidgetTester tester) => tester.widget<EditableText>(
+  find.descendant(
+    of: find.byKey(loginPinFieldKey),
+    matching: find.byType(EditableText),
+  ),
+);
+
+String _pinText(WidgetTester tester) => _pinEditable(tester).controller.text;
 
 void main() {
   group('loginErrorFor', () {
@@ -105,13 +111,18 @@ void main() {
       );
     });
 
-    test('identifier shape: 1-4 digits card, 7-15 phone', () {
+    test('identifier shape: 1-4 digits card, exactly 10 digits phone', () {
       expect(isPlausibleIdentifier('4'), isTrue);
       expect(isPlausibleIdentifier('0004'), isTrue);
       expect(isPlausibleIdentifier('9841234567'), isTrue);
       expect(isPlausibleIdentifier('12345'), isFalse);
       expect(isPlausibleIdentifier('123456'), isFalse);
-      expect(isPlausibleIdentifier('1234567890123456'), isFalse);
+      expect(
+        isPlausibleIdentifier('1234567'),
+        isFalse,
+      ); // 7 digits: not a phone
+      expect(isPlausibleIdentifier('123456789'), isFalse); // 9 digits
+      expect(isPlausibleIdentifier('98412345678'), isFalse); // 11 digits
       expect(isPlausibleIdentifier(''), isFalse);
     });
 
@@ -127,18 +138,80 @@ void main() {
   group('LoginScreen', () {
     testWidgets('PIN input is hardened', (tester) async {
       await _pump(tester, _FakeAuth(const LoginOk()));
-      final TextField pin = tester.widget(find.byKey(loginPinFieldKey));
-      expect(pin.obscureText, isTrue);
+      final EditableText pin = _pinEditable(tester);
       expect(pin.enableSuggestions, isFalse);
       expect(pin.autocorrect, isFalse);
-      expect(pin.autofillHints, isEmpty);
+      expect(pin.autofillHints, isNull);
       expect(pin.enableIMEPersonalizedLearning, isFalse);
       expect(pin.keyboardType, TextInputType.number);
-      expect(pin.maxLength, 6);
       // No label or helper words: six boxes with faint dots read as a code.
       expect(find.text('PIN'), findsNothing);
       expect(find.text('LOG Fitness'), findsNothing);
       expect(find.byKey(const ValueKey<String>('pin-empty')), findsNWidgets(6));
+    });
+
+    testWidgets('the phone field never takes more than ten digits', (
+      tester,
+    ) async {
+      await _pump(tester, _FakeAuth(const LoginOk()));
+      await tester.enterText(
+        find.byKey(loginIdentifierFieldKey),
+        '984123456789',
+      );
+      await tester.pump();
+      final TextField f = tester.widget(find.byKey(loginIdentifierFieldKey));
+      expect(f.controller!.text.length, 10);
+      expect(f.controller!.text, '9841234567');
+      expect(f.maxLength, 10);
+    });
+
+    testWidgets('the tenth digit of a phone moves on to the PIN boxes', (
+      tester,
+    ) async {
+      await _pump(tester, _FakeAuth(const LoginOk()));
+      await tester.enterText(find.byKey(loginIdentifierFieldKey), '984123456');
+      await tester.pump();
+      expect(_pinEditable(tester).focusNode.hasFocus, isFalse);
+      await tester.enterText(find.byKey(loginIdentifierFieldKey), '9841234567');
+      await tester.pump();
+      expect(_pinEditable(tester).focusNode.hasFocus, isTrue);
+    });
+
+    testWidgets('a Done bar sits above the keyboard and puts it away', (
+      tester,
+    ) async {
+      await _pump(tester, _FakeAuth(const LoginOk()));
+      expect(find.byKey(loginKeyboardDoneKey), findsNothing);
+      await tester.tap(find.byKey(loginIdentifierFieldKey));
+      await tester.pump();
+      expect(find.byKey(loginKeyboardDoneKey), findsOneWidget);
+      expect(find.text('Done'), findsOneWidget);
+      await tester.tap(find.byKey(loginKeyboardDoneKey));
+      await tester.pumpAndSettle();
+      expect(find.byKey(loginKeyboardDoneKey), findsNothing);
+    });
+
+    testWidgets('tapping empty space puts the keyboard away', (tester) async {
+      await _pump(tester, _FakeAuth(const LoginOk()));
+      await tester.tap(find.byKey(loginIdentifierFieldKey));
+      await tester.pump();
+      expect(find.byKey(loginKeyboardDoneKey), findsOneWidget);
+      await tester.tapAt(const Offset(6, 6));
+      await tester.pumpAndSettle();
+      expect(find.byKey(loginKeyboardDoneKey), findsNothing);
+    });
+
+    testWidgets('the keyboard closes by itself when the sixth digit lands', (
+      tester,
+    ) async {
+      await _pump(tester, _FakeAuth(const LoginInvalid()));
+      await tester.enterText(find.byKey(loginIdentifierFieldKey), '0004');
+      await tester.tap(find.byKey(loginPinFieldKey));
+      await tester.pump();
+      expect(_pinEditable(tester).focusNode.hasFocus, isTrue);
+      await tester.enterText(find.byKey(loginPinFieldKey), '123456');
+      await tester.pump();
+      expect(_pinEditable(tester).focusNode.hasFocus, isFalse);
     });
 
     testWidgets('6th digit with a valid card signs in once, automatically', (

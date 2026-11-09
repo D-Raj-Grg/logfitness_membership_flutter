@@ -98,10 +98,13 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authIdentifierInvalid =>
-      'Enter a card number (1 to 4 digits) or a phone number.';
+      'Enter a card number (1 to 4 digits) or your 10-digit phone number.';
 
   @override
   String get authIdentifierLabel => 'Card number or phone';
+
+  @override
+  String get authKeyboardDone => 'Done';
 
   @override
   String get authNotMemberBody =>

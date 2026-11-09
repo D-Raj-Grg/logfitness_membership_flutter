@@ -233,7 +233,7 @@ abstract class AppLocalizations {
   /// No description provided for @authIdentifierInvalid.
   ///
   /// In en, this message translates to:
-  /// **'Enter a card number (1 to 4 digits) or a phone number.'**
+  /// **'Enter a card number (1 to 4 digits) or your 10-digit phone number.'**
   String get authIdentifierInvalid;
 
   /// No description provided for @authIdentifierLabel.
@@ -241,6 +241,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Card number or phone'**
   String get authIdentifierLabel;
+
+  /// No description provided for @authKeyboardDone.
+  ///
+  /// In en, this message translates to:
+  /// **'Done'**
+  String get authKeyboardDone;
 
   /// No description provided for @authNotMemberBody.
   ///
