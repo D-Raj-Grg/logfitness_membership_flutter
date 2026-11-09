@@ -94,14 +94,7 @@ class AppLocalizationsNe extends AppLocalizations {
       'अहिले साइन इन गर्न सकिएन। कृपया फेरि प्रयास गर्नुहोस्।';
 
   @override
-  String get authForgotPin =>
-      'पिन बिर्सनुभयो? फ्रन्ट डेस्कलाई सोध्नुहोस्। उहाँहरूले नयाँ पिन राखिदिनुहुन्छ।';
-
-  @override
-  String get authHidePin => 'पिन लुकाउनुहोस्';
-
-  @override
-  String get authIdentifierHint => '0004 वा 98XXXXXXXX';
+  String get authForgotPin => 'पिन बिर्सनुभयो? फ्रन्ट डेस्कलाई सोध्नुहोस्।';
 
   @override
   String get authIdentifierInvalid =>
@@ -118,18 +111,9 @@ class AppLocalizationsNe extends AppLocalizations {
   String get authNotMemberTitle => 'सदस्यता सक्रिय छैन';
 
   @override
-  String get authPinHelper => 'फ्रन्ट डेस्कले दिएको ६ अंकको पिन राख्नुहोस्';
-
-  @override
-  String get authPinLabel => 'पिन';
-
-  @override
   String authPinSemantics(int count) {
     return 'पिन, ६ मध्ये $count अंक भरिएको';
   }
-
-  @override
-  String get authShowPin => 'पिन देखाउनुहोस्';
 
   @override
   String get authSignIn => 'साइन इन';
@@ -139,13 +123,6 @@ class AppLocalizationsNe extends AppLocalizations {
 
   @override
   String get authSigningIn => 'साइन इन हुँदैछ';
-
-  @override
-  String get authSubtitle =>
-      'फ्रन्ट डेस्कले दिएको कार्ड नम्बर वा फोन नम्बरबाट साइन इन गर्नुहोस्।';
-
-  @override
-  String get authTagline => 'तपाईंको सदस्यता, तपाईंकै खल्तीमा';
 
   @override
   String get bookingsCancel => 'बुकिङ रद्द गर्नुहोस्';

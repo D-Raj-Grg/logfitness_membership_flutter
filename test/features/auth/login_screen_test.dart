@@ -58,10 +58,8 @@ Future<void> _signIn(WidgetTester tester, String id, String pin) async {
   await tester.pumpAndSettle();
 }
 
-String _pinText(WidgetTester tester) => tester
-    .widget<TextField>(find.byKey(loginPinFieldKey))
-    .controller!
-    .text;
+String _pinText(WidgetTester tester) =>
+    tester.widget<TextField>(find.byKey(loginPinFieldKey)).controller!.text;
 
 void main() {
   group('loginErrorFor', () {
@@ -74,14 +72,29 @@ void main() {
     });
 
     test('locked rounds seconds up to whole minutes, minimum one', () {
-      expect((loginErrorFor(const LoginLocked(840)) as LoginErrorLocked).minutes, 14);
-      expect((loginErrorFor(const LoginLocked(841)) as LoginErrorLocked).minutes, 15);
-      expect((loginErrorFor(const LoginLocked(5)) as LoginErrorLocked).minutes, 1);
-      expect((loginErrorFor(const LoginLocked(0)) as LoginErrorLocked).minutes, 1);
+      expect(
+        (loginErrorFor(const LoginLocked(840)) as LoginErrorLocked).minutes,
+        14,
+      );
+      expect(
+        (loginErrorFor(const LoginLocked(841)) as LoginErrorLocked).minutes,
+        15,
+      );
+      expect(
+        (loginErrorFor(const LoginLocked(5)) as LoginErrorLocked).minutes,
+        1,
+      );
+      expect(
+        (loginErrorFor(const LoginLocked(0)) as LoginErrorLocked).minutes,
+        1,
+      );
     });
 
     test('rate limited and offline and unknown', () {
-      expect(loginErrorFor(const LoginRateLimited()), isA<LoginErrorRateLimited>());
+      expect(
+        loginErrorFor(const LoginRateLimited()),
+        isA<LoginErrorRateLimited>(),
+      );
       expect(
         loginErrorFor(const LoginFailed(AppFailure(FailureKind.offline, 'x'))),
         isA<LoginErrorOffline>(),
@@ -122,10 +135,15 @@ void main() {
       expect(pin.enableIMEPersonalizedLearning, isFalse);
       expect(pin.keyboardType, TextInputType.number);
       expect(pin.maxLength, 6);
-      expect(find.text('Enter the 6-digit PIN from the front desk'), findsOneWidget);
+      // No label or helper words: six boxes with faint dots read as a code.
+      expect(find.text('PIN'), findsNothing);
+      expect(find.text('LOG Fitness'), findsNothing);
+      expect(find.byKey(const ValueKey<String>('pin-empty')), findsNWidgets(6));
     });
 
-    testWidgets('6th digit with a valid card signs in once, automatically', (tester) async {
+    testWidgets('6th digit with a valid card signs in once, automatically', (
+      tester,
+    ) async {
       final _FakeAuth auth = _FakeAuth(const LoginInvalid());
       await _pump(tester, auth);
       await tester.enterText(find.byKey(loginIdentifierFieldKey), '0004');
@@ -147,7 +165,9 @@ void main() {
       expect(auth.calls, <(String, String)>[('9841234567', '654321')]);
     });
 
-    testWidgets('no auto-submit with an invalid or empty identifier', (tester) async {
+    testWidgets('no auto-submit with an invalid or empty identifier', (
+      tester,
+    ) async {
       final _FakeAuth auth = _FakeAuth(const LoginOk());
       await _pump(tester, auth);
       await _signIn(tester, '12345', '123456');
@@ -162,20 +182,23 @@ void main() {
       expect(_pinText(tester), '123456');
     });
 
-    testWidgets('fixing the identifier afterwards does not auto-submit; the button does', (tester) async {
-      final _FakeAuth auth = _FakeAuth(const LoginInvalid());
-      await _pump(tester, auth);
-      await tester.enterText(find.byKey(loginPinFieldKey), '123456');
-      await tester.pump(const Duration(milliseconds: 300));
-      await tester.enterText(find.byKey(loginIdentifierFieldKey), '0004');
-      await tester.pump(const Duration(milliseconds: 300));
-      expect(auth.calls, isEmpty);
+    testWidgets(
+      'fixing the identifier afterwards does not auto-submit; the button does',
+      (tester) async {
+        final _FakeAuth auth = _FakeAuth(const LoginInvalid());
+        await _pump(tester, auth);
+        await tester.enterText(find.byKey(loginPinFieldKey), '123456');
+        await tester.pump(const Duration(milliseconds: 300));
+        await tester.enterText(find.byKey(loginIdentifierFieldKey), '0004');
+        await tester.pump(const Duration(milliseconds: 300));
+        expect(auth.calls, isEmpty);
 
-      await tester.ensureVisible(find.byKey(loginSubmitKey));
-      await tester.tap(find.byKey(loginSubmitKey));
-      await tester.pumpAndSettle();
-      expect(auth.calls, <(String, String)>[('0004', '123456')]);
-    });
+        await tester.ensureVisible(find.byKey(loginSubmitKey));
+        await tester.tap(find.byKey(loginSubmitKey));
+        await tester.pumpAndSettle();
+        expect(auth.calls, <(String, String)>[('0004', '123456')]);
+      },
+    );
 
     testWidgets('button is off until card and all six digits', (tester) async {
       await _pump(tester, _FakeAuth(const LoginOk()));
@@ -187,8 +210,11 @@ void main() {
       expect(button().onPressed, isNull);
     });
 
-    testWidgets('no double fire: button tap while the auto call is in flight', (tester) async {
-      final _FakeAuth auth = _FakeAuth(const LoginInvalid())..gate = Completer<void>();
+    testWidgets('no double fire: button tap while the auto call is in flight', (
+      tester,
+    ) async {
+      final _FakeAuth auth = _FakeAuth(const LoginInvalid())
+        ..gate = Completer<void>();
       await _pump(tester, auth);
       await tester.enterText(find.byKey(loginIdentifierFieldKey), '0004');
       await tester.enterText(find.byKey(loginPinFieldKey), '123456');
@@ -208,7 +234,9 @@ void main() {
       expect(auth.calls.length, 1);
     });
 
-    testWidgets('backspace before the timer fires cancels the auto-submit', (tester) async {
+    testWidgets('backspace before the timer fires cancels the auto-submit', (
+      tester,
+    ) async {
       final _FakeAuth auth = _FakeAuth(const LoginOk());
       await _pump(tester, auth);
       await tester.enterText(find.byKey(loginIdentifierFieldKey), '0004');
@@ -219,22 +247,28 @@ void main() {
       expect(auth.calls, isEmpty);
     });
 
-    testWidgets('invalid shows the one generic error and clears all six boxes', (tester) async {
-      final _FakeAuth auth = _FakeAuth(const LoginInvalid());
-      await _pump(tester, auth);
-      await _signIn(tester, '0004', '123456');
+    testWidgets(
+      'invalid shows the one generic error and clears all six boxes',
+      (tester) async {
+        final _FakeAuth auth = _FakeAuth(const LoginInvalid());
+        await _pump(tester, auth);
+        await _signIn(tester, '0004', '123456');
 
-      expect(auth.calls, <(String, String)>[('0004', '123456')]);
-      expect(find.text('Card number or PIN is wrong.'), findsOneWidget);
-      expect(_pinText(tester), isEmpty);
-      expect(find.byKey(const ValueKey<String>('pin-dot')), findsNothing);
-    });
+        expect(auth.calls, <(String, String)>[('0004', '123456')]);
+        expect(find.text('Card number or PIN is wrong.'), findsOneWidget);
+        expect(_pinText(tester), isEmpty);
+        expect(find.byKey(const ValueKey<String>('pin-dot')), findsNothing);
+      },
+    );
 
     testWidgets('locked shows the wait and clears the PIN', (tester) async {
       await _pump(tester, _FakeAuth(const LoginLocked(14 * 60 + 20)));
       await _signIn(tester, '0004', '123456');
 
-      expect(find.textContaining('Too many tries. Try again in 15 minutes'), findsOneWidget);
+      expect(
+        find.textContaining('Too many tries. Try again in 15 minutes'),
+        findsOneWidget,
+      );
       expect(_pinText(tester), isEmpty);
     });
 
@@ -242,7 +276,10 @@ void main() {
       final _FakeAuth auth = _FakeAuth(const LoginRateLimited());
       await _pump(tester, auth);
       await _signIn(tester, '0004', '123456');
-      expect(find.textContaining('Too many attempts from this phone'), findsOneWidget);
+      expect(
+        find.textContaining('Too many attempts from this phone'),
+        findsOneWidget,
+      );
 
       auth.result = const LoginFailed(AppFailure(FailureKind.offline, 'x'));
       await _signIn(tester, '0004', '123456');
@@ -250,8 +287,11 @@ void main() {
       expect(find.textContaining('No connection'), findsOneWidget);
     });
 
-    testWidgets('the PIN is not left in the field while the call runs', (tester) async {
-      final _FakeAuth auth = _FakeAuth(const LoginInvalid())..gate = Completer<void>();
+    testWidgets('the PIN is not left in the field while the call runs', (
+      tester,
+    ) async {
+      final _FakeAuth auth = _FakeAuth(const LoginInvalid())
+        ..gate = Completer<void>();
       await _pump(tester, auth);
       await tester.enterText(find.byKey(loginIdentifierFieldKey), '0004');
       await tester.enterText(find.byKey(loginPinFieldKey), '432100');
@@ -275,15 +315,13 @@ void main() {
       expect(e.widget.focusNode.hasFocus, isTrue);
     });
 
-    testWidgets('eye toggle reveals the digits', (tester) async {
+    testWidgets('typed digits show as dots, never as text', (tester) async {
       await _pump(tester, _FakeAuth(const LoginOk()));
       await tester.enterText(find.byKey(loginPinFieldKey), '123');
       await tester.pump();
       expect(find.byKey(const ValueKey<String>('pin-dot')), findsNWidgets(3));
-      await tester.tap(find.byTooltip('Show PIN'));
-      await tester.pump();
-      expect(find.byKey(const ValueKey<String>('pin-digit')), findsNWidgets(3));
-      expect(find.text('2'), findsOneWidget);
+      expect(find.byKey(const ValueKey<String>('pin-digit')), findsNothing);
+      expect(find.text('2'), findsNothing);
     });
   });
 
@@ -292,7 +330,9 @@ void main() {
       final _FakeAuth auth = _FakeAuth(const LoginOk());
       await _pump(tester, auth, home: const NotMemberScreen());
       expect(
-        find.text('Your membership is no longer active. Please contact the front desk.'),
+        find.text(
+          'Your membership is no longer active. Please contact the front desk.',
+        ),
         findsOneWidget,
       );
       await tester.tap(find.byKey(notMemberSignOutKey));

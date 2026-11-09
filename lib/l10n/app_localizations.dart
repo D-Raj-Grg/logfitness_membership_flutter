@@ -227,20 +227,8 @@ abstract class AppLocalizations {
   /// No description provided for @authForgotPin.
   ///
   /// In en, this message translates to:
-  /// **'Forgot your PIN? Ask the front desk. They can set a new one for you.'**
+  /// **'Forgot your PIN? Ask the front desk.'**
   String get authForgotPin;
-
-  /// No description provided for @authHidePin.
-  ///
-  /// In en, this message translates to:
-  /// **'Hide PIN'**
-  String get authHidePin;
-
-  /// No description provided for @authIdentifierHint.
-  ///
-  /// In en, this message translates to:
-  /// **'0004 or 98XXXXXXXX'**
-  String get authIdentifierHint;
 
   /// No description provided for @authIdentifierInvalid.
   ///
@@ -266,29 +254,11 @@ abstract class AppLocalizations {
   /// **'Membership not active'**
   String get authNotMemberTitle;
 
-  /// No description provided for @authPinHelper.
-  ///
-  /// In en, this message translates to:
-  /// **'Enter the 6-digit PIN from the front desk'**
-  String get authPinHelper;
-
-  /// No description provided for @authPinLabel.
-  ///
-  /// In en, this message translates to:
-  /// **'PIN'**
-  String get authPinLabel;
-
   /// No description provided for @authPinSemantics.
   ///
   /// In en, this message translates to:
   /// **'PIN, {count} of 6 digits entered'**
   String authPinSemantics(int count);
-
-  /// No description provided for @authShowPin.
-  ///
-  /// In en, this message translates to:
-  /// **'Show PIN'**
-  String get authShowPin;
 
   /// No description provided for @authSignIn.
   ///
@@ -307,18 +277,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Signing in'**
   String get authSigningIn;
-
-  /// No description provided for @authSubtitle.
-  ///
-  /// In en, this message translates to:
-  /// **'Sign in with the card number or phone number the front desk gave you.'**
-  String get authSubtitle;
-
-  /// No description provided for @authTagline.
-  ///
-  /// In en, this message translates to:
-  /// **'Your membership, in your pocket'**
-  String get authTagline;
 
   /// No description provided for @bookingsCancel.
   ///

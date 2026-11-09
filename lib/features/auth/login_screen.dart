@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:logfitness_membership_flutter/app/brand.dart';
+import 'package:logfitness_membership_flutter/app/theme.dart';
 import 'package:logfitness_membership_flutter/data/auth/member_auth_repository.dart';
 import 'package:logfitness_membership_flutter/domain/errors/app_failure.dart';
 import 'package:logfitness_membership_flutter/features/common/log_mark.dart';
@@ -87,7 +88,6 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   Timer? _autoSubmit;
   bool _busy = false;
-  bool _showPin = false;
   int _shake = 0;
   LoginError? _error;
 
@@ -188,8 +188,23 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     LoginErrorUnknown() => l10n.authErrorUnknown,
   };
 
+  /// The login is always the brand's dark ground (#17181D), in light and dark
+  /// mode: it matches the native launch screen, so opening the app has no
+  /// colour change, and the white LOG mark is the one thing on the screen.
   @override
   Widget build(BuildContext context) {
+    return Theme(
+      data: appDarkTheme,
+      child: Builder(
+        builder: (BuildContext context) => AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle.light,
+          child: _buildBody(context),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildBody(BuildContext context) {
     final AppLocalizations l10n = AppLocalizations.of(context);
     final ThemeData theme = Theme.of(context);
     final ColorScheme scheme = theme.colorScheme;
@@ -226,32 +241,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    const Center(child: _LoginLogo()),
-                    const SizedBox(height: Brand.spaceMd),
-                    Text(
-                      l10n.appName,
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.titleLarge?.copyWith(
-                        fontWeight: FontWeight.w900,
-                        letterSpacing: 4,
-                      ),
-                    ),
-                    const SizedBox(height: Brand.spaceXs),
-                    Text(
-                      l10n.authTagline,
-                      textAlign: TextAlign.center,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: scheme.onSurfaceVariant,
-                      ),
-                    ),
-                    const SizedBox(height: Brand.spaceXl),
-                    Text(
-                      l10n.authSubtitle,
-                      style: theme.textTheme.bodyMedium?.copyWith(
-                        color: scheme.onSurfaceVariant,
-                      ),
-                    ),
-                    const SizedBox(height: Brand.spaceMd),
+                    const Center(child: LogMark(size: 168)),
+                    const SizedBox(height: 64),
                     TextField(
                       key: loginIdentifierFieldKey,
                       controller: _identifier,
@@ -268,59 +259,24 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ],
                       onSubmitted: (_) => _pinFocus.requestFocus(),
                       decoration: InputDecoration(
-                        labelText: l10n.authIdentifierLabel,
-                        hintText: l10n.authIdentifierHint,
+                        hintText: l10n.authIdentifierLabel,
                         errorText: identifierProblem
                             ? l10n.authIdentifierInvalid
                             : null,
                         counterText: '',
-                        prefixIcon: const Icon(Icons.badge_outlined),
                       ),
                     ),
-                    const SizedBox(height: Brand.spaceLg),
-                    Row(
-                      children: <Widget>[
-                        Expanded(
-                          child: Text(
-                            l10n.authPinLabel,
-                            style: theme.textTheme.titleSmall?.copyWith(
-                              fontWeight: FontWeight.w700,
-                            ),
-                          ),
-                        ),
-                        IconButton(
-                          tooltip: _showPin ? l10n.authHidePin : l10n.authShowPin,
-                          constraints: const BoxConstraints(
-                            minWidth: 44,
-                            minHeight: 44,
-                          ),
-                          icon: Icon(
-                            _showPin
-                                ? Icons.visibility_off_outlined
-                                : Icons.visibility_outlined,
-                          ),
-                          onPressed: () => setState(() => _showPin = !_showPin),
-                        ),
-                      ],
-                    ),
-                    const SizedBox(height: Brand.spaceXs),
+                    const SizedBox(height: Brand.spaceMd),
                     PinBoxes(
                       fieldKey: loginPinFieldKey,
                       controller: _pin,
                       focusNode: _pinFocus,
                       enabled: !_busy,
-                      obscure: !_showPin,
+                      obscure: true,
                       hasError: _error != null && _pin.text.isEmpty,
                       shakeTrigger: _shake,
                       onCompleted: _onPinCompleted,
                       onSubmitted: _submit,
-                    ),
-                    const SizedBox(height: Brand.spaceSm),
-                    Text(
-                      l10n.authPinHelper,
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: scheme.onSurfaceVariant,
-                      ),
                     ),
                     AnimatedSize(
                       duration: still ? Duration.zero : Brand.motionBase,
@@ -361,24 +317,12 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       ),
                     ),
                     const SizedBox(height: Brand.spaceLg),
-                    Row(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        Icon(
-                          Icons.support_agent_outlined,
-                          size: 20,
-                          color: scheme.onSurfaceVariant,
-                        ),
-                        const SizedBox(width: Brand.spaceSm),
-                        Expanded(
-                          child: Text(
-                            l10n.authForgotPin,
-                            style: theme.textTheme.bodySmall?.copyWith(
-                              color: scheme.onSurfaceVariant,
-                            ),
-                          ),
-                        ),
-                      ],
+                    Text(
+                      l10n.authForgotPin,
+                      textAlign: TextAlign.center,
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: scheme.onSurfaceVariant,
+                      ),
                     ),
                   ],
                 ),
@@ -426,34 +370,6 @@ class _ErrorBanner extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-/// The real LOG mark on its dark tile, with a hairline ring so the tile stays
-/// visible on the dark theme too.
-class _LoginLogo extends StatelessWidget {
-  const _LoginLogo();
-
-  @override
-  Widget build(BuildContext context) {
-    const double size = 88;
-    return Semantics(
-      excludeSemantics: true,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(size * 96 / 512),
-          border: Border.all(color: Brand.elegantGrey, width: 1.5),
-          boxShadow: <BoxShadow>[
-            BoxShadow(
-              color: Brand.tarRoad.withValues(alpha: 0.28),
-              blurRadius: 26,
-              offset: const Offset(0, 8),
-            ),
-          ],
-        ),
-        child: const LogMark(size: size, withTile: true),
       ),
     );
   }

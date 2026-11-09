@@ -379,6 +379,18 @@ class _Cell extends StatelessWidget {
             );
     }
 
+    // An empty box shows a faint dot, so six boxes read as a code entry
+    // without a "PIN" label.
+    content ??= Container(
+      key: const ValueKey<String>('pin-empty'),
+      width: 8,
+      height: 8,
+      decoration: BoxDecoration(
+        color: scheme.onSurface.withValues(alpha: active ? 0.0 : 0.22),
+        shape: BoxShape.circle,
+      ),
+    );
+
     return AnimatedContainer(
       duration: still ? Duration.zero : Brand.motionFast,
       curve: Brand.motionCurve,
