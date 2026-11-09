@@ -14,6 +14,40 @@
   "loading": "लोड हुँदैछ",
   "offline": "तपाईं अफलाइन हुनुहुन्छ",
   "ok": "ठीक छ",
+  "qrCheckAgain": "फेरि जाँच गर्नुहोस्",
+  "qrExpired": "कोडको समय सकियो",
+  "qrHeadline": "ढोकामा यो देखाउनुहोस्",
+  "qrLoading": "तपाईंको कोड ल्याउँदै…",
+  "qrMemberCode": "सदस्य {code}",
+  "@qrMemberCode": {
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "qrNotEligibleBody": "फ्रन्ट डेस्कले यो समस्या समाधान नगरेसम्म ढोकाले यो कोड स्वीकार गर्दैन। कृपया फ्रन्ट डेस्कमा भेट्नुहोस्, हामी तपाईंलाई भित्र पठाउँछौं।",
+  "qrNotEligibleTitle": "अहिले चेक-इन गर्न मिल्दैन",
+  "qrReconnecting": "फेरि जडान हुँदैछ…",
+  "qrReconnectingHint": "चिन्ता नलिनुहोस्। हामी प्रयास गरिरहन्छौं, जडान फर्किनेबित्तिकै नयाँ कोड देखिनेछ।",
+  "qrSecondsLeft": "{seconds} सेकेन्डमा नवीकरण हुन्छ",
+  "@qrSecondsLeft": {
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "qrSemanticsLabel": "{name} को चेक-इन QR कोड",
+  "@qrSemanticsLabel": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "qrSemanticsLabelNoName": "चेक-इन QR कोड",
+  "qrSubtitle": "तपाईंको कोड आफैँ नवीकरण हुन्छ।",
   "retry": "फेरि प्रयास गर्नुहोस्",
   "snackRetry": "फेरि गर्नुहोस्",
   "tabCheckin": "चेक-इन",

@@ -1,0 +1,24 @@
+{
+  "qrHeadline": "ढोकामा यो देखाउनुहोस्",
+  "qrSubtitle": "तपाईंको कोड आफैँ नवीकरण हुन्छ।",
+  "qrLoading": "तपाईंको कोड ल्याउँदै…",
+  "qrMemberCode": "सदस्य {code}",
+  "@qrMemberCode": {
+    "placeholders": { "code": { "type": "String" } }
+  },
+  "qrSecondsLeft": "{seconds} सेकेन्डमा नवीकरण हुन्छ",
+  "@qrSecondsLeft": {
+    "placeholders": { "seconds": { "type": "int" } }
+  },
+  "qrSemanticsLabel": "{name} को चेक-इन QR कोड",
+  "@qrSemanticsLabel": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "qrSemanticsLabelNoName": "चेक-इन QR कोड",
+  "qrReconnecting": "फेरि जडान हुँदैछ…",
+  "qrReconnectingHint": "चिन्ता नलिनुहोस्। हामी प्रयास गरिरहन्छौं, जडान फर्किनेबित्तिकै नयाँ कोड देखिनेछ।",
+  "qrExpired": "कोडको समय सकियो",
+  "qrNotEligibleTitle": "अहिले चेक-इन गर्न मिल्दैन",
+  "qrNotEligibleBody": "फ्रन्ट डेस्कले यो समस्या समाधान नगरेसम्म ढोकाले यो कोड स्वीकार गर्दैन। कृपया फ्रन्ट डेस्कमा भेट्नुहोस्, हामी तपाईंलाई भित्र पठाउँछौं।",
+  "qrCheckAgain": "फेरि जाँच गर्नुहोस्"
+}

@@ -182,6 +182,84 @@ abstract class AppLocalizations {
   /// **'OK'**
   String get ok;
 
+  /// No description provided for @qrCheckAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Check again'**
+  String get qrCheckAgain;
+
+  /// No description provided for @qrExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Code expired'**
+  String get qrExpired;
+
+  /// No description provided for @qrHeadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Show this at the door'**
+  String get qrHeadline;
+
+  /// No description provided for @qrLoading.
+  ///
+  /// In en, this message translates to:
+  /// **'Getting your code…'**
+  String get qrLoading;
+
+  /// Member code line under the member's name on the check-in ticket.
+  ///
+  /// In en, this message translates to:
+  /// **'Member {code}'**
+  String qrMemberCode(String code);
+
+  /// No description provided for @qrNotEligibleBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The door will turn this code away until the front desk has sorted this out. Please see the front desk and we\'ll get you in.'**
+  String get qrNotEligibleBody;
+
+  /// No description provided for @qrNotEligibleTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in isn\'t available right now'**
+  String get qrNotEligibleTitle;
+
+  /// No description provided for @qrReconnecting.
+  ///
+  /// In en, this message translates to:
+  /// **'Reconnecting…'**
+  String get qrReconnecting;
+
+  /// No description provided for @qrReconnectingHint.
+  ///
+  /// In en, this message translates to:
+  /// **'No problem. We\'ll keep trying and show a fresh code as soon as we\'re back.'**
+  String get qrReconnectingHint;
+
+  /// Countdown under the QR until the code is replaced.
+  ///
+  /// In en, this message translates to:
+  /// **'Refreshes in {seconds}s'**
+  String qrSecondsLeft(int seconds);
+
+  /// Screen-reader label for the QR image.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in QR code for {name}'**
+  String qrSemanticsLabel(String name);
+
+  /// No description provided for @qrSemanticsLabelNoName.
+  ///
+  /// In en, this message translates to:
+  /// **'Check-in QR code'**
+  String get qrSemanticsLabelNoName;
+
+  /// No description provided for @qrSubtitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Your code refreshes by itself.'**
+  String get qrSubtitle;
+
   /// No description provided for @retry.
   ///
   /// In en, this message translates to:

@@ -70,9 +70,9 @@ Build and test these in `../logfitness_saas` (migrations through Supabase MCP, S
 
 ## Phase 4 — QR check-in
 
-- [ ] Port `qr_token_repository` + `member_qr_screen` from the staff app: mint, render with `qr_flutter`, re-mint 20 s before expiry (clock from local receipt), re-check on app resume, retry after 10 s on failure, brightness boost while shown.
-- [ ] Not-eligible states (expired / dues) show the gym's reason text rather than a QR the door will refuse.
-- [ ] Tests: refresh scheduling, resume behaviour, failure retry.
+- [x] Port `qr_token_repository` + `member_qr_screen` from the staff app: mint, render with `qr_flutter`, re-mint 20 s before expiry (clock from local receipt), re-check on app resume, retry after 10 s on failure, brightness boost while shown.
+- [x] Not-eligible states (expired / dues) show the gym's reason text rather than a QR the door will refuse.
+- [x] Tests: refresh scheduling, resume behaviour, failure retry.
 
 ---
 

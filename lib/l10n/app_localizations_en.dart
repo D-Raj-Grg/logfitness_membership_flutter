@@ -51,6 +51,53 @@ class AppLocalizationsEn extends AppLocalizations {
   String get ok => 'OK';
 
   @override
+  String get qrCheckAgain => 'Check again';
+
+  @override
+  String get qrExpired => 'Code expired';
+
+  @override
+  String get qrHeadline => 'Show this at the door';
+
+  @override
+  String get qrLoading => 'Getting your code…';
+
+  @override
+  String qrMemberCode(String code) {
+    return 'Member $code';
+  }
+
+  @override
+  String get qrNotEligibleBody =>
+      'The door will turn this code away until the front desk has sorted this out. Please see the front desk and we\'ll get you in.';
+
+  @override
+  String get qrNotEligibleTitle => 'Check-in isn\'t available right now';
+
+  @override
+  String get qrReconnecting => 'Reconnecting…';
+
+  @override
+  String get qrReconnectingHint =>
+      'No problem. We\'ll keep trying and show a fresh code as soon as we\'re back.';
+
+  @override
+  String qrSecondsLeft(int seconds) {
+    return 'Refreshes in ${seconds}s';
+  }
+
+  @override
+  String qrSemanticsLabel(String name) {
+    return 'Check-in QR code for $name';
+  }
+
+  @override
+  String get qrSemanticsLabelNoName => 'Check-in QR code';
+
+  @override
+  String get qrSubtitle => 'Your code refreshes by itself.';
+
+  @override
   String get retry => 'Try again';
 
   @override

@@ -51,6 +51,53 @@ class AppLocalizationsNe extends AppLocalizations {
   String get ok => 'ठीक छ';
 
   @override
+  String get qrCheckAgain => 'फेरि जाँच गर्नुहोस्';
+
+  @override
+  String get qrExpired => 'कोडको समय सकियो';
+
+  @override
+  String get qrHeadline => 'ढोकामा यो देखाउनुहोस्';
+
+  @override
+  String get qrLoading => 'तपाईंको कोड ल्याउँदै…';
+
+  @override
+  String qrMemberCode(String code) {
+    return 'सदस्य $code';
+  }
+
+  @override
+  String get qrNotEligibleBody =>
+      'फ्रन्ट डेस्कले यो समस्या समाधान नगरेसम्म ढोकाले यो कोड स्वीकार गर्दैन। कृपया फ्रन्ट डेस्कमा भेट्नुहोस्, हामी तपाईंलाई भित्र पठाउँछौं।';
+
+  @override
+  String get qrNotEligibleTitle => 'अहिले चेक-इन गर्न मिल्दैन';
+
+  @override
+  String get qrReconnecting => 'फेरि जडान हुँदैछ…';
+
+  @override
+  String get qrReconnectingHint =>
+      'चिन्ता नलिनुहोस्। हामी प्रयास गरिरहन्छौं, जडान फर्किनेबित्तिकै नयाँ कोड देखिनेछ।';
+
+  @override
+  String qrSecondsLeft(int seconds) {
+    return '$seconds सेकेन्डमा नवीकरण हुन्छ';
+  }
+
+  @override
+  String qrSemanticsLabel(String name) {
+    return '$name को चेक-इन QR कोड';
+  }
+
+  @override
+  String get qrSemanticsLabelNoName => 'चेक-इन QR कोड';
+
+  @override
+  String get qrSubtitle => 'तपाईंको कोड आफैँ नवीकरण हुन्छ।';
+
+  @override
   String get retry => 'फेरि प्रयास गर्नुहोस्';
 
   @override
