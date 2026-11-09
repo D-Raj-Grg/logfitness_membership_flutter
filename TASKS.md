@@ -149,3 +149,19 @@ See `PLANNING.md` §10 for the full list. The ones that block work:
 - [ ] PIN length (blocks Phase 0 `set_member_pin` validation).
 - [ ] Who signs off the Nepali strings, and by when (blocks Phase 8).
 - [ ] Does the member change their own PIN in v1? (If yes, add `change_own_pin` to Phase 0 and a screen to Phase 3.)
+
+## Round 2 — first device run (2026-11-09)
+
+Done (built, tested with fakes, run on the iOS simulator against prod with a real member):
+- [x] Home hero shows "Expired" once (pill + "N days ago"); pill follows the headline kind.
+- [x] "Request renewal" is one tap: sends the profile phone, no sheet. Pending state is seeded from `my_renewal_request()` so it survives restarts.
+- [x] Classes and Bookings hidden by `kClassesEnabled=false` (`lib/app/features.dart`); code and tests kept. Tabs: Home, Attendance, Check-in, Payments, Profile.
+- [x] Attendance calendar (`my_attendance_calendar`): green + check = present, red + x = absent, outlined = day off / holiday. Weekly-off days and holidays are set in the SaaS console (Settings → Gym schedule).
+- [x] Check-in tab scans the door's rotating QR (`LG1.<qr_id>.<8 digits>`) with the camera and calls `member_door_check_in`; a scan marks attendance and opens the door (firmware 1.4.0).
+
+Open:
+- [ ] **Real-phone test of the door scan** with a flashed 1.4.0 door board: camera permission prompts (iOS + Android), scanning the small OLED QR (~7 mm on a 0.96" panel), result screens, door opening. The simulator has no camera.
+- [ ] Denied-reason mapping in `lib/data/door/` matches `reason` strings by substring; confirm against the backend's real values on a device.
+- [ ] Past freeze periods are not stored, so a past frozen span can show red on the calendar. Needs a freeze-period table in `logfitness_saas`.
+- [ ] `mint_qr_token` does not check eligibility; the old phone-shows-QR screen is hidden (`kShowMemberQr=false`) until a scanner exists.
+- [ ] iOS screenshot block on the PIN screen; Nepali copy review by the gym; push (Phase 7); store records and release builds (Phase 8).
