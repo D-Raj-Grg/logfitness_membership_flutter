@@ -1,0 +1,58 @@
+{
+  "checkinInstruction": "Point at the QR code on the door screen",
+  "checkinCameraSemantics": "Camera view. Aim it at the QR code on the door screen.",
+  "checkinTorchOn": "Turn torch on",
+  "checkinTorchOff": "Turn torch off",
+  "checkinForeignHint": "That is not the gym's door code. Look for the QR code on the door screen.",
+  "checkinCheckingIn": "Checking you in…",
+
+  "checkinOkTitle": "Door open",
+  "checkinOkWelcomeBack": "Welcome back — door open",
+  "checkinOkGreeting": "Hi {name}",
+  "@checkinOkGreeting": {
+    "description": "Greeting on the success screen, with the member's first name.",
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "checkinDaysLeft": "{count, plural, =0{Your membership ends today} =1{1 day left} other{{count} days left}}",
+  "@checkinDaysLeft": {
+    "description": "Days of membership remaining, shown on the success screen.",
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "checkinTapToClose": "Tap anywhere to close",
+
+  "checkinDeniedTitle": "The door stays shut",
+  "checkinDeniedExpired": "Your membership has expired.",
+  "checkinDeniedDues": "You have dues to clear.",
+  "checkinDeniedDuesAmount": "You have {amount} due.",
+  "@checkinDeniedDuesAmount": {
+    "description": "Dues owed; amount is already formatted with the currency.",
+    "placeholders": { "amount": { "type": "String" } }
+  },
+  "checkinDeniedFrozen": "Your membership is frozen.",
+  "checkinDeniedOther": "We could not let you in this time.",
+  "checkinDeniedHint": "Please see the front desk and they will sort it out.",
+
+  "checkinInvalidTitle": "That code has expired",
+  "checkinInvalidBody": "That code has expired. Scan the screen again — it refreshes every 30 seconds.",
+  "checkinScanAgain": "Scan again",
+
+  "checkinClosedTitle": "Closed",
+  "checkinClosedBody": "The gym is closed right now.",
+
+  "checkinRateTitle": "Slow down",
+  "checkinRateBody": "Too many tries. Please wait a few minutes.",
+
+  "checkinOfflineTitle": "No connection",
+  "checkinOfflineBody": "Check your internet connection and try again.",
+  "checkinUnknownTitle": "Something went wrong",
+  "checkinUnknownBody": "We could not check you in. Please try again, or see the front desk.",
+  "checkinTryAgain": "Try again",
+
+  "checkinPermissionTitle": "Camera access is off",
+  "checkinPermissionBody": "LOG Fitness needs the camera to scan the QR code at the gym door. You can turn it on in Settings.",
+  "checkinOpenSettings": "Open settings",
+  "checkinNoCameraTitle": "No camera found",
+  "checkinNoCameraBody": "This device has no camera we can use. Please ask the front desk to check you in.",
+  "checkinCameraErrorTitle": "The camera did not start",
+  "checkinCameraErrorBody": "Close other apps that are using the camera, then try again."
+}

@@ -1,0 +1,49 @@
+{
+  "attendanceStatusPresent": "Present",
+  "attendanceStatusAbsent": "Absent",
+  "attendanceStatusOff": "Day off",
+  "attendanceStatusHoliday": "Holiday",
+  "attendanceStatusNone": "No record",
+  "attendanceHolidayNamed": "Holiday: {name}",
+  "@attendanceHolidayNamed": {
+    "description": "Cell description for a holiday that has a name.",
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "attendanceCellSemantics": "{date}, {status}",
+  "@attendanceCellSemantics": {
+    "description": "Screen-reader label for one calendar day, e.g. '3 November, present'.",
+    "placeholders": {
+      "date": { "type": "String" },
+      "status": { "type": "String" }
+    }
+  },
+  "attendanceDayMonth": "{day} {month}",
+  "@attendanceDayMonth": {
+    "description": "A day and month name, e.g. '3 November'.",
+    "placeholders": {
+      "day": { "type": "int" },
+      "month": { "type": "String" }
+    }
+  },
+  "attendanceMonthYear": "{month} {year}",
+  "@attendanceMonthYear": {
+    "description": "Calendar header, e.g. 'November 2026'. Year is shown with ASCII digits.",
+    "placeholders": {
+      "month": { "type": "String" },
+      "year": { "type": "String" }
+    }
+  },
+  "attendanceSummaryTitle": "Month summary",
+  "attendanceSummarySemantics": "{present} present, {absent} absent",
+  "@attendanceSummarySemantics": {
+    "description": "Screen-reader summary of the month's counts.",
+    "placeholders": {
+      "present": { "type": "int" },
+      "absent": { "type": "int" }
+    }
+  },
+  "attendancePreviousMonth": "Previous month",
+  "attendanceNextMonth": "Next month",
+  "attendanceEmptyMonth": "No visits recorded this month. Your attendance will show up here once you start checking in.",
+  "attendanceHolidaySheetHint": "The gym is closed on this day."
+}

@@ -1,0 +1,181 @@
+import 'dart:convert';
+
+import 'package:flutter_test/flutter_test.dart';
+import 'package:logfitness_membership_flutter/supabase/app_claims.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+
+/// Builds an unsigned JWT string (`header.payload.signature`) carrying
+/// [payload], using unpadded base64url for the payload segment — matching
+/// how real Supabase-issued tokens are encoded.
+String _fakeJwt(Map<String, dynamic> payload) {
+  String encode(Map<String, dynamic> map) =>
+      base64Url.encode(utf8.encode(jsonEncode(map))).replaceAll('=', '');
+
+  final header = encode({'alg': 'HS256', 'typ': 'JWT'});
+  final body = encode(payload);
+  return '$header.$body.signature';
+}
+
+Session _sessionWithPayload(Map<String, dynamic> payload) {
+  return Session(
+    accessToken: _fakeJwt(payload),
+    tokenType: 'bearer',
+    user: const User(
+      id: 'user-1',
+      appMetadata: {},
+      userMetadata: {},
+      aud: 'authenticated',
+      createdAt: '2026-01-01T00:00:00Z',
+    ),
+  );
+}
+
+void main() {
+  group('AppClaims.fromJwtPayload', () {
+    test('a staff payload is not a member', () {
+      final claims = AppClaims.fromJwtPayload({
+        'role': 'authenticated',
+        'org_id': 'org-1',
+        'staff_id': 'staff-1',
+        'staff_role': 'manager',
+        'branch_ids': ['branch-1', 'branch-2'],
+      });
+
+      expect(claims, isNotNull);
+      expect(claims!.orgId, 'org-1');
+      expect(claims.staffRole, 'manager');
+      expect(claims.memberId, isNull);
+      expect(claims.isMember, isFalse);
+    });
+
+    test('decodes a member claims payload', () {
+      final claims = AppClaims.fromJwtPayload({
+        'role': 'authenticated',
+        'org_id': 'org-1',
+        'member_id': 'member-1',
+        'branch_ids': ['branch-1'],
+      });
+
+      expect(claims, isNotNull);
+      expect(claims!.orgId, 'org-1');
+      expect(claims.memberId, 'member-1');
+      expect(claims.role, 'authenticated');
+      expect(claims.staffRole, isNull);
+      expect(claims.isMember, isTrue);
+    });
+
+    test('returns null for a payload with no principal claims', () {
+      final claims = AppClaims.fromJwtPayload({
+        'sub': 'user-1',
+        'role': 'authenticated',
+        'aud': 'authenticated',
+      });
+
+      expect(claims, isNull);
+    });
+
+    test(
+      'returns null when org_id/branch_ids are present but no principal id is',
+      () {
+        final claims = AppClaims.fromJwtPayload({
+          'role': 'authenticated',
+          'org_id': 'org-1',
+          'branch_ids': <String>[],
+        });
+
+        expect(claims, isNull);
+      },
+    );
+  });
+
+  group('AppClaims.fromSession', () {
+    test('decodes unpadded base64url JWT payloads', () {
+      final payload = {
+        'org_id': 'org-1',
+        'member_id': 'member-1',
+        'branch_ids': ['branch-1', 'branch-2', 'branch-3'],
+      };
+      final session = _sessionWithPayload(payload);
+
+      // Sanity check that the fixture actually produced an unpadded
+      // segment, so this test would fail if it stopped exercising the
+      // padding-restoration path.
+      final rawPayloadSegment = session.accessToken.split('.')[1];
+      expect(rawPayloadSegment.contains('='), isFalse);
+
+      final claims = AppClaims.fromSession(session);
+
+      expect(claims, isNotNull);
+      expect(claims!.orgId, 'org-1');
+      expect(claims.isMember, isTrue);
+      expect(claims.memberId, 'member-1');
+    });
+
+    test('returns null when the session carries no claims yet', () {
+      final session = _sessionWithPayload({'sub': 'user-1'});
+
+      expect(AppClaims.fromSession(session), isNull);
+    });
+  });
+
+  group('AppClaims malformed payloads fail loudly', () {
+    // A principal marker with a broken claim set means the access-token hook
+    // shipped something wrong. Reading that as "not linked yet" would put a
+    // backend regression behind a friendly screen, so it throws instead.
+
+    test('a principal with no org_id throws', () {
+      expect(
+        () => AppClaims.fromJwtPayload({
+          'member_id': 'member-1',
+          'branch_ids': <String>['branch-1'],
+        }),
+        throwsA(isA<MalformedClaims>()),
+      );
+    });
+
+    test('branch_ids as a string rather than a list throws', () {
+      expect(
+        () => AppClaims.fromJwtPayload({
+          'org_id': 'org-1',
+          'member_id': 'member-1',
+          'branch_ids': 'branch-1',
+        }),
+        throwsA(isA<MalformedClaims>()),
+      );
+    });
+
+    test('a non-string inside branch_ids throws', () {
+      expect(
+        () => AppClaims.fromJwtPayload({
+          'org_id': 'org-1',
+          'member_id': 'member-1',
+          'branch_ids': <dynamic>[42],
+        }),
+        throwsA(isA<MalformedClaims>()),
+      );
+    });
+
+    test('both staff_role and member_id present throws', () {
+      expect(
+        () => AppClaims.fromJwtPayload({
+          'org_id': 'org-1',
+          'staff_role': 'front_desk',
+          'member_id': 'member-1',
+          'branch_ids': <String>['branch-1'],
+        }),
+        throwsA(isA<MalformedClaims>()),
+      );
+    });
+
+    test('no principal marker at all is still a plain null, not a throw', () {
+      expect(
+        AppClaims.fromJwtPayload({
+          'role': 'authenticated',
+          'org_id': 'org-1',
+          'branch_ids': <String>[],
+        }),
+        isNull,
+      );
+    });
+  });
+}

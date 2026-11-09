@@ -1,0 +1,86 @@
+{
+  "paymentsTotalPaid": "Total paid",
+  "paymentsAmountDue": "Amount due",
+  "paymentsAllSettled": "All settled - nothing is due",
+  "paymentsPayAtDesk": "Please pay at the front desk.",
+  "paymentsTabInvoices": "Invoices",
+  "paymentsTabPayments": "Payments",
+  "paymentsEmptyInvoices": "No invoices yet. They appear here when you join or renew.",
+  "paymentsEmptyPayments": "No payments yet. Payments you make at the front desk appear here.",
+  "paymentsMonthYear": "{month, select, m1{January} m2{February} m3{March} m4{April} m5{May} m6{June} m7{July} m8{August} m9{September} m10{October} m11{November} m12{December} other{}} {year}",
+  "@paymentsMonthYear": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsIssuedOn": "Issued {date}",
+  "@paymentsIssuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsPaidOnly": "Paid {amount}",
+  "@paymentsPaidOnly": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsPaidAndDue": "Paid {paid} - Due {due}",
+  "@paymentsPaidAndDue": {
+    "placeholders": {
+      "paid": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsMethodOnDate": "{method} - {date}",
+  "@paymentsMethodOnDate": {
+    "placeholders": {
+      "method": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsReason": "Reason: {reason}",
+  "@paymentsReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsSubtotal": "Subtotal",
+  "paymentsDiscount": "Discount",
+  "paymentsTotal": "Total",
+  "paymentsPaid": "Paid",
+  "paymentsDue": "Due",
+  "paymentsOnThisInvoice": "Payments on this invoice",
+  "paymentsStatusUnpaid": "Unpaid",
+  "paymentsStatusPartial": "Partly paid",
+  "paymentsStatusPaid": "Paid",
+  "paymentsStatusVoid": "Void",
+  "paymentsMethodCash": "Cash",
+  "paymentsMethodEsewa": "eSewa",
+  "paymentsMethodKhalti": "Khalti",
+  "paymentsMethodFonepay": "Fonepay",
+  "paymentsMethodBank": "Bank transfer",
+  "paymentsMethodCard": "Card",
+  "paymentsKindPayment": "Payment",
+  "paymentsKindRefund": "Refund",
+  "paymentsKindReversal": "Reversed"
+}

@@ -1,0 +1,40 @@
+name: CI
+
+on:
+  push:
+    branches: ['**']
+  pull_request:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  analyze-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          flutter-version: 3.38.7
+          channel: stable
+          cache: true
+
+      - run: flutter pub get
+
+      # Generated sources are committed; CI regenerates to prove they are not stale.
+      - run: dart run build_runner build
+
+      # l10n: fragments -> base arbs -> generated Dart. All committed.
+      - run: dart run tool/merge_arb.dart
+      - run: flutter gen-l10n
+
+      - name: Fail if generated sources are out of date
+        run: git diff --exit-code -- '*.g.dart' '*.freezed.dart' 'lib/l10n'
+
+      - run: flutter analyze
+
+      - run: dart run custom_lint
+
+      - run: flutter test

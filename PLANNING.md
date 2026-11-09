@@ -176,3 +176,13 @@ Any staff feature; online payment, card-on-file, QR/UPI payment; self-service pl
 - **Add-to-wallet pass** for the card/QR — after v1?
 - **Realtime vs polling** for booking capacity and messages (the staff app polls).
 - **What to do with `invite_member` / email accounts** already created for members — migrate to PIN, or leave both paths?
+
+---
+
+## 11. Changes after the first device run (2026-11-09)
+
+- **Tabs:** Home, Attendance, Check-in, Payments, Profile (`enabledTabs` in `lib/app/features.dart`). Classes/Bookings are behind `kClassesEnabled` (off). Messages is reached from Home.
+- **Renewal:** one tap, no sheet. `request_renewal(p_phone)` with the profile phone; `my_renewal_request()` returns the pending request so the state persists. Staff see it in the console: sidebar badge on Members, dashboard card, live pop-up (Supabase realtime on `renewal_requests`), the `/members/requests` page and the member-profile banner.
+- **Attendance calendar:** `my_attendance_calendar(p_year, p_month)` → per-day `present | absent | off | holiday | none` computed in Postgres in the org timezone. `absent` = a day inside a non-cancelled membership window, not today/future, not a weekly-off day or holiday (console Settings → Gym schedule: `orgs.settings.weekly_off`, `org_holidays`), not currently frozen, with no visit.
+- **Door check-in:** the door's OLED shows a rotating QR (`LG1.<qr_id>.<code>`, code = 8-digit HMAC of the device secret over 30 s windows, server accepts ±1 window). The app scans it and calls `member_door_check_in(p_payload)`; on success the server records attendance (`method='qr'`) and queues an unlock that the door fetches from `rfid-poll` within 20 s. Only inside branch opening hours; per-member bad-code throttle. A live photo of the screen can still be relayed within ~60 s (accepted trade-off). Firmware lives in `../logfitness_saas/firmware/rfid-check-in` (v1.4.0, not yet run on hardware).
+- **Security note found on the way:** `set_org_setting` let any signed-in member change gym settings (null-unsafe owner check); fixed in `logfitness_saas` migration `20261109130100`.

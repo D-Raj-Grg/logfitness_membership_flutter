@@ -1,0 +1,27 @@
+{
+  "qrHeadline": "Show this at the door",
+  "qrSubtitle": "Your code refreshes by itself.",
+  "qrLoading": "Getting your code…",
+  "qrMemberCode": "Member {code}",
+  "@qrMemberCode": {
+    "description": "Member code line under the member's name on the check-in ticket.",
+    "placeholders": { "code": { "type": "String" } }
+  },
+  "qrSecondsLeft": "Refreshes in {seconds}s",
+  "@qrSecondsLeft": {
+    "description": "Countdown under the QR until the code is replaced.",
+    "placeholders": { "seconds": { "type": "int" } }
+  },
+  "qrSemanticsLabel": "Check-in QR code for {name}",
+  "@qrSemanticsLabel": {
+    "description": "Screen-reader label for the QR image.",
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "qrSemanticsLabelNoName": "Check-in QR code",
+  "qrReconnecting": "Reconnecting…",
+  "qrReconnectingHint": "No problem. We'll keep trying and show a fresh code as soon as we're back.",
+  "qrExpired": "Code expired",
+  "qrNotEligibleTitle": "Check-in isn't available right now",
+  "qrNotEligibleBody": "The door will turn this code away until the front desk has sorted this out. Please see the front desk and we'll get you in.",
+  "qrCheckAgain": "Check again"
+}
