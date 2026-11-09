@@ -24,8 +24,47 @@ enum RenewalResult {
   };
 }
 
+/// The member's own pending renewal request, from `my_renewal_request()`:
+/// `{status:'pending', requested_at, last_requested_at, request_count}`.
+class PendingRenewal {
+  const PendingRenewal({
+    required this.requestedAt,
+    required this.lastRequestedAt,
+    required this.requestCount,
+  });
+
+  /// Null when the payload is not a pending request (the RPC returns SQL
+  /// null when nothing is pending).
+  static PendingRenewal? tryParse(Object? raw) {
+    if (raw is! Map<String, dynamic> || raw['status'] != 'pending') {
+      return null;
+    }
+    final DateTime? first = _ts(raw['requested_at']);
+    final DateTime? last = _ts(raw['last_requested_at']) ?? first;
+    if (last == null) {
+      return null;
+    }
+    final Object? count = raw['request_count'];
+    return PendingRenewal(
+      requestedAt: first ?? last,
+      lastRequestedAt: last,
+      requestCount: count is num ? count.toInt() : 1,
+    );
+  }
+
+  static DateTime? _ts(Object? v) => v is String ? DateTime.tryParse(v) : null;
+
+  final DateTime requestedAt;
+  final DateTime lastRequestedAt;
+  final int requestCount;
+}
+
 abstract interface class RenewalRepository {
   Future<RenewalResult> requestRenewal({String? phone, String? note});
+
+  /// The pending request, or null when there is none (never asked, or the
+  /// front desk has handled it).
+  Future<PendingRenewal?> pendingRequest();
 }
 
 class SupabaseRenewalRepository implements RenewalRepository {
@@ -58,6 +97,12 @@ class SupabaseRenewalRepository implements RenewalRepository {
         }
         return result;
       });
+
+  @override
+  Future<PendingRenewal?> pendingRequest() => guardFailures(() async {
+    final Object? data = await _client.rpc('my_renewal_request');
+    return PendingRenewal.tryParse(data);
+  });
 
   static String? _blankToNull(String? v) {
     final String? t = v?.trim();

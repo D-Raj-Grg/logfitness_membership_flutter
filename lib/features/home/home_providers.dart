@@ -33,6 +33,9 @@ final homeDataProvider = FutureProvider<HomeData>((ref) async {
   final AttendanceRepository attendance = ref.watch(
     attendanceRepositoryProvider,
   );
+  // Seeds the renewal button (see [RenewalController]); loaded with Home so
+  // the button never flashes "Request renewal" before "Requested".
+  await ref.watch(pendingRenewalProvider.future);
   final (MembershipSnapshot snap, MyCard card) = await (
     attendance.fetchSnapshot(me.memberId),
     // A card lookup failing must not take Home down.
@@ -49,8 +52,23 @@ final homeDataProvider = FutureProvider<HomeData>((ref) async {
   );
 });
 
-/// In-memory renewal request state for this session. The server remains the
-/// authority (one pending row; `too_soon`), this only drives the button.
+/// The server's pending renewal request for this member, or null.
+///
+/// Never throws: a failure here must not break Home, so it falls back to
+/// "nothing pending" (the button stays usable; the server's `too_soon` guard
+/// still protects against double-sends).
+final pendingRenewalProvider = FutureProvider<PendingRenewal?>((ref) async {
+  ref.watch(sessionProvider.select((Session? s) => s?.user.id));
+  try {
+    return await ref.watch(renewalRepositoryProvider).pendingRequest();
+  } catch (_) {
+    return null;
+  }
+});
+
+/// Renewal request state. Seeded from [pendingRenewalProvider] so a pending
+/// request survives an app restart; the server remains the authority (one
+/// pending row; `too_soon`), this only drives the button.
 sealed class RenewalState {
   const RenewalState();
 }
@@ -77,7 +95,12 @@ class RenewalController extends Notifier<RenewalState> {
   RenewalState build() {
     // A different account must never inherit "already requested".
     ref.watch(sessionProvider.select((Session? s) => s?.user.id));
-    return const RenewalIdle();
+    // Re-seeds whenever the server copy is refreshed (pull-to-refresh), so a
+    // request the front desk has handled frees the button again.
+    final PendingRenewal? pending = ref.watch(pendingRenewalProvider).value;
+    return pending == null
+        ? const RenewalIdle()
+        : RenewalRequested(pending.lastRequestedAt);
   }
 
   /// Throws [AppFailure] on offline/other failure (state returns to idle).

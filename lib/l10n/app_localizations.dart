@@ -542,12 +542,6 @@ abstract class AppLocalizations {
   /// **'Ends'**
   String get homeEndsLabel;
 
-  /// No description provided for @homeExpired.
-  ///
-  /// In en, this message translates to:
-  /// **'Expired'**
-  String get homeExpired;
-
   /// No description provided for @homeExpiredAgoLabel.
   ///
   /// In en, this message translates to:
@@ -559,12 +553,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Request a renewal and the front desk will get you back in.'**
   String get homeExpiredHint;
-
-  /// No description provided for @homeExpiredPrefix.
-  ///
-  /// In en, this message translates to:
-  /// **'Expired'**
-  String get homeExpiredPrefix;
 
   /// No description provided for @homeExpiringHint.
   ///
@@ -607,6 +595,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Updated {time}'**
   String homeLastUpdated(String time);
+
+  /// No description provided for @homeMembershipEnded.
+  ///
+  /// In en, this message translates to:
+  /// **'Membership ended'**
+  String get homeMembershipEnded;
 
   /// No description provided for @homeMessages.
   ///
@@ -679,6 +673,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Requested just now. The front desk will call you.'**
   String get homeRenewRequestedNow;
+
+  /// No description provided for @homeRenewRequestedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Requested {date} at {time}. The front desk will call you.'**
+  String homeRenewRequestedOn(String date, String time);
 
   /// No description provided for @homeRenewSend.
   ///

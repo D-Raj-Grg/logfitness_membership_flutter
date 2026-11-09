@@ -11,7 +11,6 @@ import 'package:logfitness_membership_flutter/domain/enums/postgres_enums.dart';
 import 'package:logfitness_membership_flutter/domain/errors/app_failure.dart';
 import 'package:logfitness_membership_flutter/features/home/home_providers.dart';
 import 'package:logfitness_membership_flutter/features/home/home_screen.dart';
-import 'package:logfitness_membership_flutter/features/home/renewal_sheet.dart';
 import 'package:logfitness_membership_flutter/l10n/app_localizations.dart';
 import 'package:logfitness_membership_flutter/supabase/supabase_providers.dart';
 
@@ -40,9 +39,13 @@ HomeData _data(
 );
 
 class _FakeRenewal implements RenewalRepository {
-  _FakeRenewal(this.result);
+  _FakeRenewal(this.result, {this.pending});
 
   Object result; // RenewalResult or an Object to throw
+  PendingRenewal? pending;
+
+  /// Set to make `pendingRequest()` fail (an AppFailure or any error).
+  Object? pendingError;
   final List<(String?, String?)> calls = <(String?, String?)>[];
 
   @override
@@ -53,6 +56,15 @@ class _FakeRenewal implements RenewalRepository {
       return r;
     }
     throw r;
+  }
+
+  @override
+  Future<PendingRenewal?> pendingRequest() async {
+    final Object? e = pendingError;
+    if (e != null) {
+      throw e;
+    }
+    return pending;
   }
 }
 
@@ -142,7 +154,7 @@ void main() {
     expect(find.byKey(homeCardChipKey), findsNothing);
   });
 
-  testWidgets('expired shows "Expired N days ago" and dues in rupees', (tester) async {
+  testWidgets('expired reads "Expired" once, then "9 days ago", plus dues', (tester) async {
     await _pump(
       tester,
       home: AsyncData(
@@ -155,11 +167,70 @@ void main() {
         ),
       ),
     );
-    expect(find.text('Expired'), findsWidgets);
+    // The pill carries the word; the headline must not repeat it.
+    expect(find.text('Expired'), findsOneWidget);
     expect(find.text('9'), findsOneWidget);
     expect(find.text('days ago'), findsOneWidget);
     expect(find.byKey(homeAmountDueKey), findsOneWidget);
     expect(find.text('NPR 1,500.5'), findsOneWidget);
+  });
+
+  testWidgets('expired a day ago uses the singular label', (tester) async {
+    await _pump(
+      tester,
+      home: AsyncData(
+        _data(
+          const MembershipSnapshot(
+            banner: SnapshotBanner.expired,
+            daysToExpiry: -1,
+          ),
+        ),
+      ),
+    );
+    expect(find.text('Expired'), findsOneWidget);
+    expect(find.text('1'), findsOneWidget);
+    expect(find.text('day ago'), findsOneWidget);
+  });
+
+  testWidgets('expired with no day count says "Membership ended", not "Expired" twice', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      home: AsyncData(
+        _data(const MembershipSnapshot(banner: SnapshotBanner.expired)),
+      ),
+    );
+    expect(find.text('Expired'), findsOneWidget);
+    expect(find.text('Membership ended'), findsOneWidget);
+  });
+
+  testWidgets('a live banner with negative days shows an Expired pill, not Active', (
+    tester,
+  ) async {
+    await _pump(
+      tester,
+      home: AsyncData(
+        _data(
+          const MembershipSnapshot(banner: SnapshotBanner.active, daysToExpiry: -3),
+        ),
+      ),
+    );
+    expect(find.text('Expired'), findsOneWidget);
+    expect(find.text('Active'), findsNothing);
+    expect(find.text('3'), findsOneWidget);
+    expect(find.text('days ago'), findsOneWidget);
+  });
+
+  testWidgets('the My bookings tile is hidden while classes are off', (tester) async {
+    await _pump(
+      tester,
+      home: AsyncData(
+        _data(const MembershipSnapshot(banner: SnapshotBanner.active, daysToExpiry: 5)),
+      ),
+    );
+    expect(find.text('Messages'), findsOneWidget);
+    expect(find.text('My bookings'), findsNothing);
   });
 
   testWidgets('frozen and none read as words, not numbers', (tester) async {
@@ -192,30 +263,28 @@ void main() {
       await tester.ensureVisible(find.byKey(homeRenewButtonKey));
       await tester.tap(find.byKey(homeRenewButtonKey));
       await tester.pumpAndSettle();
-      await tester.enterText(find.byKey(renewalPhoneFieldKey), '9841111111');
-      await tester.enterText(find.byKey(renewalNoteFieldKey), 'call after 5');
-      await tester.tap(find.byKey(renewalSendKey));
-      await tester.pumpAndSettle();
     }
 
-    testWidgets('ok -> pending state, button disabled', (tester) async {
+    testWidgets('one tap sends the member phone with no note and no sheet', (tester) async {
       final _FakeRenewal repo = _FakeRenewal(RenewalResult.ok);
       await _pump(tester, home: AsyncData(data), renewal: repo);
       await request(tester);
 
-      expect(repo.calls, <(String?, String?)>[('9841111111', 'call after 5')]);
+      expect(repo.calls, <(String?, String?)>[('9841000000', null)]);
+      // No sheet/dialog was opened.
+      expect(find.byType(BottomSheet), findsNothing);
+      expect(find.byType(Dialog), findsNothing);
       expect(
         find.text('Requested just now. The front desk will call you.'),
         findsOneWidget,
       );
+      expect(find.text('Request sent. The front desk will call you.'), findsOneWidget);
       expect(find.text('Request sent'), findsOneWidget);
-      final FilledButton b = tester.widget(
-        find.byKey(homeRenewButtonKey),
-      );
+      final FilledButton b = tester.widget(find.byKey(homeRenewButtonKey));
       expect(b.onPressed, isNull);
     });
 
-    testWidgets('too_soon is explained and stays pending', (tester) async {
+    testWidgets('too_soon is explained and stays pending, not an error', (tester) async {
       await _pump(
         tester,
         home: AsyncData(data),
@@ -224,6 +293,8 @@ void main() {
       await request(tester);
       expect(find.textContaining('You asked a moment ago'), findsOneWidget);
       expect(find.byKey(homeRenewPendingKey), findsOneWidget);
+      final FilledButton b = tester.widget(find.byKey(homeRenewButtonKey));
+      expect(b.onPressed, isNull);
     });
 
     testWidgets('offline failure shows a snackbar and leaves the button usable', (tester) async {
@@ -241,16 +312,112 @@ void main() {
       expect(find.byKey(homeRenewPendingKey), findsNothing);
     });
 
-    testWidgets('an empty sheet still sends (both fields are optional)', (tester) async {
-      final _FakeRenewal repo = _FakeRenewal(RenewalResult.ok);
+    testWidgets('no_member is reported and the button stays usable', (tester) async {
+      await _pump(
+        tester,
+        home: AsyncData(data),
+        renewal: _FakeRenewal(RenewalResult.noMember),
+      );
+      await request(tester);
+      expect(find.textContaining("couldn't find an active membership"), findsOneWidget);
+      final FilledButton b = tester.widget(find.byKey(homeRenewButtonKey));
+      expect(b.onPressed, isNotNull);
+    });
+
+    testWidgets('a pending request from the server is shown and disables the button', (
+      tester,
+    ) async {
+      final DateTime at = DateTime.now().subtract(const Duration(minutes: 30));
+      final _FakeRenewal repo = _FakeRenewal(
+        RenewalResult.ok,
+        pending: PendingRenewal(
+          requestedAt: at.subtract(const Duration(hours: 1)),
+          lastRequestedAt: at,
+          requestCount: 2,
+        ),
+      );
       await _pump(tester, home: AsyncData(data), renewal: repo);
       await tester.ensureVisible(find.byKey(homeRenewButtonKey));
-      await tester.tap(find.byKey(homeRenewButtonKey));
-      await tester.pumpAndSettle();
-      await tester.tap(find.byKey(renewalSendKey));
-      await tester.pumpAndSettle();
-      expect(repo.calls.single, ('', ''));
+
+      expect(find.byKey(homeRenewPendingKey), findsOneWidget);
+      expect(find.textContaining('The front desk will call you.'), findsOneWidget);
+      expect(find.text('Request sent'), findsOneWidget);
+      final FilledButton b = tester.widget(find.byKey(homeRenewButtonKey));
+      expect(b.onPressed, isNull);
+      expect(repo.calls, isEmpty);
     });
+
+    testWidgets('a pending request from an earlier day names the date', (tester) async {
+      final _FakeRenewal repo = _FakeRenewal(
+        RenewalResult.ok,
+        pending: PendingRenewal(
+          requestedAt: DateTime.utc(2026, 1, 2, 10),
+          lastRequestedAt: DateTime.utc(2026, 1, 3, 10),
+          requestCount: 1,
+        ),
+      );
+      await _pump(tester, home: AsyncData(data), renewal: repo);
+      expect(find.textContaining('03 Jan 2026'), findsOneWidget);
+    });
+
+    testWidgets('pendingRequest failing does not break Home; the button is usable', (
+      tester,
+    ) async {
+      final _FakeRenewal repo = _FakeRenewal(RenewalResult.ok)
+        ..pendingError = const AppFailure(FailureKind.offline, 'No connection.');
+      await _pump(tester, home: AsyncData(data), renewal: repo);
+
+      expect(find.text('Hi, Sita'), findsOneWidget);
+      expect(find.byKey(homeRenewPendingKey), findsNothing);
+      final FilledButton b = tester.widget(find.byKey(homeRenewButtonKey));
+      expect(b.onPressed, isNotNull);
+    });
+
+    testWidgets('a refresh frees the button once the request is handled', (
+      tester,
+    ) async {
+      final _FakeRenewal repo = _FakeRenewal(
+        RenewalResult.ok,
+        pending: PendingRenewal(
+          requestedAt: DateTime.now(),
+          lastRequestedAt: DateTime.now(),
+          requestCount: 1,
+        ),
+      );
+      final ProviderContainer c = await _pump(tester, home: AsyncData(data), renewal: repo);
+      expect(find.byKey(homeRenewPendingKey), findsOneWidget);
+
+      repo.pending = null; // the front desk handled it
+      c.invalidate(pendingRenewalProvider);
+      await tester.pumpAndSettle();
+
+      expect(find.byKey(homeRenewPendingKey), findsNothing);
+      final FilledButton b = tester.widget(find.byKey(homeRenewButtonKey));
+      expect(b.onPressed, isNotNull);
+    });
+  });
+
+  test('PendingRenewal.tryParse follows the RPC contract', () {
+    final PendingRenewal? p = PendingRenewal.tryParse(<String, dynamic>{
+      'status': 'pending',
+      'requested_at': '2026-11-09T04:00:00Z',
+      'last_requested_at': '2026-11-09T05:30:00Z',
+      'request_count': 3,
+    });
+    expect(p, isNotNull);
+    expect(p!.requestedAt, DateTime.utc(2026, 11, 9, 4));
+    expect(p.lastRequestedAt, DateTime.utc(2026, 11, 9, 5, 30));
+    expect(p.requestCount, 3);
+    expect(PendingRenewal.tryParse(null), isNull);
+    expect(PendingRenewal.tryParse(<String, dynamic>{'status': 'handled'}), isNull);
+    // last_requested_at missing: falls back to requested_at.
+    expect(
+      PendingRenewal.tryParse(<String, dynamic>{
+        'status': 'pending',
+        'requested_at': '2026-11-09T04:00:00Z',
+      })!.lastRequestedAt,
+      DateTime.utc(2026, 11, 9, 4),
+    );
   });
 
   test('RenewalController: state machine with a fake repository', () async {

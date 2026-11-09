@@ -27,19 +27,26 @@ Future<void> _pump(WidgetTester tester, Principal p) async {
 }
 
 void main() {
-  testWidgets('a member lands in the shell with five tabs', (tester) async {
+  testWidgets('a member lands in the shell with five tabs (no Classes)', (tester) async {
     await _pump(
       tester,
       const MemberPrincipal(
         AppClaims(orgId: 'o', branchIds: <String>[], memberId: 'm'),
       ),
     );
-    for (final label in ['Home', 'Classes', 'Check-in', 'Payments', 'Profile']) {
+    const tabs = ['Home', 'Attendance', 'Check-in', 'Payments', 'Profile'];
+    for (final label in tabs) {
       expect(find.text(label), findsWidgets, reason: label);
     }
-    await tester.tap(find.text('Classes').last);
+    // Exactly these five destinations, in this order; Classes is hidden.
+    final bar = tester.widget<NavigationBar>(find.byType(NavigationBar));
+    expect(bar.destinations.map((d) => (d as NavigationDestination).label), tabs);
+    expect(find.text('Classes'), findsNothing);
+
+    await tester.tap(find.text('Payments').last);
     await tester.pumpAndSettle();
     expect(find.byType(NavigationBar), findsOneWidget);
+    expect(tester.widget<NavigationBar>(find.byType(NavigationBar)).selectedIndex, 3);
   });
 
   testWidgets('signed out lands on login', (tester) async {

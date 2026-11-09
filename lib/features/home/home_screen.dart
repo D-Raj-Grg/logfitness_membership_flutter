@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:logfitness_membership_flutter/app/brand.dart';
+import 'package:logfitness_membership_flutter/app/features.dart';
 import 'package:logfitness_membership_flutter/app/router.dart';
 import 'package:logfitness_membership_flutter/data/attendance/membership_snapshot.dart';
 import 'package:logfitness_membership_flutter/data/member/member_repository.dart';
@@ -17,7 +18,6 @@ import 'package:logfitness_membership_flutter/features/common/skeleton_box.dart'
 import 'package:logfitness_membership_flutter/features/common/status_pill.dart';
 import 'package:logfitness_membership_flutter/features/home/home_headline.dart';
 import 'package:logfitness_membership_flutter/features/home/home_providers.dart';
-import 'package:logfitness_membership_flutter/features/home/renewal_sheet.dart';
 import 'package:logfitness_membership_flutter/l10n/app_localizations.dart';
 
 const Key homeHeroKey = Key('home-hero');
@@ -33,6 +33,9 @@ class HomeScreen extends ConsumerWidget {
 
   Future<void> _refresh(WidgetRef ref) async {
     ref.invalidate(memberSelfProvider);
+    // Re-ask the server whether a renewal is still pending (this also
+    // rebuilds homeDataProvider, which waits on it).
+    ref.invalidate(pendingRenewalProvider);
     try {
       await ref.read(homeDataProvider.future);
     } catch (_) {
@@ -136,7 +139,11 @@ class _HomeBody extends ConsumerWidget {
         const SizedBox(height: Brand.spaceLg),
         _Hero(data: data, fmt: fmt),
         const SizedBox(height: Brand.spaceMd),
-        _RenewalSection(snapshot: data.snapshot, timezone: data.member.timezone),
+        _RenewalSection(
+          snapshot: data.snapshot,
+          timezone: data.member.timezone,
+          phone: data.member.phone,
+        ),
         const SizedBox(height: Brand.spaceLg),
         LogCard(
           padding: EdgeInsets.zero,
@@ -149,14 +156,16 @@ class _HomeBody extends ConsumerWidget {
                 trailing: const Icon(Icons.chevron_right),
                 onTap: () => context.push(AppRoutes.messages),
               ),
-              Divider(height: 1, color: theme.colorScheme.outlineVariant),
-              ListTile(
-                leading: const Icon(Icons.event_available_outlined),
-                title: Text(l10n.homeBookings),
-                subtitle: Text(l10n.homeBookingsSubtitle),
-                trailing: const Icon(Icons.chevron_right),
-                onTap: () => context.push(AppRoutes.bookings),
-              ),
+              if (kClassesEnabled) ...<Widget>[
+                Divider(height: 1, color: theme.colorScheme.outlineVariant),
+                ListTile(
+                  leading: const Icon(Icons.event_available_outlined),
+                  title: Text(l10n.homeBookings),
+                  subtitle: Text(l10n.homeBookingsSubtitle),
+                  trailing: const Icon(Icons.chevron_right),
+                  onTap: () => context.push(AppRoutes.bookings),
+                ),
+              ],
             ],
           ),
         ),
@@ -259,7 +268,14 @@ class _Hero extends StatelessWidget {
     final MembershipSnapshot snap = data.snapshot;
     final Headline headline = headlineFor(snap);
     final (String pillLabel, IconData pillIcon, PillEmphasis emphasis) =
-        _pillFor(l10n, snap.banner);
+        _pillFor(
+          l10n,
+          // A live banner with a negative day count is headlined as expired;
+          // the pill must agree with the headline, not the raw banner.
+          headline.kind == HeadlineKind.expiredAgo
+              ? SnapshotBanner.expired
+              : snap.banner,
+        );
     final bool expiring = snap.banner == SnapshotBanner.expiring;
 
     final Color fg = scheme.onInverseSurface;
@@ -299,8 +315,10 @@ class _Hero extends StatelessWidget {
             null,
             l10n.homeLastDayHint,
           ),
+          // The pill already says "Expired"; the hero reads
+          // "<pill> 9 days ago" and must not repeat the word.
           HeadlineKind.expiredAgo => (
-            l10n.homeExpiredPrefix,
+            null,
             AnimatedCount(
               key: homeDaysNumeralKey,
               value: headline.number!,
@@ -311,7 +329,7 @@ class _Hero extends StatelessWidget {
           ),
           HeadlineKind.expired => (
             null,
-            Text(l10n.homeExpired, key: homeDaysNumeralKey, style: word),
+            Text(l10n.homeMembershipEnded, key: homeDaysNumeralKey, style: word),
             null,
             l10n.homeExpiredHint,
           ),
@@ -499,21 +517,24 @@ class _Hero extends StatelessWidget {
 }
 
 class _RenewalSection extends ConsumerWidget {
-  const _RenewalSection({required this.snapshot, required this.timezone});
+  const _RenewalSection({
+    required this.snapshot,
+    required this.timezone,
+    required this.phone,
+  });
 
   final MembershipSnapshot snapshot;
   final String timezone;
+  final String? phone;
 
-  Future<void> _open(BuildContext context, WidgetRef ref) async {
+  /// One tap sends the request at once: the member's phone is already on file,
+  /// so there is no sheet and no note.
+  Future<void> _send(BuildContext context, WidgetRef ref) async {
     final AppLocalizations l10n = AppLocalizations.of(context);
-    final RenewalRequestInput? input = await showRenewalSheet(context);
-    if (input == null || !context.mounted) {
-      return;
-    }
     try {
       final RenewalOutcome outcome = await ref
           .read(renewalControllerProvider.notifier)
-          .submit(phone: input.phone, note: input.note);
+          .submit(phone: phone);
       if (!context.mounted) {
         return;
       }
@@ -531,7 +552,7 @@ class _RenewalSection extends ConsumerWidget {
           context,
           e,
           stackTrace: st,
-          onRetry: () => _open(context, ref),
+          onRetry: () => _send(context, ref),
         );
       }
     }
@@ -548,12 +569,18 @@ class _RenewalSection extends ConsumerWidget {
 
     String? pendingText;
     if (state is RenewalRequested) {
-      final Duration age = DateTime.now().difference(state.at);
-      pendingText = age.inMinutes < 2
+      final DateTime now = DateTime.now();
+      final OrgFormatters fmt = orgFormatters(
+        currency: 'NPR',
+        timezone: timezone,
+      );
+      pendingText = now.difference(state.at).inMinutes < 2
           ? l10n.homeRenewRequestedNow
-          : l10n.homeRenewRequestedAt(
-              orgFormatters(currency: 'NPR', timezone: timezone).time(state.at),
-            );
+          // Same org-local day: just the time. Otherwise name the date too,
+          // since a request seeded from the server can be days old.
+          : fmt.date(state.at) == fmt.date(now)
+          ? l10n.homeRenewRequestedAt(fmt.time(state.at))
+          : l10n.homeRenewRequestedOn(fmt.date(state.at), fmt.time(state.at));
     }
 
     return Column(
@@ -563,7 +590,7 @@ class _RenewalSection extends ConsumerWidget {
           height: Brand.buttonHeight,
           child: FilledButton.icon(
             key: homeRenewButtonKey,
-            onPressed: pending || sending ? null : () => _open(context, ref),
+            onPressed: pending || sending ? null : () => _send(context, ref),
             icon: sending
                 ? const SizedBox(
                     width: 18,
