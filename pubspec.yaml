@@ -2,7 +2,7 @@ name: logfitness_membership_flutter
 description: "LOG Fitness — the members' app for Lord of Gyms, over the same Supabase project as the console and Gym Tross."
 publish_to: 'none'
 
-version: 0.1.0+1
+version: 1.0.0+1
 
 environment:
   sdk: ^3.10.7
