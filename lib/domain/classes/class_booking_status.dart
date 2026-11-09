@@ -1,4 +1,6 @@
 /// Mirrors the Postgres enum `class_booking_status`. Values must match exactly.
+///
+/// Display words live in l10n (`bookingsStatus*`), not here.
 enum ClassBookingStatus {
   booked,
   waitlisted,
@@ -17,12 +19,4 @@ enum ClassBookingStatus {
 
   /// Holds a seat or a place in the queue.
   bool get isLive => this == booked || this == waitlisted;
-
-  String get label => switch (this) {
-    booked => 'Booked',
-    waitlisted => 'Waitlisted',
-    cancelled => 'Cancelled',
-    attended => 'Attended',
-    noShow => 'No-show',
-  };
 }
