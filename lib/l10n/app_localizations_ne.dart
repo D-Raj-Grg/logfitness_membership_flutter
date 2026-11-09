@@ -137,6 +137,141 @@ class AppLocalizationsNe extends AppLocalizations {
   String get cancel => 'रद्द गर्नुहोस्';
 
   @override
+  String get checkinCameraErrorBody =>
+      'क्यामेरा प्रयोग गरिरहेका अन्य एपहरू बन्द गरेर फेरि प्रयास गर्नुहोस्।';
+
+  @override
+  String get checkinCameraErrorTitle => 'क्यामेरा सुरु हुन सकेन';
+
+  @override
+  String get checkinCameraSemantics =>
+      'क्यामेरा दृश्य। ढोकाको स्क्रिनमा रहेको QR कोडतर्फ देखाउनुहोस्।';
+
+  @override
+  String get checkinCheckingIn => 'तपाईंको चेक-इन हुँदैछ…';
+
+  @override
+  String get checkinClosedBody => 'जिम अहिले बन्द छ।';
+
+  @override
+  String get checkinClosedTitle => 'बन्द छ';
+
+  @override
+  String checkinDaysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count दिन बाँकी',
+      one: '१ दिन बाँकी',
+      zero: 'तपाईंको सदस्यता आज सकिन्छ',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get checkinDeniedDues => 'तपाईंको बक्यौता तिर्न बाँकी छ।';
+
+  @override
+  String checkinDeniedDuesAmount(String amount) {
+    return 'तपाईंको $amount बक्यौता छ।';
+  }
+
+  @override
+  String get checkinDeniedExpired => 'तपाईंको सदस्यता सकिएको छ।';
+
+  @override
+  String get checkinDeniedFrozen => 'तपाईंको सदस्यता रोकिएको (फ्रिज) छ।';
+
+  @override
+  String get checkinDeniedHint =>
+      'कृपया फ्रन्ट डेस्कमा सम्पर्क गर्नुहोस्, उहाँहरूले मिलाइदिनुहुनेछ।';
+
+  @override
+  String get checkinDeniedOther => 'यसपटक हामीले तपाईंलाई प्रवेश दिन सकेनौं।';
+
+  @override
+  String get checkinDeniedTitle => 'ढोका खुलेन';
+
+  @override
+  String get checkinForeignHint =>
+      'यो जिमको ढोका कोड होइन। ढोकाको स्क्रिनमा रहेको QR कोड खोज्नुहोस्।';
+
+  @override
+  String get checkinInstruction =>
+      'ढोकाको स्क्रिनमा रहेको QR कोडतर्फ क्यामेरा देखाउनुहोस्';
+
+  @override
+  String get checkinInvalidBody =>
+      'त्यो कोडको समय सकिएको छ। स्क्रिन फेरि स्क्यान गर्नुहोस् — यो हरेक ३० सेकेन्डमा बदलिन्छ।';
+
+  @override
+  String get checkinInvalidTitle => 'त्यो कोडको समय सकियो';
+
+  @override
+  String get checkinNoCameraBody =>
+      'यो उपकरणमा प्रयोग गर्न मिल्ने क्यामेरा छैन। कृपया फ्रन्ट डेस्कलाई चेक-इन गरिदिन भन्नुहोस्।';
+
+  @override
+  String get checkinNoCameraTitle => 'क्यामेरा भेटिएन';
+
+  @override
+  String get checkinOfflineBody =>
+      'इन्टरनेट जडान जाँचेर फेरि प्रयास गर्नुहोस्।';
+
+  @override
+  String get checkinOfflineTitle => 'इन्टरनेट छैन';
+
+  @override
+  String checkinOkGreeting(String name) {
+    return 'नमस्ते $name';
+  }
+
+  @override
+  String get checkinOkTitle => 'ढोका खुल्यो';
+
+  @override
+  String get checkinOkWelcomeBack => 'फेरि स्वागत छ — ढोका खुल्यो';
+
+  @override
+  String get checkinOpenSettings => 'सेटिङ खोल्नुहोस्';
+
+  @override
+  String get checkinPermissionBody =>
+      'जिमको ढोकामा रहेको QR कोड स्क्यान गर्न LOG Fitness लाई क्यामेरा चाहिन्छ। यसलाई सेटिङमा गएर खोल्न सकिन्छ।';
+
+  @override
+  String get checkinPermissionTitle => 'क्यामेरा अनुमति बन्द छ';
+
+  @override
+  String get checkinRateBody =>
+      'धेरै पटक प्रयास भयो। कृपया केही मिनेट पर्खनुहोस्।';
+
+  @override
+  String get checkinRateTitle => 'अलि पर्खनुहोस्';
+
+  @override
+  String get checkinScanAgain => 'फेरि स्क्यान गर्नुहोस्';
+
+  @override
+  String get checkinTapToClose => 'बन्द गर्न जहाँसुकै छुनुहोस्';
+
+  @override
+  String get checkinTorchOff => 'टर्च निभाउनुहोस्';
+
+  @override
+  String get checkinTorchOn => 'टर्च बाल्नुहोस्';
+
+  @override
+  String get checkinTryAgain => 'फेरि प्रयास गर्नुहोस्';
+
+  @override
+  String get checkinUnknownBody =>
+      'तपाईंको चेक-इन गर्न सकिएन। फेरि प्रयास गर्नुहोस्, वा फ्रन्ट डेस्कमा सम्पर्क गर्नुहोस्।';
+
+  @override
+  String get checkinUnknownTitle => 'केही गडबड भयो';
+
+  @override
   String get classesBook => 'बुक गर्नुहोस्';
 
   @override

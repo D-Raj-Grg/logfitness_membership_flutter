@@ -137,6 +137,139 @@ class AppLocalizationsEn extends AppLocalizations {
   String get cancel => 'Cancel';
 
   @override
+  String get checkinCameraErrorBody =>
+      'Close other apps that are using the camera, then try again.';
+
+  @override
+  String get checkinCameraErrorTitle => 'The camera did not start';
+
+  @override
+  String get checkinCameraSemantics =>
+      'Camera view. Aim it at the QR code on the door screen.';
+
+  @override
+  String get checkinCheckingIn => 'Checking you in…';
+
+  @override
+  String get checkinClosedBody => 'The gym is closed right now.';
+
+  @override
+  String get checkinClosedTitle => 'Closed';
+
+  @override
+  String checkinDaysLeft(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count days left',
+      one: '1 day left',
+      zero: 'Your membership ends today',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get checkinDeniedDues => 'You have dues to clear.';
+
+  @override
+  String checkinDeniedDuesAmount(String amount) {
+    return 'You have $amount due.';
+  }
+
+  @override
+  String get checkinDeniedExpired => 'Your membership has expired.';
+
+  @override
+  String get checkinDeniedFrozen => 'Your membership is frozen.';
+
+  @override
+  String get checkinDeniedHint =>
+      'Please see the front desk and they will sort it out.';
+
+  @override
+  String get checkinDeniedOther => 'We could not let you in this time.';
+
+  @override
+  String get checkinDeniedTitle => 'The door stays shut';
+
+  @override
+  String get checkinForeignHint =>
+      'That is not the gym\'s door code. Look for the QR code on the door screen.';
+
+  @override
+  String get checkinInstruction => 'Point at the QR code on the door screen';
+
+  @override
+  String get checkinInvalidBody =>
+      'That code has expired. Scan the screen again — it refreshes every 30 seconds.';
+
+  @override
+  String get checkinInvalidTitle => 'That code has expired';
+
+  @override
+  String get checkinNoCameraBody =>
+      'This device has no camera we can use. Please ask the front desk to check you in.';
+
+  @override
+  String get checkinNoCameraTitle => 'No camera found';
+
+  @override
+  String get checkinOfflineBody =>
+      'Check your internet connection and try again.';
+
+  @override
+  String get checkinOfflineTitle => 'No connection';
+
+  @override
+  String checkinOkGreeting(String name) {
+    return 'Hi $name';
+  }
+
+  @override
+  String get checkinOkTitle => 'Door open';
+
+  @override
+  String get checkinOkWelcomeBack => 'Welcome back — door open';
+
+  @override
+  String get checkinOpenSettings => 'Open settings';
+
+  @override
+  String get checkinPermissionBody =>
+      'LOG Fitness needs the camera to scan the QR code at the gym door. You can turn it on in Settings.';
+
+  @override
+  String get checkinPermissionTitle => 'Camera access is off';
+
+  @override
+  String get checkinRateBody => 'Too many tries. Please wait a few minutes.';
+
+  @override
+  String get checkinRateTitle => 'Slow down';
+
+  @override
+  String get checkinScanAgain => 'Scan again';
+
+  @override
+  String get checkinTapToClose => 'Tap anywhere to close';
+
+  @override
+  String get checkinTorchOff => 'Turn torch off';
+
+  @override
+  String get checkinTorchOn => 'Turn torch on';
+
+  @override
+  String get checkinTryAgain => 'Try again';
+
+  @override
+  String get checkinUnknownBody =>
+      'We could not check you in. Please try again, or see the front desk.';
+
+  @override
+  String get checkinUnknownTitle => 'Something went wrong';
+
+  @override
   String get classesBook => 'Book';
 
   @override

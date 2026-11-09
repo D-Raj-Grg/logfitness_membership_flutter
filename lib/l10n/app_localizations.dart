@@ -320,6 +320,228 @@ abstract class AppLocalizations {
   /// **'Cancel'**
   String get cancel;
 
+  /// No description provided for @checkinCameraErrorBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Close other apps that are using the camera, then try again.'**
+  String get checkinCameraErrorBody;
+
+  /// No description provided for @checkinCameraErrorTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The camera did not start'**
+  String get checkinCameraErrorTitle;
+
+  /// No description provided for @checkinCameraSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera view. Aim it at the QR code on the door screen.'**
+  String get checkinCameraSemantics;
+
+  /// No description provided for @checkinCheckingIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking you in…'**
+  String get checkinCheckingIn;
+
+  /// No description provided for @checkinClosedBody.
+  ///
+  /// In en, this message translates to:
+  /// **'The gym is closed right now.'**
+  String get checkinClosedBody;
+
+  /// No description provided for @checkinClosedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Closed'**
+  String get checkinClosedTitle;
+
+  /// Days of membership remaining, shown on the success screen.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{Your membership ends today} =1{1 day left} other{{count} days left}}'**
+  String checkinDaysLeft(int count);
+
+  /// No description provided for @checkinDeniedDues.
+  ///
+  /// In en, this message translates to:
+  /// **'You have dues to clear.'**
+  String get checkinDeniedDues;
+
+  /// Dues owed; amount is already formatted with the currency.
+  ///
+  /// In en, this message translates to:
+  /// **'You have {amount} due.'**
+  String checkinDeniedDuesAmount(String amount);
+
+  /// No description provided for @checkinDeniedExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Your membership has expired.'**
+  String get checkinDeniedExpired;
+
+  /// No description provided for @checkinDeniedFrozen.
+  ///
+  /// In en, this message translates to:
+  /// **'Your membership is frozen.'**
+  String get checkinDeniedFrozen;
+
+  /// No description provided for @checkinDeniedHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Please see the front desk and they will sort it out.'**
+  String get checkinDeniedHint;
+
+  /// No description provided for @checkinDeniedOther.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not let you in this time.'**
+  String get checkinDeniedOther;
+
+  /// No description provided for @checkinDeniedTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'The door stays shut'**
+  String get checkinDeniedTitle;
+
+  /// No description provided for @checkinForeignHint.
+  ///
+  /// In en, this message translates to:
+  /// **'That is not the gym\'s door code. Look for the QR code on the door screen.'**
+  String get checkinForeignHint;
+
+  /// No description provided for @checkinInstruction.
+  ///
+  /// In en, this message translates to:
+  /// **'Point at the QR code on the door screen'**
+  String get checkinInstruction;
+
+  /// No description provided for @checkinInvalidBody.
+  ///
+  /// In en, this message translates to:
+  /// **'That code has expired. Scan the screen again — it refreshes every 30 seconds.'**
+  String get checkinInvalidBody;
+
+  /// No description provided for @checkinInvalidTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'That code has expired'**
+  String get checkinInvalidTitle;
+
+  /// No description provided for @checkinNoCameraBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This device has no camera we can use. Please ask the front desk to check you in.'**
+  String get checkinNoCameraBody;
+
+  /// No description provided for @checkinNoCameraTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No camera found'**
+  String get checkinNoCameraTitle;
+
+  /// No description provided for @checkinOfflineBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your internet connection and try again.'**
+  String get checkinOfflineBody;
+
+  /// No description provided for @checkinOfflineTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'No connection'**
+  String get checkinOfflineTitle;
+
+  /// Greeting on the success screen, with the member's first name.
+  ///
+  /// In en, this message translates to:
+  /// **'Hi {name}'**
+  String checkinOkGreeting(String name);
+
+  /// No description provided for @checkinOkTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Door open'**
+  String get checkinOkTitle;
+
+  /// No description provided for @checkinOkWelcomeBack.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome back — door open'**
+  String get checkinOkWelcomeBack;
+
+  /// No description provided for @checkinOpenSettings.
+  ///
+  /// In en, this message translates to:
+  /// **'Open settings'**
+  String get checkinOpenSettings;
+
+  /// No description provided for @checkinPermissionBody.
+  ///
+  /// In en, this message translates to:
+  /// **'LOG Fitness needs the camera to scan the QR code at the gym door. You can turn it on in Settings.'**
+  String get checkinPermissionBody;
+
+  /// No description provided for @checkinPermissionTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera access is off'**
+  String get checkinPermissionTitle;
+
+  /// No description provided for @checkinRateBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many tries. Please wait a few minutes.'**
+  String get checkinRateBody;
+
+  /// No description provided for @checkinRateTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Slow down'**
+  String get checkinRateTitle;
+
+  /// No description provided for @checkinScanAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Scan again'**
+  String get checkinScanAgain;
+
+  /// No description provided for @checkinTapToClose.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap anywhere to close'**
+  String get checkinTapToClose;
+
+  /// No description provided for @checkinTorchOff.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn torch off'**
+  String get checkinTorchOff;
+
+  /// No description provided for @checkinTorchOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Turn torch on'**
+  String get checkinTorchOn;
+
+  /// No description provided for @checkinTryAgain.
+  ///
+  /// In en, this message translates to:
+  /// **'Try again'**
+  String get checkinTryAgain;
+
+  /// No description provided for @checkinUnknownBody.
+  ///
+  /// In en, this message translates to:
+  /// **'We could not check you in. Please try again, or see the front desk.'**
+  String get checkinUnknownBody;
+
+  /// No description provided for @checkinUnknownTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong'**
+  String get checkinUnknownTitle;
+
   /// No description provided for @classesBook.
   ///
   /// In en, this message translates to:

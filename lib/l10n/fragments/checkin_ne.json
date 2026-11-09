@@ -1,0 +1,58 @@
+{
+  "checkinInstruction": "ढोकाको स्क्रिनमा रहेको QR कोडतर्फ क्यामेरा देखाउनुहोस्",
+  "checkinCameraSemantics": "क्यामेरा दृश्य। ढोकाको स्क्रिनमा रहेको QR कोडतर्फ देखाउनुहोस्।",
+  "checkinTorchOn": "टर्च बाल्नुहोस्",
+  "checkinTorchOff": "टर्च निभाउनुहोस्",
+  "checkinForeignHint": "यो जिमको ढोका कोड होइन। ढोकाको स्क्रिनमा रहेको QR कोड खोज्नुहोस्।",
+  "checkinCheckingIn": "तपाईंको चेक-इन हुँदैछ…",
+
+  "checkinOkTitle": "ढोका खुल्यो",
+  "checkinOkWelcomeBack": "फेरि स्वागत छ — ढोका खुल्यो",
+  "checkinOkGreeting": "नमस्ते {name}",
+  "@checkinOkGreeting": {
+    "description": "Greeting on the success screen, with the member's first name.",
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "checkinDaysLeft": "{count, plural, =0{तपाईंको सदस्यता आज सकिन्छ} =1{१ दिन बाँकी} other{{count} दिन बाँकी}}",
+  "@checkinDaysLeft": {
+    "description": "Days of membership remaining, shown on the success screen.",
+    "placeholders": { "count": { "type": "int" } }
+  },
+  "checkinTapToClose": "बन्द गर्न जहाँसुकै छुनुहोस्",
+
+  "checkinDeniedTitle": "ढोका खुलेन",
+  "checkinDeniedExpired": "तपाईंको सदस्यता सकिएको छ।",
+  "checkinDeniedDues": "तपाईंको बक्यौता तिर्न बाँकी छ।",
+  "checkinDeniedDuesAmount": "तपाईंको {amount} बक्यौता छ।",
+  "@checkinDeniedDuesAmount": {
+    "description": "Dues owed; amount is already formatted with the currency.",
+    "placeholders": { "amount": { "type": "String" } }
+  },
+  "checkinDeniedFrozen": "तपाईंको सदस्यता रोकिएको (फ्रिज) छ।",
+  "checkinDeniedOther": "यसपटक हामीले तपाईंलाई प्रवेश दिन सकेनौं।",
+  "checkinDeniedHint": "कृपया फ्रन्ट डेस्कमा सम्पर्क गर्नुहोस्, उहाँहरूले मिलाइदिनुहुनेछ।",
+
+  "checkinInvalidTitle": "त्यो कोडको समय सकियो",
+  "checkinInvalidBody": "त्यो कोडको समय सकिएको छ। स्क्रिन फेरि स्क्यान गर्नुहोस् — यो हरेक ३० सेकेन्डमा बदलिन्छ।",
+  "checkinScanAgain": "फेरि स्क्यान गर्नुहोस्",
+
+  "checkinClosedTitle": "बन्द छ",
+  "checkinClosedBody": "जिम अहिले बन्द छ।",
+
+  "checkinRateTitle": "अलि पर्खनुहोस्",
+  "checkinRateBody": "धेरै पटक प्रयास भयो। कृपया केही मिनेट पर्खनुहोस्।",
+
+  "checkinOfflineTitle": "इन्टरनेट छैन",
+  "checkinOfflineBody": "इन्टरनेट जडान जाँचेर फेरि प्रयास गर्नुहोस्।",
+  "checkinUnknownTitle": "केही गडबड भयो",
+  "checkinUnknownBody": "तपाईंको चेक-इन गर्न सकिएन। फेरि प्रयास गर्नुहोस्, वा फ्रन्ट डेस्कमा सम्पर्क गर्नुहोस्।",
+  "checkinTryAgain": "फेरि प्रयास गर्नुहोस्",
+
+  "checkinPermissionTitle": "क्यामेरा अनुमति बन्द छ",
+  "checkinPermissionBody": "जिमको ढोकामा रहेको QR कोड स्क्यान गर्न LOG Fitness लाई क्यामेरा चाहिन्छ। यसलाई सेटिङमा गएर खोल्न सकिन्छ।",
+  "checkinOpenSettings": "सेटिङ खोल्नुहोस्",
+  "checkinNoCameraTitle": "क्यामेरा भेटिएन",
+  "checkinNoCameraBody": "यो उपकरणमा प्रयोग गर्न मिल्ने क्यामेरा छैन। कृपया फ्रन्ट डेस्कलाई चेक-इन गरिदिन भन्नुहोस्।",
+  "checkinCameraErrorTitle": "क्यामेरा सुरु हुन सकेन",
+  "checkinCameraErrorBody": "क्यामेरा प्रयोग गरिरहेका अन्य एपहरू बन्द गरेर फेरि प्रयास गर्नुहोस्।"
+}

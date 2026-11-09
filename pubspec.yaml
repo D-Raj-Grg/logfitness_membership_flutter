@@ -32,6 +32,11 @@ dependencies:
   package_info_plus: ^10.2.2
   # Brightness boost while the QR is on screen (Phase 4).
   screen_brightness: ^2.1.0
+  # Door QR scan check-in (camera).
+  mobile_scanner: ^7.4.0
+  # Only for openAppSettings() on the "camera denied" card: mobile_scanner
+  # reports the denial but has no way to send the member to Settings.
+  permission_handler: ^12.0.1
 
 dev_dependencies:
   flutter_test:
