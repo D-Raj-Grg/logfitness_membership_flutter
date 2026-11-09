@@ -86,11 +86,12 @@ Build and test these in `../logfitness_saas` (migrations through Supabase MCP, S
 
 ## Phase 6 — Classes, bookings, messages
 
-- [ ] Port `member_classes_screen` + `class_board_notifier`: upcoming sessions at the home branch, capacity, book / join waitlist / cancel with optimistic UI and rollback on refusal; use the RPC's refusal text.
-- [ ] Port `member_bookings_screen`.
-- [ ] Port `member_messages_screen` (`notification_messages`, newest first, explicit `ascending: false`); mark-read is client-local only (no write policy).
-- [ ] Decide polling vs Realtime for capacity and messages (see `PLANNING.md` §10) and record it.
-- [ ] Tests: booking states (booked / waitlisted / full / cancelled), optimistic rollback, message ordering.
+- [x] Port `member_classes_screen` + `class_board_notifier`: upcoming sessions at the home branch, capacity, book / join waitlist / cancel with optimistic UI and rollback on refusal; use the RPC's refusal text. (Day selector for the next 7 days in the org timezone; poll every 30 s while the tab is visible and the app is foregrounded.)
+- [x] Port `member_bookings_screen` (upcoming / past, cancel with confirm). Waitlist *position* is not shown: other members' bookings are invisible under RLS, so only "on the waitlist" is known. Trainer name is not shown either: `staff` is not readable by members.
+- [x] Port `member_messages_screen` (`notification_messages`, newest first, explicit `ascending: false`); mark-read is client-local only (no write policy, in-memory per launch). Only `status = 'sent'` rows are listed.
+- [x] Decide polling vs Realtime for capacity and messages (see `PLANNING.md` §10) and record it. **Decision: polling.** Classes board re-reads every 30 s while the tab is visible and the app is resumed (stops when hidden/backgrounded, refreshes on return); booking RPC re-checks capacity under a row lock, so a stale count is only cosmetic. Messages re-read on open and on pull-to-refresh; push (Phase 7) is the live channel.
+- [x] Tests: booking states (booked / waitlisted / full / cancelled), optimistic rollback, message ordering, day grouping, capacity label.
+- [ ] Verify live with a real member: book, fill-then-waitlist, cancel inside the cancellation window (RPC refusal text), cancel promotes the waitlist, messages list against real `notification_messages` rows.
 
 ---
 

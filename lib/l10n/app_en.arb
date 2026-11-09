@@ -4,7 +4,99 @@
   "@appName": {
     "description": "Store name of the app."
   },
+  "bookingsCancel": "Cancel booking",
+  "bookingsCancelConfirmBody": "{name}, {when}",
+  "@bookingsCancelConfirmBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingsCancelConfirmTitle": "Cancel this booking?",
+  "bookingsEmpty": "No bookings yet",
+  "bookingsEmptyHint": "Book a class from the Classes tab.",
+  "bookingsKeep": "Keep booking",
+  "bookingsNoUpcoming": "Nothing coming up",
+  "bookingsPast": "Past",
+  "bookingsSessionCancelled": "Class cancelled by the gym",
+  "bookingsStatusAttended": "Attended",
+  "bookingsStatusBooked": "Booked",
+  "bookingsStatusCancelled": "Cancelled",
+  "bookingsStatusNoShow": "Missed",
+  "bookingsStatusWaitlisted": "On waitlist",
+  "bookingsTitle": "My bookings",
+  "bookingsUpcoming": "Upcoming",
+  "bookingsWaitlistNote": "You'll move into the class automatically if a spot opens.",
   "cancel": "Cancel",
+  "classesBook": "Book",
+  "classesBooked": "Booked",
+  "classesBookedSnack": "You're booked in for {name}.",
+  "@classesBookedSnack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "classesCancel": "Cancel",
+  "classesCancelledSnack": "Booking cancelled.",
+  "classesCapacitySemantics": "{booked} of {capacity} places taken",
+  "@classesCapacitySemantics": {
+    "placeholders": {
+      "booked": {
+        "type": "int"
+      },
+      "capacity": {
+        "type": "int"
+      }
+    }
+  },
+  "classesClosed": "Closed",
+  "classesDaySelectorLabel": "Choose a day",
+  "classesFull": "Full",
+  "classesJoinWaitlist": "Join waitlist",
+  "classesMyBookings": "My bookings",
+  "classesNoClasses": "No classes this day",
+  "classesNoClassesHint": "Pick another day, or check back later.",
+  "classesOnWaitlist": "On waitlist",
+  "classesRoom": "Room {room}",
+  "@classesRoom": {
+    "placeholders": {
+      "room": {
+        "type": "String"
+      }
+    }
+  },
+  "classesSpotsLeft": "{count, plural, =1{1 spot left} other{{count} spots left}}",
+  "@classesSpotsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "classesToday": "Today",
+  "classesUpdating": "Updating",
+  "classesWaitlistedSnack": "You're on the waitlist for {name}.",
+  "@classesWaitlistedSnack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "classesWeekdayShort": "{day, select, mon{Mon} tue{Tue} wed{Wed} thu{Thu} fri{Fri} sat{Sat} sun{Sun} other{}}",
+  "@classesWeekdayShort": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
   "comingSoon": "Coming soon",
   "emptyDefault": "Nothing here yet.",
   "failureDuplicate": "Already exists",
@@ -15,6 +107,41 @@
   "failureSignedOut": "Signed out",
   "failureUnknown": "That did not work",
   "loading": "Loading",
+  "messagesChannelEmail": "Email",
+  "messagesChannelSms": "SMS",
+  "messagesChannelViber": "Viber",
+  "messagesEmpty": "No messages yet",
+  "messagesEmptyHint": "Messages from the gym will appear here.",
+  "messagesEventAnnouncement": "Announcement",
+  "messagesEventBirthdayGreeting": "Birthday greeting",
+  "messagesEventCustomMessage": "Message from the gym",
+  "messagesEventDuesCleared": "Balance cleared",
+  "messagesEventDuesReminder": "Dues reminder",
+  "messagesEventMemberWelcome": "Welcome",
+  "messagesEventMembershipRenewed": "Membership renewed",
+  "messagesEventOther": "Message from the gym",
+  "messagesEventPaymentReceived": "Payment receipt",
+  "messagesEventRenewalReminder": "Renewal reminder",
+  "messagesHoursAgo": "{count, plural, =1{1 hour ago} other{{count} hours ago}}",
+  "@messagesHoursAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "messagesJustNow": "Just now",
+  "messagesMarkAllRead": "Mark all read",
+  "messagesMinutesAgo": "{count, plural, =1{1 minute ago} other{{count} minutes ago}}",
+  "@messagesMinutesAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "messagesTitle": "Messages",
+  "messagesUnread": "Unread",
   "offline": "You're offline",
   "ok": "OK",
   "retry": "Try again",

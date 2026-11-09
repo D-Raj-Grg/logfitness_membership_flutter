@@ -1,0 +1,20 @@
+{
+  "bookingsTitle": "मेरा बुकिङहरू",
+  "bookingsUpcoming": "आगामी",
+  "bookingsPast": "विगत",
+  "bookingsEmpty": "अहिलेसम्म कुनै बुकिङ छैन",
+  "bookingsEmptyHint": "कक्षा ट्याबबाट कक्षा बुक गर्नुहोस्।",
+  "bookingsNoUpcoming": "आगामी केही छैन",
+  "bookingsCancel": "बुकिङ रद्द गर्नुहोस्",
+  "bookingsCancelConfirmTitle": "यो बुकिङ रद्द गर्ने?",
+  "bookingsCancelConfirmBody": "{name}, {when}",
+  "@bookingsCancelConfirmBody": { "placeholders": { "name": { "type": "String" }, "when": { "type": "String" } } },
+  "bookingsKeep": "बुकिङ राख्नुहोस्",
+  "bookingsStatusBooked": "बुक भयो",
+  "bookingsStatusWaitlisted": "प्रतीक्षा सूचीमा",
+  "bookingsStatusCancelled": "रद्द भयो",
+  "bookingsStatusAttended": "उपस्थित भयो",
+  "bookingsStatusNoShow": "अनुपस्थित",
+  "bookingsSessionCancelled": "जिमले कक्षा रद्द गर्‍यो",
+  "bookingsWaitlistNote": "सिट खाली भएमा तपाईं आफैँ कक्षामा सारिनुहुनेछ।"
+}

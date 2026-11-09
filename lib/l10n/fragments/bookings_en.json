@@ -1,0 +1,20 @@
+{
+  "bookingsTitle": "My bookings",
+  "bookingsUpcoming": "Upcoming",
+  "bookingsPast": "Past",
+  "bookingsEmpty": "No bookings yet",
+  "bookingsEmptyHint": "Book a class from the Classes tab.",
+  "bookingsNoUpcoming": "Nothing coming up",
+  "bookingsCancel": "Cancel booking",
+  "bookingsCancelConfirmTitle": "Cancel this booking?",
+  "bookingsCancelConfirmBody": "{name}, {when}",
+  "@bookingsCancelConfirmBody": { "placeholders": { "name": { "type": "String" }, "when": { "type": "String" } } },
+  "bookingsKeep": "Keep booking",
+  "bookingsStatusBooked": "Booked",
+  "bookingsStatusWaitlisted": "On waitlist",
+  "bookingsStatusCancelled": "Cancelled",
+  "bookingsStatusAttended": "Attended",
+  "bookingsStatusNoShow": "Missed",
+  "bookingsSessionCancelled": "Class cancelled by the gym",
+  "bookingsWaitlistNote": "You'll move into the class automatically if a spot opens."
+}
