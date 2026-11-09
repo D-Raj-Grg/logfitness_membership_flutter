@@ -27,6 +27,14 @@ void main() {
       expect(mapLoginResponse(429, null), isA<LoginRateLimited>());
     });
 
+    test('a JSON-string body (some non-2xx paths) is decoded', () {
+      expect(
+        mapLoginResponse(423, '{"result":"locked","retry_after_seconds":60}'),
+        isA<LoginLocked>(),
+      );
+      expect(mapLoginResponse(500, 'not json'), isA<LoginFailed>());
+    });
+
     test('anything unrecognised is a failure, not "wrong PIN"', () {
       expect(mapLoginResponse(500, null), isA<LoginFailed>());
       expect(mapLoginResponse(200, {'result': 'banana'}), isA<LoginFailed>());

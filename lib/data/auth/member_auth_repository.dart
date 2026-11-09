@@ -5,6 +5,8 @@
 // body to the `member-login` Edge Function, and is not stored, logged, put in
 // an exception, or held by any provider afterwards. Nothing here may ever
 // interpolate it into a string.
+import 'dart:convert';
+
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -58,13 +60,30 @@ abstract interface class MemberAuthRepository {
   Future<void> signOut();
 }
 
+/// The body may arrive already decoded or, on some non-2xx paths, as a JSON
+/// string. Anything else is "no body".
+Map<String, dynamic>? _asMap(Object? body) {
+  if (body is Map<String, dynamic>) {
+    return body;
+  }
+  if (body is String && body.isNotEmpty) {
+    try {
+      final Object? decoded = jsonDecode(body);
+      return decoded is Map<String, dynamic> ? decoded : null;
+    } on FormatException {
+      return null;
+    }
+  }
+  return null;
+}
+
 /// Maps a `member-login` response to a [LoginResult] for the non-`ok` cases.
 ///
 /// [status] is the HTTP status when known; [body] the decoded JSON. Anything
 /// unrecognised is [LoginFailed] rather than [LoginInvalid], so a server
 /// regression is not disguised as "wrong PIN".
 LoginResult mapLoginResponse(int? status, Object? body) {
-  final Map<String, dynamic>? map = body is Map<String, dynamic> ? body : null;
+  final Map<String, dynamic>? map = _asMap(body);
   final Object? result = map?['result'];
 
   switch (result) {

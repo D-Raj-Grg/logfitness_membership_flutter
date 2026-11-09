@@ -4,6 +4,31 @@
   "@appName": {
     "description": "Store name of the app."
   },
+  "authErrorInvalid": "Card number or PIN is wrong.",
+  "authErrorLocked": "Too many tries. Try again in {minutes, plural, =1{1 minute} other{{minutes} minutes}}.",
+  "@authErrorLocked": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "authErrorOffline": "No connection. Check your internet and try again.",
+  "authErrorRateLimited": "Too many attempts from this phone. Please wait a few minutes and try again.",
+  "authErrorUnknown": "Couldn't sign in right now. Please try again.",
+  "authForgotPin": "Forgot your PIN? Ask the front desk. They can set a new one for you.",
+  "authHidePin": "Hide PIN",
+  "authIdentifierHint": "0004 or 98XXXXXXXX",
+  "authIdentifierLabel": "Card number or phone",
+  "authNotMemberBody": "Your membership is no longer active. Please contact the front desk.",
+  "authNotMemberTitle": "Membership not active",
+  "authPinLabel": "PIN",
+  "authShowPin": "Show PIN",
+  "authSignIn": "Sign in",
+  "authSignOut": "Sign out",
+  "authSigningIn": "Signing in",
+  "authSubtitle": "Sign in with the card number or phone number the front desk gave you.",
+  "authTagline": "Your membership, in your pocket",
   "cancel": "Cancel",
   "comingSoon": "Coming soon",
   "emptyDefault": "Nothing here yet.",
@@ -14,9 +39,140 @@
   "failureRefused": "Refused",
   "failureSignedOut": "Signed out",
   "failureUnknown": "That did not work",
+  "homeActiveOpen": "Active",
+  "homeAmountDue": "Amount due",
+  "homeAmountDueHint": "Pay at the front desk.",
+  "homeBookings": "My bookings",
+  "homeBookingsSubtitle": "Classes you've booked",
+  "homeCardNo": "NO. {number}",
+  "@homeCardNo": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDaysLeftLabel": "{count, plural, =1{day left} other{days left}}",
+  "@homeDaysLeftLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeEndsLabel": "Ends",
+  "homeExpired": "Expired",
+  "homeExpiredAgoLabel": "{count, plural, =1{day ago} other{days ago}}",
+  "@homeExpiredAgoLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeExpiredHint": "Request a renewal and the front desk will get you back in.",
+  "homeExpiredPrefix": "Expired",
+  "homeExpiringHint": "Your plan ends soon. Request a renewal so you don't miss a day.",
+  "homeFrozen": "Frozen",
+  "homeFrozenHint": "Your membership is paused. Ask the front desk to resume it.",
+  "homeGreeting": "Hi, {name}",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeLastDay": "Last day",
+  "homeLastDayHint": "Your plan ends today.",
+  "homeLastUpdated": "Updated {time}",
+  "@homeLastUpdated": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "homeMessages": "Messages",
+  "homeMessagesSubtitle": "Notes from the gym",
+  "homeNoPlan": "No active plan",
+  "homeNoPlanHint": "Ask the front desk about a plan.",
+  "homePlanLabel": "Plan",
+  "homeRenewButton": "Request renewal",
+  "homeRenewNoMember": "We couldn't find an active membership on this account. Please contact the front desk.",
+  "homeRenewNoteLabel": "Note (optional)",
+  "homeRenewPhoneLabel": "Phone (optional)",
+  "homeRenewRequestedAt": "Requested at {time}. The front desk will call you.",
+  "@homeRenewRequestedAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRenewRequestedButton": "Request sent",
+  "homeRenewRequestedNow": "Requested just now. The front desk will call you.",
+  "homeRenewSend": "Send request",
+  "homeRenewSending": "Sending",
+  "homeRenewSent": "Request sent. The front desk will call you.",
+  "homeRenewSheetBody": "The front desk will get your request and call you. You pay at the counter. Nothing is charged here.",
+  "homeRenewSheetTitle": "Request renewal",
+  "homeRenewTooSoon": "You asked a moment ago. The front desk already has your request.",
+  "homeSessionsLeft": "{count, plural, =1{1 session left} other{{count} sessions left}}",
+  "@homeSessionsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeStaleBanner": "Couldn't refresh. Showing what we had at {time}.",
+  "@homeStaleBanner": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "homeStatusActive": "Active",
+  "homeStatusExpired": "Expired",
+  "homeStatusExpiring": "Expiring soon",
+  "homeStatusFrozen": "Frozen",
+  "homeStatusNone": "No plan",
+  "homeStatusUpcoming": "Upcoming",
+  "homeUpcomingOn": "Starts {date}",
+  "@homeUpcomingOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "homeUpcomingSoon": "Starts soon",
   "loading": "Loading",
   "offline": "You're offline",
   "ok": "OK",
+  "profileBranch": "Home branch",
+  "profileCardNo": "Card number",
+  "profileLanguage": "Language",
+  "profileLanguageEnglish": "English",
+  "profileLanguageNepali": "नेपाली",
+  "profileMemberCode": "Member code",
+  "profileMessages": "Messages",
+  "profileNoCard": "No card yet",
+  "profilePhone": "Phone",
+  "profileSectionAbout": "About",
+  "profileSectionDetails": "Your details",
+  "profileSectionPreferences": "Preferences",
+  "profileSignOut": "Sign out",
+  "profileSignOutConfirmBody": "You'll need your card number or phone and your PIN to sign in again.",
+  "profileSignOutConfirmTitle": "Sign out?",
+  "profileTheme": "Appearance",
+  "profileThemeDark": "Dark",
+  "profileThemeLight": "Light",
+  "profileThemeSystem": "System",
+  "profileTitle": "Profile",
+  "profileVersion": "App version",
   "retry": "Try again",
   "snackRetry": "Retry",
   "tabCheckin": "Check-in",

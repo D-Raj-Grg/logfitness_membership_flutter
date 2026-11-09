@@ -1,6 +1,31 @@
 {
   "@@locale": "ne",
   "appName": "LOG Fitness",
+  "authErrorInvalid": "कार्ड नम्बर वा पिन मिलेन।",
+  "authErrorLocked": "धेरै पटक प्रयास भयो। {minutes, plural, =1{१ मिनेट} other{{minutes} मिनेट}} पछि फेरि प्रयास गर्नुहोस्।",
+  "@authErrorLocked": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "authErrorOffline": "इन्टरनेट छैन। इन्टरनेट जाँचेर फेरि प्रयास गर्नुहोस्।",
+  "authErrorRateLimited": "यो फोनबाट धेरै प्रयास भयो। केही मिनेट कुरेर फेरि प्रयास गर्नुहोस्।",
+  "authErrorUnknown": "अहिले साइन इन गर्न सकिएन। कृपया फेरि प्रयास गर्नुहोस्।",
+  "authForgotPin": "पिन बिर्सनुभयो? फ्रन्ट डेस्कलाई सोध्नुहोस्। उहाँहरूले नयाँ पिन राखिदिनुहुन्छ।",
+  "authHidePin": "पिन लुकाउनुहोस्",
+  "authIdentifierHint": "0004 वा 98XXXXXXXX",
+  "authIdentifierLabel": "कार्ड नम्बर वा फोन",
+  "authNotMemberBody": "तपाईंको सदस्यता अब सक्रिय छैन। कृपया फ्रन्ट डेस्कमा सम्पर्क गर्नुहोस्।",
+  "authNotMemberTitle": "सदस्यता सक्रिय छैन",
+  "authPinLabel": "पिन",
+  "authShowPin": "पिन देखाउनुहोस्",
+  "authSignIn": "साइन इन",
+  "authSignOut": "साइन आउट",
+  "authSigningIn": "साइन इन हुँदैछ",
+  "authSubtitle": "फ्रन्ट डेस्कले दिएको कार्ड नम्बर वा फोन नम्बरबाट साइन इन गर्नुहोस्।",
+  "authTagline": "तपाईंको सदस्यता, तपाईंकै खल्तीमा",
   "cancel": "रद्द गर्नुहोस्",
   "comingSoon": "छिट्टै आउँदैछ",
   "emptyDefault": "यहाँ अहिलेसम्म केही छैन।",
@@ -11,9 +36,140 @@
   "failureRefused": "अस्वीकृत",
   "failureSignedOut": "साइन आउट भयो",
   "failureUnknown": "यो काम गरेन",
+  "homeActiveOpen": "सक्रिय",
+  "homeAmountDue": "तिर्नुपर्ने रकम",
+  "homeAmountDueHint": "फ्रन्ट डेस्कमा तिर्नुहोस्।",
+  "homeBookings": "मेरा बुकिङ",
+  "homeBookingsSubtitle": "तपाईंले बुक गरेका कक्षा",
+  "homeCardNo": "नं. {number}",
+  "@homeCardNo": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDaysLeftLabel": "{count, plural, =1{दिन बाँकी} other{दिन बाँकी}}",
+  "@homeDaysLeftLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeEndsLabel": "सकिने मिति",
+  "homeExpired": "म्याद सकियो",
+  "homeExpiredAgoLabel": "{count, plural, =1{दिन अघि} other{दिन अघि}}",
+  "@homeExpiredAgoLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeExpiredHint": "नवीकरणको अनुरोध गर्नुहोस्, फ्रन्ट डेस्कले तपाईंलाई फेरि सुचारु गरिदिनुहुन्छ।",
+  "homeExpiredPrefix": "म्याद सकियो",
+  "homeExpiringHint": "तपाईंको योजना छिट्टै सकिँदैछ। एक दिन पनि नछुटोस् भनेर नवीकरणको अनुरोध गर्नुहोस्।",
+  "homeFrozen": "रोकिएको",
+  "homeFrozenHint": "तपाईंको सदस्यता रोकिएको छ। फेरि चालु गर्न फ्रन्ट डेस्कलाई भन्नुहोस्।",
+  "homeGreeting": "नमस्ते, {name}",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeLastDay": "अन्तिम दिन",
+  "homeLastDayHint": "तपाईंको योजना आज सकिँदैछ।",
+  "homeLastUpdated": "{time} मा अद्यावधिक",
+  "@homeLastUpdated": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "homeMessages": "सन्देशहरू",
+  "homeMessagesSubtitle": "जिमबाट आएका सूचना",
+  "homeNoPlan": "सक्रिय योजना छैन",
+  "homeNoPlanHint": "योजनाको बारेमा फ्रन्ट डेस्कलाई सोध्नुहोस्।",
+  "homePlanLabel": "योजना",
+  "homeRenewButton": "नवीकरणको अनुरोध",
+  "homeRenewNoMember": "यो खातामा सक्रिय सदस्यता भेटिएन। कृपया फ्रन्ट डेस्कमा सम्पर्क गर्नुहोस्।",
+  "homeRenewNoteLabel": "टिप्पणी (ऐच्छिक)",
+  "homeRenewPhoneLabel": "फोन (ऐच्छिक)",
+  "homeRenewRequestedAt": "{time} मा अनुरोध गरियो। फ्रन्ट डेस्कले तपाईंलाई फोन गर्नुहुन्छ।",
+  "@homeRenewRequestedAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRenewRequestedButton": "अनुरोध पठाइयो",
+  "homeRenewRequestedNow": "अहिले नै अनुरोध गरियो। फ्रन्ट डेस्कले तपाईंलाई फोन गर्नुहुन्छ।",
+  "homeRenewSend": "अनुरोध पठाउनुहोस्",
+  "homeRenewSending": "पठाउँदैछ",
+  "homeRenewSent": "अनुरोध पठाइयो। फ्रन्ट डेस्कले तपाईंलाई फोन गर्नुहुन्छ।",
+  "homeRenewSheetBody": "फ्रन्ट डेस्कले तपाईंको अनुरोध पाउँछ र फोन गर्छ। रकम काउन्टरमै तिर्नुहुन्छ। यहाँ केही पनि काटिँदैन।",
+  "homeRenewSheetTitle": "नवीकरणको अनुरोध",
+  "homeRenewTooSoon": "तपाईंले भर्खरै अनुरोध गर्नुभएको छ। फ्रन्ट डेस्कसँग तपाईंको अनुरोध पुगिसकेको छ।",
+  "homeSessionsLeft": "{count, plural, =1{१ सत्र बाँकी} other{{count} सत्र बाँकी}}",
+  "@homeSessionsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeStaleBanner": "नयाँ जानकारी ल्याउन सकिएन। {time} को जानकारी देखाइएको छ।",
+  "@homeStaleBanner": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "homeStatusActive": "सक्रिय",
+  "homeStatusExpired": "म्याद सकियो",
+  "homeStatusExpiring": "छिट्टै सकिँदैछ",
+  "homeStatusFrozen": "रोकिएको",
+  "homeStatusNone": "योजना छैन",
+  "homeStatusUpcoming": "आउँदै",
+  "homeUpcomingOn": "{date} देखि सुरु",
+  "@homeUpcomingOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "homeUpcomingSoon": "छिट्टै सुरु हुन्छ",
   "loading": "लोड हुँदैछ",
   "offline": "तपाईं अफलाइन हुनुहुन्छ",
   "ok": "ठीक छ",
+  "profileBranch": "मुख्य शाखा",
+  "profileCardNo": "कार्ड नम्बर",
+  "profileLanguage": "भाषा",
+  "profileLanguageEnglish": "English",
+  "profileLanguageNepali": "नेपाली",
+  "profileMemberCode": "सदस्य कोड",
+  "profileMessages": "सन्देशहरू",
+  "profileNoCard": "कार्ड अझै छैन",
+  "profilePhone": "फोन",
+  "profileSectionAbout": "बारेमा",
+  "profileSectionDetails": "तपाईंको विवरण",
+  "profileSectionPreferences": "रोजाइ",
+  "profileSignOut": "साइन आउट",
+  "profileSignOutConfirmBody": "फेरि साइन इन गर्न कार्ड नम्बर वा फोन र पिन चाहिन्छ।",
+  "profileSignOutConfirmTitle": "साइन आउट गर्ने?",
+  "profileTheme": "रूपरङ",
+  "profileThemeDark": "अँध्यारो",
+  "profileThemeLight": "उज्यालो",
+  "profileThemeSystem": "फोन अनुसार",
+  "profileTitle": "प्रोफाइल",
+  "profileVersion": "एपको संस्करण",
   "retry": "फेरि प्रयास गर्नुहोस्",
   "snackRetry": "फेरि गर्नुहोस्",
   "tabCheckin": "चेक-इन",
