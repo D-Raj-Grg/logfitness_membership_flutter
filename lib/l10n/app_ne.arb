@@ -1,6 +1,68 @@
 {
   "@@locale": "ne",
   "appName": "LOG Fitness",
+  "attendanceCellSemantics": "{date}, {status}",
+  "@attendanceCellSemantics": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      },
+      "status": {
+        "type": "String"
+      }
+    }
+  },
+  "attendanceDayMonth": "{day} {month}",
+  "@attendanceDayMonth": {
+    "placeholders": {
+      "day": {
+        "type": "int"
+      },
+      "month": {
+        "type": "String"
+      }
+    }
+  },
+  "attendanceEmptyMonth": "यो महिना कुनै उपस्थिति रेकर्ड भएको छैन। चेक-इन गर्न थालेपछि तपाईंको उपस्थिति यहाँ देखिनेछ।",
+  "attendanceHolidayNamed": "बिदा: {name}",
+  "@attendanceHolidayNamed": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "attendanceHolidaySheetHint": "यो दिन जिम बन्द रहन्छ।",
+  "attendanceMonthYear": "{month} {year}",
+  "@attendanceMonthYear": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "attendanceNextMonth": "अर्को महिना",
+  "attendancePreviousMonth": "अघिल्लो महिना",
+  "attendanceStatusAbsent": "अनुपस्थित",
+  "attendanceStatusHoliday": "सार्वजनिक बिदा",
+  "attendanceStatusNone": "रेकर्ड छैन",
+  "attendanceStatusOff": "बिदाको दिन",
+  "attendanceStatusPresent": "उपस्थित",
+  "attendanceSummarySemantics": "{present} दिन उपस्थित, {absent} दिन अनुपस्थित",
+  "@attendanceSummarySemantics": {
+    "placeholders": {
+      "present": {
+        "type": "int"
+      },
+      "absent": {
+        "type": "int"
+      }
+    }
+  },
+  "attendanceSummaryTitle": "महिनाको सारांश",
   "authErrorInvalid": "कार्ड नम्बर वा पिन मिलेन।",
   "authErrorLocked": "धेरै पटक प्रयास भयो। {minutes, plural, =1{१ मिनेट} other{{minutes} मिनेट}} पछि फेरि प्रयास गर्नुहोस्।",
   "@authErrorLocked": {

@@ -12,6 +12,62 @@ class AppLocalizationsNe extends AppLocalizations {
   String get appName => 'LOG Fitness';
 
   @override
+  String attendanceCellSemantics(String date, String status) {
+    return '$date, $status';
+  }
+
+  @override
+  String attendanceDayMonth(int day, String month) {
+    return '$day $month';
+  }
+
+  @override
+  String get attendanceEmptyMonth =>
+      'यो महिना कुनै उपस्थिति रेकर्ड भएको छैन। चेक-इन गर्न थालेपछि तपाईंको उपस्थिति यहाँ देखिनेछ।';
+
+  @override
+  String attendanceHolidayNamed(String name) {
+    return 'बिदा: $name';
+  }
+
+  @override
+  String get attendanceHolidaySheetHint => 'यो दिन जिम बन्द रहन्छ।';
+
+  @override
+  String attendanceMonthYear(String month, String year) {
+    return '$month $year';
+  }
+
+  @override
+  String get attendanceNextMonth => 'अर्को महिना';
+
+  @override
+  String get attendancePreviousMonth => 'अघिल्लो महिना';
+
+  @override
+  String get attendanceStatusAbsent => 'अनुपस्थित';
+
+  @override
+  String get attendanceStatusHoliday => 'सार्वजनिक बिदा';
+
+  @override
+  String get attendanceStatusNone => 'रेकर्ड छैन';
+
+  @override
+  String get attendanceStatusOff => 'बिदाको दिन';
+
+  @override
+  String get attendanceStatusPresent => 'उपस्थित';
+
+  @override
+  String attendanceSummarySemantics(int present, int absent) {
+    return '$present दिन उपस्थित, $absent दिन अनुपस्थित';
+  }
+
+  @override
+  String get attendanceSummaryTitle => 'महिनाको सारांश';
+
+  @override
   String get authErrorInvalid => 'कार्ड नम्बर वा पिन मिलेन।';
 
   @override

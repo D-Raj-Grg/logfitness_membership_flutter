@@ -12,6 +12,62 @@ class AppLocalizationsEn extends AppLocalizations {
   String get appName => 'LOG Fitness';
 
   @override
+  String attendanceCellSemantics(String date, String status) {
+    return '$date, $status';
+  }
+
+  @override
+  String attendanceDayMonth(int day, String month) {
+    return '$day $month';
+  }
+
+  @override
+  String get attendanceEmptyMonth =>
+      'No visits recorded this month. Your attendance will show up here once you start checking in.';
+
+  @override
+  String attendanceHolidayNamed(String name) {
+    return 'Holiday: $name';
+  }
+
+  @override
+  String get attendanceHolidaySheetHint => 'The gym is closed on this day.';
+
+  @override
+  String attendanceMonthYear(String month, String year) {
+    return '$month $year';
+  }
+
+  @override
+  String get attendanceNextMonth => 'Next month';
+
+  @override
+  String get attendancePreviousMonth => 'Previous month';
+
+  @override
+  String get attendanceStatusAbsent => 'Absent';
+
+  @override
+  String get attendanceStatusHoliday => 'Holiday';
+
+  @override
+  String get attendanceStatusNone => 'No record';
+
+  @override
+  String get attendanceStatusOff => 'Day off';
+
+  @override
+  String get attendanceStatusPresent => 'Present';
+
+  @override
+  String attendanceSummarySemantics(int present, int absent) {
+    return '$present present, $absent absent';
+  }
+
+  @override
+  String get attendanceSummaryTitle => 'Month summary';
+
+  @override
   String get authErrorInvalid => 'Card number or PIN is wrong.';
 
   @override
