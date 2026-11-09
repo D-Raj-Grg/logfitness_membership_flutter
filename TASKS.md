@@ -28,22 +28,22 @@ Build and test these in `../logfitness_saas` (migrations through Supabase MCP, S
 
 ## Phase 1 — Foundation
 
-- [ ] `flutter create` in this repo: org `com.lordofgyms`, project `logfitness_membership_flutter`, iOS + Android only; display name "LOG Fitness".
-- [ ] `.gitignore`: `env/local.json`, `*.jks`, `android/key.properties`, `google-services.json`, `GoogleService-Info.plist`, build output. Commit `env/local.example.json`.
-- [ ] Pin SDK (`sdk: ^3.10.7`, Flutter `>=3.38.0`); pubspec per `PLANNING.md` §2 (copy the staff app's `path_provider_foundation: 2.4.1` override and Android `compileSdk` 36 pin).
-- [ ] Lints: `flutter_lints`, `riverpod_lint`, `custom_lint`; analysis options match the staff app.
-- [ ] Config: `--dart-define-from-file` (`SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `ORG_SLUG`); `supabase_config.dart` with `assertConfigured()`; `StartupFailureApp` on bad config.
-- [ ] `supabase_bootstrap` with `SecureSessionStorage` (refresh token in `flutter_secure_storage`).
-- [ ] `ProviderScope`, `sessionProvider`, `claimsProvider` (`AppClaims`: `org_id`, `member_id`, `role`, `branch_ids`; `isMember`; `MalformedClaims`), `principalProvider` (`signedOut | member | signedInNotMember`).
-- [ ] Router with the single redirect guard (`/splash`, `/login`, `/home`, `/not-member`).
-- [ ] Generated models + Dart enums matching Postgres (`member_status`, `membership_status`, `invoice_status`, `payment_method`, class/booking enums, notification enums); `build_runner` wired.
-- [ ] `repository_guard` (`guardFailures`, `rpcParams`), `AppFailure` + `FailureKind`, `AsyncValueView` / `FailureView` / failure snackbar — ported from the staff app.
-- [ ] Formatters: `Money` (paisa → text, once), dates in the org timezone, plain dates, relative time; ported with their tests.
-- [ ] Theme: Material 3 light + dark from the LOG brand tokens in `../logfitness_web` (record the chosen seed/tokens in `PLANNING.md` §6); theme mode in `shared_preferences`.
-- [ ] l10n scaffold: `l10n.yaml`, `app_en.arb`, `app_ne.arb`, language override; test that both key sets are identical.
-- [ ] Shell: a bottom-nav `MemberShell` (Home, Classes, Check-in, Payments, Profile) with empty screens; Messages reachable from Home/Profile.
-- [ ] CI `.github/workflows/ci.yaml`: pub get, `build_runner build`, generated-files diff check, `flutter analyze`, `dart run custom_lint`, `flutter test`.
-- [ ] `README.md`: run instructions (`flutter run --dart-define-from-file=env/local.json`).
+- [x] `flutter create` in this repo: org `com.lordofgyms`, project `logfitness_membership_flutter`, iOS + Android only; display name "LOG Fitness".
+- [x] `.gitignore`: `env/local.json`, `*.jks`, `android/key.properties`, `google-services.json`, `GoogleService-Info.plist`, build output. Commit `env/local.example.json`.
+- [x] Pin SDK (`sdk: ^3.10.7`, Flutter `>=3.38.0`); pubspec per `PLANNING.md` §2 (copy the staff app's `path_provider_foundation: 2.4.1` override and Android `compileSdk` 36 pin).
+- [x] Lints: `flutter_lints`, `riverpod_lint`, `custom_lint`; analysis options match the staff app.
+- [x] Config: `--dart-define-from-file` (`SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `ORG_SLUG`); `supabase_config.dart` with `assertConfigured()`; `StartupFailureApp` on bad config.
+- [x] `supabase_bootstrap` with `SecureSessionStorage` (refresh token in `flutter_secure_storage`).
+- [x] `ProviderScope`, `sessionProvider`, `claimsProvider` (`AppClaims`: `org_id`, `member_id`, `role`, `branch_ids`; `isMember`; `MalformedClaims`), `principalProvider` (`signedOut | member | signedInNotMember`).
+- [x] Router with the single redirect guard (`/splash`, `/login`, `/home`, `/not-member`).
+- [x] Generated models + Dart enums matching Postgres (`member_status`, `membership_status`, `invoice_status`, `payment_method`, class/booking enums, notification enums); `build_runner` wired.
+- [x] `repository_guard` (`guardFailures`, `rpcParams`), `AppFailure` + `FailureKind`, `AsyncValueView` / `FailureView` / failure snackbar — ported from the staff app.
+- [x] Formatters: `Money` (paisa → text, once), dates in the org timezone, plain dates, relative time; ported with their tests.
+- [x] Theme: Material 3 light + dark from the LOG brand tokens in `../logfitness_web` (record the chosen seed/tokens in `PLANNING.md` §6); theme mode in `shared_preferences`.
+- [x] l10n scaffold: `l10n.yaml`, `app_en.arb`, `app_ne.arb`, language override; test that both key sets are identical.
+- [x] Shell: a bottom-nav `MemberShell` (Home, Classes, Check-in, Payments, Profile) with empty screens; Messages reachable from Home/Profile.
+- [x] CI `.github/workflows/ci.yaml`: pub get, `build_runner build`, generated-files diff check, `flutter analyze`, `dart run custom_lint`, `flutter test`.
+- [x] `README.md`: run instructions (`flutter run --dart-define-from-file=env/local.json`).
 
 ---
 
@@ -124,6 +124,10 @@ Build and test these in `../logfitness_saas` (migrations through Supabase MCP, S
 
 <!-- Format: - [ ] **YYYY-MM-DD** What was found and what to do about it -->
 
+- [ ] **2026-11-09** `PLANNING.md` §3/§5 says the hook stamps `role: 'member'`. It does not: the deployed `custom_access_token_hook` (migration `20260905150300`) leaves `role` as PostgREST's `authenticated` and the principal is the presence of `member_id` (staff carry `staff_role`). `AppClaims.isMember` is `member_id != null && staff_role == null`. Correct the wording in PLANNING.
+- [ ] **2026-11-09** Theme tokens chosen in Phase 1 (record in `PLANNING.md` §6): Tar Road `#17181D`, Elegant Grey `#8B9096`, paper `#F4F5F6`, grey-ink `#565B62` (Elegant Grey darkened for small text on white); error red `#B3261E`/`#FFB4AB` is the only non-brand hue. No bundled font yet (web uses Anton + Inter).
+- [ ] **2026-11-09** Theme mode defaults to `system` here (staff app defaults to light).
+- [ ] **2026-11-09** `FailureView` headings are localised; the sentence beneath (`AppFailure.message`) is English from `mapError` or the database. Localise the mapper's own sentences before release.
 - [ ] **2026-11-09** The staff app's member shell has no tests. Everything ported from it gets tests in this repo (Phases 3–6); do not copy untested code across without them.
 - [ ] **2026-11-09** The staff app's push is declared but unwired and the FCM send path is unverified upstream. Treat push as new work with a verification gate, not a port.
 - [ ] **2026-11-09** Files copied from the staff app can drift. When a bug is fixed in a copied file in either repo, add a line here (or in `../logfitness_flutter/TASKS.md`) naming the counterpart.

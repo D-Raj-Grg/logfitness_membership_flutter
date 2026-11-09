@@ -1,0 +1,27 @@
+{
+  "@@locale": "en",
+  "appName": "LOG Fitness",
+  "@appName": {
+    "description": "Store name of the app."
+  },
+  "cancel": "Cancel",
+  "comingSoon": "Coming soon",
+  "emptyDefault": "Nothing here yet.",
+  "failureDuplicate": "Already exists",
+  "failureInvalid": "That would not be valid",
+  "failureNotFound": "Not found",
+  "failureOffline": "No connection",
+  "failureRefused": "Refused",
+  "failureSignedOut": "Signed out",
+  "failureUnknown": "That did not work",
+  "loading": "Loading",
+  "offline": "You're offline",
+  "ok": "OK",
+  "retry": "Try again",
+  "snackRetry": "Retry",
+  "tabCheckin": "Check-in",
+  "tabClasses": "Classes",
+  "tabHome": "Home",
+  "tabPayments": "Payments",
+  "tabProfile": "Profile"
+}

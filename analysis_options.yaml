@@ -1,0 +1,30 @@
+# Lord of Gyms Mobile — `flutter analyze` clean is a merge gate (PLANNING.md §2).
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  plugins:
+    - custom_lint
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+  errors:
+    # Generated models and enums must fail loudly, never silently widen.
+    missing_required_param: error
+    missing_return: error
+    invalid_annotation_target: ignore
+
+linter:
+  rules:
+    - always_declare_return_types
+    - avoid_dynamic_calls
+    - avoid_print
+    - prefer_final_locals
+    - prefer_single_quotes
+    - require_trailing_commas
+    - unawaited_futures
+    - unnecessary_parenthesis
+    - use_super_parameters
+
+custom_lint:
+  rules:
+    - missing_provider_scope: false
