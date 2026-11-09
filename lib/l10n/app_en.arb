@@ -17,6 +17,90 @@
   "loading": "Loading",
   "offline": "You're offline",
   "ok": "OK",
+  "paymentsAllSettled": "All settled - nothing is due",
+  "paymentsAmountDue": "Amount due",
+  "paymentsDiscount": "Discount",
+  "paymentsDue": "Due",
+  "paymentsEmptyInvoices": "No invoices yet. They appear here when you join or renew.",
+  "paymentsEmptyPayments": "No payments yet. Payments you make at the front desk appear here.",
+  "paymentsIssuedOn": "Issued {date}",
+  "@paymentsIssuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsKindPayment": "Payment",
+  "paymentsKindRefund": "Refund",
+  "paymentsKindReversal": "Reversed",
+  "paymentsMethodBank": "Bank transfer",
+  "paymentsMethodCard": "Card",
+  "paymentsMethodCash": "Cash",
+  "paymentsMethodEsewa": "eSewa",
+  "paymentsMethodFonepay": "Fonepay",
+  "paymentsMethodKhalti": "Khalti",
+  "paymentsMethodOnDate": "{method} - {date}",
+  "@paymentsMethodOnDate": {
+    "placeholders": {
+      "method": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsMonthYear": "{month, select, m1{January} m2{February} m3{March} m4{April} m5{May} m6{June} m7{July} m8{August} m9{September} m10{October} m11{November} m12{December} other{}} {year}",
+  "@paymentsMonthYear": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsOnThisInvoice": "Payments on this invoice",
+  "paymentsPaid": "Paid",
+  "paymentsPaidAndDue": "Paid {paid} - Due {due}",
+  "@paymentsPaidAndDue": {
+    "placeholders": {
+      "paid": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsPaidOnly": "Paid {amount}",
+  "@paymentsPaidOnly": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsPayAtDesk": "Please pay at the front desk.",
+  "paymentsReason": "Reason: {reason}",
+  "@paymentsReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsStatusPaid": "Paid",
+  "paymentsStatusPartial": "Partly paid",
+  "paymentsStatusUnpaid": "Unpaid",
+  "paymentsStatusVoid": "Void",
+  "paymentsSubtotal": "Subtotal",
+  "paymentsTabInvoices": "Invoices",
+  "paymentsTabPayments": "Payments",
+  "paymentsTotal": "Total",
+  "paymentsTotalPaid": "Total paid",
   "retry": "Try again",
   "snackRetry": "Retry",
   "tabCheckin": "Check-in",

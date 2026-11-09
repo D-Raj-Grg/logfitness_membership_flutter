@@ -14,6 +14,90 @@
   "loading": "लोड हुँदैछ",
   "offline": "तपाईं अफलाइन हुनुहुन्छ",
   "ok": "ठीक छ",
+  "paymentsAllSettled": "सबै चुक्ता भएको छ - कुनै बाँकी छैन",
+  "paymentsAmountDue": "तिर्न बाँकी रकम",
+  "paymentsDiscount": "छुट",
+  "paymentsDue": "बाँकी",
+  "paymentsEmptyInvoices": "अहिलेसम्म कुनै बिल छैन। सदस्यता लिँदा वा नवीकरण गर्दा यहाँ देखिन्छ।",
+  "paymentsEmptyPayments": "अहिलेसम्म कुनै भुक्तानी छैन। फ्रन्ट डेस्कमा गरेको भुक्तानी यहाँ देखिन्छ।",
+  "paymentsIssuedOn": "जारी मिति {date}",
+  "@paymentsIssuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsKindPayment": "भुक्तानी",
+  "paymentsKindRefund": "फिर्ता",
+  "paymentsKindReversal": "उल्टाइएको",
+  "paymentsMethodBank": "बैंक ट्रान्सफर",
+  "paymentsMethodCard": "कार्ड",
+  "paymentsMethodCash": "नगद",
+  "paymentsMethodEsewa": "eSewa",
+  "paymentsMethodFonepay": "Fonepay",
+  "paymentsMethodKhalti": "Khalti",
+  "paymentsMethodOnDate": "{method} - {date}",
+  "@paymentsMethodOnDate": {
+    "placeholders": {
+      "method": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsMonthYear": "{month, select, m1{जनवरी} m2{फेब्रुअरी} m3{मार्च} m4{अप्रिल} m5{मे} m6{जुन} m7{जुलाई} m8{अगस्ट} m9{सेप्टेम्बर} m10{अक्टोबर} m11{नोभेम्बर} m12{डिसेम्बर} other{}} {year}",
+  "@paymentsMonthYear": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsOnThisInvoice": "यो बिलमा गरिएको भुक्तानी",
+  "paymentsPaid": "तिरेको",
+  "paymentsPaidAndDue": "तिरेको {paid} - बाँकी {due}",
+  "@paymentsPaidAndDue": {
+    "placeholders": {
+      "paid": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsPaidOnly": "तिरेको {amount}",
+  "@paymentsPaidOnly": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsPayAtDesk": "कृपया फ्रन्ट डेस्कमा भुक्तानी गर्नुहोस्।",
+  "paymentsReason": "कारण: {reason}",
+  "@paymentsReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsStatusPaid": "भुक्तानी भयो",
+  "paymentsStatusPartial": "आंशिक भुक्तानी",
+  "paymentsStatusUnpaid": "तिर्न बाँकी",
+  "paymentsStatusVoid": "रद्द",
+  "paymentsSubtotal": "उप-जम्मा",
+  "paymentsTabInvoices": "बिलहरू",
+  "paymentsTabPayments": "भुक्तानीहरू",
+  "paymentsTotal": "जम्मा",
+  "paymentsTotalPaid": "कुल भुक्तानी",
   "retry": "फेरि प्रयास गर्नुहोस्",
   "snackRetry": "फेरि गर्नुहोस्",
   "tabCheckin": "चेक-इन",

@@ -78,9 +78,9 @@ Build and test these in `../logfitness_saas` (migrations through Supabase MCP, S
 
 ## Phase 5 — Payments & invoices
 
-- [ ] Port `member_payments_screen`: invoices (number, total, paid, due, status) and payments (date, amount, method, refunds as negative with reason); read-only.
-- [ ] Invoice detail view; receipt/invoice sharing is **out** for v1 (staff print them).
-- [ ] Tests: money formatting, refund display, empty states.
+- [x] Port `member_payments_screen`: invoices (number, total, paid, due, status) and payments (date, amount, method, refunds as negative with reason); read-only.
+- [x] Invoice detail view; receipt/invoice sharing is **out** for v1 (staff print them).
+- [x] Tests: money formatting, refund display, empty states.
 
 ---
 

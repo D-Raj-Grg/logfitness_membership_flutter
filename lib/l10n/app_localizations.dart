@@ -182,6 +182,204 @@ abstract class AppLocalizations {
   /// **'OK'**
   String get ok;
 
+  /// No description provided for @paymentsAllSettled.
+  ///
+  /// In en, this message translates to:
+  /// **'All settled - nothing is due'**
+  String get paymentsAllSettled;
+
+  /// No description provided for @paymentsAmountDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Amount due'**
+  String get paymentsAmountDue;
+
+  /// No description provided for @paymentsDiscount.
+  ///
+  /// In en, this message translates to:
+  /// **'Discount'**
+  String get paymentsDiscount;
+
+  /// No description provided for @paymentsDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Due'**
+  String get paymentsDue;
+
+  /// No description provided for @paymentsEmptyInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'No invoices yet. They appear here when you join or renew.'**
+  String get paymentsEmptyInvoices;
+
+  /// No description provided for @paymentsEmptyPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'No payments yet. Payments you make at the front desk appear here.'**
+  String get paymentsEmptyPayments;
+
+  /// No description provided for @paymentsIssuedOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Issued {date}'**
+  String paymentsIssuedOn(String date);
+
+  /// No description provided for @paymentsKindPayment.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment'**
+  String get paymentsKindPayment;
+
+  /// No description provided for @paymentsKindRefund.
+  ///
+  /// In en, this message translates to:
+  /// **'Refund'**
+  String get paymentsKindRefund;
+
+  /// No description provided for @paymentsKindReversal.
+  ///
+  /// In en, this message translates to:
+  /// **'Reversed'**
+  String get paymentsKindReversal;
+
+  /// No description provided for @paymentsMethodBank.
+  ///
+  /// In en, this message translates to:
+  /// **'Bank transfer'**
+  String get paymentsMethodBank;
+
+  /// No description provided for @paymentsMethodCard.
+  ///
+  /// In en, this message translates to:
+  /// **'Card'**
+  String get paymentsMethodCard;
+
+  /// No description provided for @paymentsMethodCash.
+  ///
+  /// In en, this message translates to:
+  /// **'Cash'**
+  String get paymentsMethodCash;
+
+  /// No description provided for @paymentsMethodEsewa.
+  ///
+  /// In en, this message translates to:
+  /// **'eSewa'**
+  String get paymentsMethodEsewa;
+
+  /// No description provided for @paymentsMethodFonepay.
+  ///
+  /// In en, this message translates to:
+  /// **'Fonepay'**
+  String get paymentsMethodFonepay;
+
+  /// No description provided for @paymentsMethodKhalti.
+  ///
+  /// In en, this message translates to:
+  /// **'Khalti'**
+  String get paymentsMethodKhalti;
+
+  /// No description provided for @paymentsMethodOnDate.
+  ///
+  /// In en, this message translates to:
+  /// **'{method} - {date}'**
+  String paymentsMethodOnDate(String method, String date);
+
+  /// No description provided for @paymentsMonthYear.
+  ///
+  /// In en, this message translates to:
+  /// **'{month, select, m1{January} m2{February} m3{March} m4{April} m5{May} m6{June} m7{July} m8{August} m9{September} m10{October} m11{November} m12{December} other{}} {year}'**
+  String paymentsMonthYear(String month, String year);
+
+  /// No description provided for @paymentsOnThisInvoice.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments on this invoice'**
+  String get paymentsOnThisInvoice;
+
+  /// No description provided for @paymentsPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get paymentsPaid;
+
+  /// No description provided for @paymentsPaidAndDue.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid {paid} - Due {due}'**
+  String paymentsPaidAndDue(String paid, String due);
+
+  /// No description provided for @paymentsPaidOnly.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid {amount}'**
+  String paymentsPaidOnly(String amount);
+
+  /// No description provided for @paymentsPayAtDesk.
+  ///
+  /// In en, this message translates to:
+  /// **'Please pay at the front desk.'**
+  String get paymentsPayAtDesk;
+
+  /// No description provided for @paymentsReason.
+  ///
+  /// In en, this message translates to:
+  /// **'Reason: {reason}'**
+  String paymentsReason(String reason);
+
+  /// No description provided for @paymentsStatusPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid'**
+  String get paymentsStatusPaid;
+
+  /// No description provided for @paymentsStatusPartial.
+  ///
+  /// In en, this message translates to:
+  /// **'Partly paid'**
+  String get paymentsStatusPartial;
+
+  /// No description provided for @paymentsStatusUnpaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Unpaid'**
+  String get paymentsStatusUnpaid;
+
+  /// No description provided for @paymentsStatusVoid.
+  ///
+  /// In en, this message translates to:
+  /// **'Void'**
+  String get paymentsStatusVoid;
+
+  /// No description provided for @paymentsSubtotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Subtotal'**
+  String get paymentsSubtotal;
+
+  /// No description provided for @paymentsTabInvoices.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices'**
+  String get paymentsTabInvoices;
+
+  /// No description provided for @paymentsTabPayments.
+  ///
+  /// In en, this message translates to:
+  /// **'Payments'**
+  String get paymentsTabPayments;
+
+  /// No description provided for @paymentsTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Total'**
+  String get paymentsTotal;
+
+  /// No description provided for @paymentsTotalPaid.
+  ///
+  /// In en, this message translates to:
+  /// **'Total paid'**
+  String get paymentsTotalPaid;
+
   /// No description provided for @retry.
   ///
   /// In en, this message translates to:

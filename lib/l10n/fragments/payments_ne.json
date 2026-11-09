@@ -1,0 +1,86 @@
+{
+  "paymentsTotalPaid": "कुल भुक्तानी",
+  "paymentsAmountDue": "तिर्न बाँकी रकम",
+  "paymentsAllSettled": "सबै चुक्ता भएको छ - कुनै बाँकी छैन",
+  "paymentsPayAtDesk": "कृपया फ्रन्ट डेस्कमा भुक्तानी गर्नुहोस्।",
+  "paymentsTabInvoices": "बिलहरू",
+  "paymentsTabPayments": "भुक्तानीहरू",
+  "paymentsEmptyInvoices": "अहिलेसम्म कुनै बिल छैन। सदस्यता लिँदा वा नवीकरण गर्दा यहाँ देखिन्छ।",
+  "paymentsEmptyPayments": "अहिलेसम्म कुनै भुक्तानी छैन। फ्रन्ट डेस्कमा गरेको भुक्तानी यहाँ देखिन्छ।",
+  "paymentsMonthYear": "{month, select, m1{जनवरी} m2{फेब्रुअरी} m3{मार्च} m4{अप्रिल} m5{मे} m6{जुन} m7{जुलाई} m8{अगस्ट} m9{सेप्टेम्बर} m10{अक्टोबर} m11{नोभेम्बर} m12{डिसेम्बर} other{}} {year}",
+  "@paymentsMonthYear": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsIssuedOn": "जारी मिति {date}",
+  "@paymentsIssuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsPaidOnly": "तिरेको {amount}",
+  "@paymentsPaidOnly": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsPaidAndDue": "तिरेको {paid} - बाँकी {due}",
+  "@paymentsPaidAndDue": {
+    "placeholders": {
+      "paid": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsMethodOnDate": "{method} - {date}",
+  "@paymentsMethodOnDate": {
+    "placeholders": {
+      "method": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsReason": "कारण: {reason}",
+  "@paymentsReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsSubtotal": "उप-जम्मा",
+  "paymentsDiscount": "छुट",
+  "paymentsTotal": "जम्मा",
+  "paymentsPaid": "तिरेको",
+  "paymentsDue": "बाँकी",
+  "paymentsOnThisInvoice": "यो बिलमा गरिएको भुक्तानी",
+  "paymentsStatusUnpaid": "तिर्न बाँकी",
+  "paymentsStatusPartial": "आंशिक भुक्तानी",
+  "paymentsStatusPaid": "भुक्तानी भयो",
+  "paymentsStatusVoid": "रद्द",
+  "paymentsMethodCash": "नगद",
+  "paymentsMethodEsewa": "eSewa",
+  "paymentsMethodKhalti": "Khalti",
+  "paymentsMethodFonepay": "Fonepay",
+  "paymentsMethodBank": "बैंक ट्रान्सफर",
+  "paymentsMethodCard": "कार्ड",
+  "paymentsKindPayment": "भुक्तानी",
+  "paymentsKindRefund": "फिर्ता",
+  "paymentsKindReversal": "उल्टाइएको"
+}
