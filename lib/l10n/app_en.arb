@@ -153,6 +153,7 @@
     }
   },
   "homeEndsLabel": "Ends",
+  "homeExpired": "Expired",
   "homeExpiredAgoLabel": "{count, plural, =1{day ago} other{days ago}}",
   "@homeExpiredAgoLabel": {
     "placeholders": {
@@ -162,6 +163,7 @@
     }
   },
   "homeExpiredHint": "Request a renewal and the front desk will get you back in.",
+  "homeExpiredPrefix": "Expired",
   "homeExpiringHint": "Your plan ends soon. Request a renewal so you don't miss a day.",
   "homeFrozen": "Frozen",
   "homeFrozenHint": "Your membership is paused. Ask the front desk to resume it.",
@@ -183,7 +185,6 @@
       }
     }
   },
-  "homeMembershipEnded": "Membership ended",
   "homeMessages": "Messages",
   "homeMessagesSubtitle": "Notes from the gym",
   "homeNoPlan": "No active plan",
@@ -203,17 +204,6 @@
   },
   "homeRenewRequestedButton": "Request sent",
   "homeRenewRequestedNow": "Requested just now. The front desk will call you.",
-  "homeRenewRequestedOn": "Requested {date} at {time}. The front desk will call you.",
-  "@homeRenewRequestedOn": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      },
-      "time": {
-        "type": "String"
-      }
-    }
-  },
   "homeRenewSend": "Send request",
   "homeRenewSending": "Sending",
   "homeRenewSent": "Request sent. The front desk will call you.",

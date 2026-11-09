@@ -150,6 +150,7 @@
     }
   },
   "homeEndsLabel": "सकिने मिति",
+  "homeExpired": "म्याद सकियो",
   "homeExpiredAgoLabel": "{count, plural, =1{दिन अघि} other{दिन अघि}}",
   "@homeExpiredAgoLabel": {
     "placeholders": {
@@ -159,6 +160,7 @@
     }
   },
   "homeExpiredHint": "नवीकरणको अनुरोध गर्नुहोस्, फ्रन्ट डेस्कले तपाईंलाई फेरि सुचारु गरिदिनुहुन्छ।",
+  "homeExpiredPrefix": "म्याद सकियो",
   "homeExpiringHint": "तपाईंको योजना छिट्टै सकिँदैछ। एक दिन पनि नछुटोस् भनेर नवीकरणको अनुरोध गर्नुहोस्।",
   "homeFrozen": "रोकिएको",
   "homeFrozenHint": "तपाईंको सदस्यता रोकिएको छ। फेरि चालु गर्न फ्रन्ट डेस्कलाई भन्नुहोस्।",
@@ -180,7 +182,6 @@
       }
     }
   },
-  "homeMembershipEnded": "सदस्यता सकियो",
   "homeMessages": "सन्देशहरू",
   "homeMessagesSubtitle": "जिमबाट आएका सूचना",
   "homeNoPlan": "सक्रिय योजना छैन",
@@ -200,17 +201,6 @@
   },
   "homeRenewRequestedButton": "अनुरोध पठाइयो",
   "homeRenewRequestedNow": "अहिले नै अनुरोध गरियो। फ्रन्ट डेस्कले तपाईंलाई फोन गर्नुहुन्छ।",
-  "homeRenewRequestedOn": "{date} {time} मा अनुरोध गरियो। फ्रन्ट डेस्कले तपाईंलाई फोन गर्नुहुन्छ।",
-  "@homeRenewRequestedOn": {
-    "placeholders": {
-      "date": {
-        "type": "String"
-      },
-      "time": {
-        "type": "String"
-      }
-    }
-  },
   "homeRenewSend": "अनुरोध पठाउनुहोस्",
   "homeRenewSending": "पठाउँदैछ",
   "homeRenewSent": "अनुरोध पठाइयो। फ्रन्ट डेस्कले तपाईंलाई फोन गर्नुहुन्छ।",

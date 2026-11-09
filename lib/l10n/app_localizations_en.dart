@@ -286,6 +286,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String get homeEndsLabel => 'Ends';
 
   @override
+  String get homeExpired => 'Expired';
+
+  @override
   String homeExpiredAgoLabel(int count) {
     String _temp0 = intl.Intl.pluralLogic(
       count,
@@ -299,6 +302,9 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get homeExpiredHint =>
       'Request a renewal and the front desk will get you back in.';
+
+  @override
+  String get homeExpiredPrefix => 'Expired';
 
   @override
   String get homeExpiringHint =>
@@ -326,9 +332,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String homeLastUpdated(String time) {
     return 'Updated $time';
   }
-
-  @override
-  String get homeMembershipEnded => 'Membership ended';
 
   @override
   String get homeMessages => 'Messages';
@@ -369,11 +372,6 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get homeRenewRequestedNow =>
       'Requested just now. The front desk will call you.';
-
-  @override
-  String homeRenewRequestedOn(String date, String time) {
-    return 'Requested $date at $time. The front desk will call you.';
-  }
 
   @override
   String get homeRenewSend => 'Send request';

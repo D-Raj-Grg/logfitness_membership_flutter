@@ -1,0 +1,44 @@
+{
+  "attendanceStatusPresent": "उपस्थित",
+  "attendanceStatusAbsent": "अनुपस्थित",
+  "attendanceStatusOff": "बिदाको दिन",
+  "attendanceStatusHoliday": "सार्वजनिक बिदा",
+  "attendanceStatusNone": "रेकर्ड छैन",
+  "attendanceHolidayNamed": "बिदा: {name}",
+  "@attendanceHolidayNamed": {
+    "placeholders": { "name": { "type": "String" } }
+  },
+  "attendanceCellSemantics": "{date}, {status}",
+  "@attendanceCellSemantics": {
+    "placeholders": {
+      "date": { "type": "String" },
+      "status": { "type": "String" }
+    }
+  },
+  "attendanceDayMonth": "{day} {month}",
+  "@attendanceDayMonth": {
+    "placeholders": {
+      "day": { "type": "int" },
+      "month": { "type": "String" }
+    }
+  },
+  "attendanceMonthYear": "{month} {year}",
+  "@attendanceMonthYear": {
+    "placeholders": {
+      "month": { "type": "String" },
+      "year": { "type": "String" }
+    }
+  },
+  "attendanceSummaryTitle": "महिनाको सारांश",
+  "attendanceSummarySemantics": "{present} दिन उपस्थित, {absent} दिन अनुपस्थित",
+  "@attendanceSummarySemantics": {
+    "placeholders": {
+      "present": { "type": "int" },
+      "absent": { "type": "int" }
+    }
+  },
+  "attendancePreviousMonth": "अघिल्लो महिना",
+  "attendanceNextMonth": "अर्को महिना",
+  "attendanceEmptyMonth": "यो महिना कुनै उपस्थिति रेकर्ड भएको छैन। चेक-इन गर्न थालेपछि तपाईंको उपस्थिति यहाँ देखिनेछ।",
+  "attendanceHolidaySheetHint": "यो दिन जिम बन्द रहन्छ।"
+}
