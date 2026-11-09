@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:logfitness_membership_flutter/data/auth/member_auth_repository.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() {
   group('mapLoginResponse', () {
@@ -40,4 +41,28 @@ void main() {
       expect(mapLoginResponse(200, {'result': 'banana'}), isA<LoginFailed>());
     });
   });
+
+  group('PIN shape', () {
+    test('exactly six ASCII digits', () {
+      expect(isValidMemberPin('123456'), isTrue);
+      expect(isValidMemberPin('000000'), isTrue);
+      for (final String bad in <String>['', '1234', '12345', '1234567', '12345a', '12 456', '١٢٣٤٥٦']) {
+        expect(isValidMemberPin(bad), isFalse, reason: 'length ${bad.length}');
+      }
+    });
+
+    test('login refuses a malformed PIN before touching the network', () async {
+      // The client is never reached, so a null-ish stand-in would throw if it were.
+      final SupabaseMemberAuthRepository repo =
+          SupabaseMemberAuthRepository(_NoClient());
+      expect(await repo.login(identifier: '0004', pin: '1234'), isA<LoginInvalid>());
+      expect(await repo.login(identifier: '0004', pin: '1234567'), isA<LoginInvalid>());
+    });
+  });
+}
+
+class _NoClient implements SupabaseClient {
+  @override
+  dynamic noSuchMethod(Invocation invocation) =>
+      throw StateError('network must not be reached');
 }

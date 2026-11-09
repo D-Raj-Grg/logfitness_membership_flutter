@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -6,6 +8,7 @@ import 'package:logfitness_membership_flutter/app/brand.dart';
 import 'package:logfitness_membership_flutter/data/auth/member_auth_repository.dart';
 import 'package:logfitness_membership_flutter/domain/errors/app_failure.dart';
 import 'package:logfitness_membership_flutter/features/auth/log_monogram.dart';
+import 'package:logfitness_membership_flutter/features/auth/pin_boxes.dart';
 import 'package:logfitness_membership_flutter/features/auth/screen_security.dart';
 import 'package:logfitness_membership_flutter/l10n/app_localizations.dart';
 
@@ -59,8 +62,8 @@ LoginError? loginErrorFor(LoginResult result) => switch (result) {
         : const LoginErrorUnknown(),
 };
 
-/// 1-4 digits = printed card number, 7+ = phone (PLANNING 4.1). Anything else
-/// can never match, so it gets the generic error without a network call.
+/// 1-4 digits = printed card number, 7-15 = phone (PLANNING 4.1). Anything
+/// else can never match, so it is never sent.
 bool isPlausibleIdentifier(String digits) {
   final int n = digits.length;
   return (n >= 1 && n <= 4) || (n >= 7 && n <= 15);
@@ -74,13 +77,18 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
+  /// Lets the sixth dot show for a beat before the sign-in starts.
+  static const Duration _autoSubmitDelay = Duration(milliseconds: 160);
+
   // Local controllers only: the PIN never enters provider state.
   final TextEditingController _identifier = TextEditingController();
   final TextEditingController _pin = TextEditingController();
   final FocusNode _pinFocus = FocusNode();
 
+  Timer? _autoSubmit;
   bool _busy = false;
   bool _showPin = false;
+  int _shake = 0;
   LoginError? _error;
 
   @override
@@ -94,6 +102,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   @override
   void dispose() {
     ScreenSecurity.setSecure(false);
+    _autoSubmit?.cancel();
     _identifier.removeListener(_onChanged);
     _pin.removeListener(_onChanged);
     _pin.clear();
@@ -105,22 +114,36 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   void _onChanged() => setState(() {});
 
-  bool get _canSubmit =>
-      !_busy && _identifier.text.isNotEmpty && _pin.text.length >= 4;
+  bool get _identifierValid => isPlausibleIdentifier(_identifier.text.trim());
+
+  bool get _pinComplete => isValidMemberPin(_pin.text);
+
+  /// The button and the auto-submit share this one gate, so they can never
+  /// both fire: [_submit] sets [_busy] before its first await.
+  bool get _canSubmit => !_busy && _identifierValid && _pinComplete;
+
+  /// Fires when the 6th digit is typed or pasted. Only submits if the card or
+  /// phone is already valid; otherwise the button does it later.
+  void _onPinCompleted() {
+    if (!_identifierValid || _busy) {
+      return;
+    }
+    _autoSubmit?.cancel();
+    _autoSubmit = Timer(_autoSubmitDelay, () {
+      if (mounted && _canSubmit) {
+        _submit();
+      }
+    });
+  }
 
   Future<void> _submit() async {
     if (!_canSubmit) {
       return;
     }
+    _autoSubmit?.cancel();
     final String identifier = _identifier.text.trim();
     final String pin = _pin.text;
     FocusScope.of(context).unfocus();
-
-    if (!isPlausibleIdentifier(identifier)) {
-      setState(() => _error = const LoginErrorInvalid());
-      _pin.clear();
-      return;
-    }
 
     setState(() {
       _busy = true;
@@ -138,13 +161,22 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       return;
     }
     // On success the session change makes the router leave this screen.
+    final LoginError? error = loginErrorFor(result);
     setState(() {
       _busy = false;
-      _error = loginErrorFor(result);
+      _error = error;
+      if (error != null) {
+        _shake++;
+      }
     });
-    if (_error != null) {
+    if (error != null) {
       _pin.clear();
-      _pinFocus.requestFocus();
+      // The boxes are disabled until this frame is built; focus after it.
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        if (mounted) {
+          _pinFocus.requestFocus();
+        }
+      });
     }
   }
 
@@ -162,6 +194,10 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final ThemeData theme = Theme.of(context);
     final ColorScheme scheme = theme.colorScheme;
     final bool still = MediaQuery.disableAnimationsOf(context);
+    // Only nag about the card/phone once the PIN is in and the button would
+    // otherwise stay silently disabled.
+    final bool identifierProblem =
+        _pinComplete && _identifier.text.isNotEmpty && !_identifierValid;
 
     return Scaffold(
       body: SafeArea(
@@ -190,6 +226,8 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
+                    // TODO: swap to LogMark when ICON lands
+                    // (lib/features/common/log_mark.dart).
                     const Center(child: LogMonogram(size: 84)),
                     const SizedBox(height: Brand.spaceMd),
                     Text(
@@ -224,7 +262,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       textInputAction: TextInputAction.next,
                       autocorrect: false,
                       enableSuggestions: false,
-                      autofillHints: null,
+                      autofillHints: const <String>[],
                       enableIMEPersonalizedLearning: false,
                       maxLength: 15,
                       inputFormatters: <TextInputFormatter>[
@@ -234,35 +272,30 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       decoration: InputDecoration(
                         labelText: l10n.authIdentifierLabel,
                         hintText: l10n.authIdentifierHint,
+                        errorText: identifierProblem
+                            ? l10n.authIdentifierInvalid
+                            : null,
                         counterText: '',
                         prefixIcon: const Icon(Icons.badge_outlined),
                       ),
                     ),
-                    const SizedBox(height: Brand.spaceMd),
-                    TextField(
-                      key: loginPinFieldKey,
-                      controller: _pin,
-                      focusNode: _pinFocus,
-                      enabled: !_busy,
-                      obscureText: !_showPin,
-                      obscuringCharacter: '•',
-                      keyboardType: TextInputType.number,
-                      textInputAction: TextInputAction.done,
-                      autocorrect: false,
-                      enableSuggestions: false,
-                      autofillHints: null,
-                      enableIMEPersonalizedLearning: false,
-                      maxLength: 6,
-                      inputFormatters: <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly,
-                      ],
-                      onSubmitted: (_) => _submit(),
-                      decoration: InputDecoration(
-                        labelText: l10n.authPinLabel,
-                        counterText: '',
-                        prefixIcon: const Icon(Icons.lock_outline),
-                        suffixIcon: IconButton(
+                    const SizedBox(height: Brand.spaceLg),
+                    Row(
+                      children: <Widget>[
+                        Expanded(
+                          child: Text(
+                            l10n.authPinLabel,
+                            style: theme.textTheme.titleSmall?.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ),
+                        IconButton(
                           tooltip: _showPin ? l10n.authHidePin : l10n.authShowPin,
+                          constraints: const BoxConstraints(
+                            minWidth: 44,
+                            minHeight: 44,
+                          ),
                           icon: Icon(
                             _showPin
                                 ? Icons.visibility_off_outlined
@@ -270,6 +303,25 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                           ),
                           onPressed: () => setState(() => _showPin = !_showPin),
                         ),
+                      ],
+                    ),
+                    const SizedBox(height: Brand.spaceXs),
+                    PinBoxes(
+                      fieldKey: loginPinFieldKey,
+                      controller: _pin,
+                      focusNode: _pinFocus,
+                      enabled: !_busy,
+                      obscure: !_showPin,
+                      hasError: _error != null && _pin.text.isEmpty,
+                      shakeTrigger: _shake,
+                      onCompleted: _onPinCompleted,
+                      onSubmitted: _submit,
+                    ),
+                    const SizedBox(height: Brand.spaceSm),
+                    Text(
+                      l10n.authPinHelper,
+                      style: theme.textTheme.bodySmall?.copyWith(
+                        color: scheme.onSurfaceVariant,
                       ),
                     ),
                     AnimatedSize(

@@ -86,10 +86,20 @@
   "authForgotPin": "Forgot your PIN? Ask the front desk. They can set a new one for you.",
   "authHidePin": "Hide PIN",
   "authIdentifierHint": "0004 or 98XXXXXXXX",
+  "authIdentifierInvalid": "Enter a card number (1 to 4 digits) or a phone number.",
   "authIdentifierLabel": "Card number or phone",
   "authNotMemberBody": "Your membership is no longer active. Please contact the front desk.",
   "authNotMemberTitle": "Membership not active",
+  "authPinHelper": "Enter the 6-digit PIN from the front desk",
   "authPinLabel": "PIN",
+  "authPinSemantics": "PIN, {count} of 6 digits entered",
+  "@authPinSemantics": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
   "authShowPin": "Show PIN",
   "authSignIn": "Sign in",
   "authSignOut": "Sign out",

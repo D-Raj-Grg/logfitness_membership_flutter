@@ -242,6 +242,12 @@ abstract class AppLocalizations {
   /// **'0004 or 98XXXXXXXX'**
   String get authIdentifierHint;
 
+  /// No description provided for @authIdentifierInvalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a card number (1 to 4 digits) or a phone number.'**
+  String get authIdentifierInvalid;
+
   /// No description provided for @authIdentifierLabel.
   ///
   /// In en, this message translates to:
@@ -260,11 +266,23 @@ abstract class AppLocalizations {
   /// **'Membership not active'**
   String get authNotMemberTitle;
 
+  /// No description provided for @authPinHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the 6-digit PIN from the front desk'**
+  String get authPinHelper;
+
   /// No description provided for @authPinLabel.
   ///
   /// In en, this message translates to:
   /// **'PIN'**
   String get authPinLabel;
+
+  /// No description provided for @authPinSemantics.
+  ///
+  /// In en, this message translates to:
+  /// **'PIN, {count} of 6 digits entered'**
+  String authPinSemantics(int count);
 
   /// No description provided for @authShowPin.
   ///

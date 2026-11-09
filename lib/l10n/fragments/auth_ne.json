@@ -10,12 +10,28 @@
   "authSigningIn": "साइन इन हुँदैछ",
   "authErrorInvalid": "कार्ड नम्बर वा पिन मिलेन।",
   "authErrorLocked": "धेरै पटक प्रयास भयो। {minutes, plural, =1{१ मिनेट} other{{minutes} मिनेट}} पछि फेरि प्रयास गर्नुहोस्।",
-  "@authErrorLocked": { "placeholders": { "minutes": { "type": "int" } } },
+  "@authErrorLocked": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
   "authErrorRateLimited": "यो फोनबाट धेरै प्रयास भयो। केही मिनेट कुरेर फेरि प्रयास गर्नुहोस्।",
   "authErrorOffline": "इन्टरनेट छैन। इन्टरनेट जाँचेर फेरि प्रयास गर्नुहोस्।",
   "authErrorUnknown": "अहिले साइन इन गर्न सकिएन। कृपया फेरि प्रयास गर्नुहोस्।",
   "authForgotPin": "पिन बिर्सनुभयो? फ्रन्ट डेस्कलाई सोध्नुहोस्। उहाँहरूले नयाँ पिन राखिदिनुहुन्छ।",
   "authNotMemberTitle": "सदस्यता सक्रिय छैन",
   "authNotMemberBody": "तपाईंको सदस्यता अब सक्रिय छैन। कृपया फ्रन्ट डेस्कमा सम्पर्क गर्नुहोस्।",
-  "authSignOut": "साइन आउट"
+  "authSignOut": "साइन आउट",
+  "authPinHelper": "फ्रन्ट डेस्कले दिएको ६ अंकको पिन राख्नुहोस्",
+  "authPinSemantics": "पिन, ६ मध्ये {count} अंक भरिएको",
+  "authIdentifierInvalid": "कार्ड नम्बर (१ देखि ४ अंक) वा फोन नम्बर राख्नुहोस्।",
+  "@authPinSemantics": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  }
 }
