@@ -7,7 +7,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:logfitness_membership_flutter/app/brand.dart';
 import 'package:logfitness_membership_flutter/data/auth/member_auth_repository.dart';
 import 'package:logfitness_membership_flutter/domain/errors/app_failure.dart';
-import 'package:logfitness_membership_flutter/features/auth/log_monogram.dart';
+import 'package:logfitness_membership_flutter/features/common/log_mark.dart';
 import 'package:logfitness_membership_flutter/features/auth/pin_boxes.dart';
 import 'package:logfitness_membership_flutter/features/auth/screen_security.dart';
 import 'package:logfitness_membership_flutter/l10n/app_localizations.dart';
@@ -226,9 +226,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   mainAxisSize: MainAxisSize.min,
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: <Widget>[
-                    // TODO: swap to LogMark when ICON lands
-                    // (lib/features/common/log_mark.dart).
-                    const Center(child: LogMonogram(size: 84)),
+                    const Center(child: _LoginLogo()),
                     const SizedBox(height: Brand.spaceMd),
                     Text(
                       l10n.appName,
@@ -428,6 +426,34 @@ class _ErrorBanner extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+/// The real LOG mark on its dark tile, with a hairline ring so the tile stays
+/// visible on the dark theme too.
+class _LoginLogo extends StatelessWidget {
+  const _LoginLogo();
+
+  @override
+  Widget build(BuildContext context) {
+    const double size = 88;
+    return Semantics(
+      excludeSemantics: true,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(size * 96 / 512),
+          border: Border.all(color: Brand.elegantGrey, width: 1.5),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+              color: Brand.tarRoad.withValues(alpha: 0.28),
+              blurRadius: 26,
+              offset: const Offset(0, 8),
+            ),
+          ],
+        ),
+        child: const LogMark(size: size, withTile: true),
       ),
     );
   }
