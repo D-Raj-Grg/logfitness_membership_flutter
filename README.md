@@ -59,6 +59,11 @@ fragments, the merged arbs and the generated Dart. Use strings with
 `AppLocalizations.of(context).someKey`
 (`import 'package:logfitness_membership_flutter/l10n/app_localizations.dart'`).
 
+## Brand assets (icon, splash)
+
+`flutter test tool/gen_icons_test.dart` regenerates the iOS/Android icons and
+splash images from the vector `LogMark`. See `docs/BRANDING.md`.
+
 ## Quality gate
 
 ```sh
