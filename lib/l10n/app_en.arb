@@ -4,7 +4,124 @@
   "@appName": {
     "description": "Store name of the app."
   },
+  "authErrorInvalid": "Card number or PIN is wrong.",
+  "authErrorLocked": "Too many tries. Try again in {minutes, plural, =1{1 minute} other{{minutes} minutes}}.",
+  "@authErrorLocked": {
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "authErrorOffline": "No connection. Check your internet and try again.",
+  "authErrorRateLimited": "Too many attempts from this phone. Please wait a few minutes and try again.",
+  "authErrorUnknown": "Couldn't sign in right now. Please try again.",
+  "authForgotPin": "Forgot your PIN? Ask the front desk. They can set a new one for you.",
+  "authHidePin": "Hide PIN",
+  "authIdentifierHint": "0004 or 98XXXXXXXX",
+  "authIdentifierLabel": "Card number or phone",
+  "authNotMemberBody": "Your membership is no longer active. Please contact the front desk.",
+  "authNotMemberTitle": "Membership not active",
+  "authPinLabel": "PIN",
+  "authShowPin": "Show PIN",
+  "authSignIn": "Sign in",
+  "authSignOut": "Sign out",
+  "authSigningIn": "Signing in",
+  "authSubtitle": "Sign in with the card number or phone number the front desk gave you.",
+  "authTagline": "Your membership, in your pocket",
+  "bookingsCancel": "Cancel booking",
+  "bookingsCancelConfirmBody": "{name}, {when}",
+  "@bookingsCancelConfirmBody": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "when": {
+        "type": "String"
+      }
+    }
+  },
+  "bookingsCancelConfirmTitle": "Cancel this booking?",
+  "bookingsEmpty": "No bookings yet",
+  "bookingsEmptyHint": "Book a class from the Classes tab.",
+  "bookingsKeep": "Keep booking",
+  "bookingsNoUpcoming": "Nothing coming up",
+  "bookingsPast": "Past",
+  "bookingsSessionCancelled": "Class cancelled by the gym",
+  "bookingsStatusAttended": "Attended",
+  "bookingsStatusBooked": "Booked",
+  "bookingsStatusCancelled": "Cancelled",
+  "bookingsStatusNoShow": "Missed",
+  "bookingsStatusWaitlisted": "On waitlist",
+  "bookingsTitle": "My bookings",
+  "bookingsUpcoming": "Upcoming",
+  "bookingsWaitlistNote": "You'll move into the class automatically if a spot opens.",
   "cancel": "Cancel",
+  "classesBook": "Book",
+  "classesBooked": "Booked",
+  "classesBookedSnack": "You're booked in for {name}.",
+  "@classesBookedSnack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "classesCancel": "Cancel",
+  "classesCancelledSnack": "Booking cancelled.",
+  "classesCapacitySemantics": "{booked} of {capacity} places taken",
+  "@classesCapacitySemantics": {
+    "placeholders": {
+      "booked": {
+        "type": "int"
+      },
+      "capacity": {
+        "type": "int"
+      }
+    }
+  },
+  "classesClosed": "Closed",
+  "classesDaySelectorLabel": "Choose a day",
+  "classesFull": "Full",
+  "classesJoinWaitlist": "Join waitlist",
+  "classesMyBookings": "My bookings",
+  "classesNoClasses": "No classes this day",
+  "classesNoClassesHint": "Pick another day, or check back later.",
+  "classesOnWaitlist": "On waitlist",
+  "classesRoom": "Room {room}",
+  "@classesRoom": {
+    "placeholders": {
+      "room": {
+        "type": "String"
+      }
+    }
+  },
+  "classesSpotsLeft": "{count, plural, =1{1 spot left} other{{count} spots left}}",
+  "@classesSpotsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "classesToday": "Today",
+  "classesUpdating": "Updating",
+  "classesWaitlistedSnack": "You're on the waitlist for {name}.",
+  "@classesWaitlistedSnack": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "classesWeekdayShort": "{day, select, mon{Mon} tue{Tue} wed{Wed} thu{Thu} fri{Fri} sat{Sat} sun{Sun} other{}}",
+  "@classesWeekdayShort": {
+    "placeholders": {
+      "day": {
+        "type": "String"
+      }
+    }
+  },
   "comingSoon": "Coming soon",
   "emptyDefault": "Nothing here yet.",
   "failureDuplicate": "Already exists",
@@ -14,9 +131,296 @@
   "failureRefused": "Refused",
   "failureSignedOut": "Signed out",
   "failureUnknown": "That did not work",
+  "homeActiveOpen": "Active",
+  "homeAmountDue": "Amount due",
+  "homeAmountDueHint": "Pay at the front desk.",
+  "homeBookings": "My bookings",
+  "homeBookingsSubtitle": "Classes you've booked",
+  "homeCardNo": "NO. {number}",
+  "@homeCardNo": {
+    "placeholders": {
+      "number": {
+        "type": "String"
+      }
+    }
+  },
+  "homeDaysLeftLabel": "{count, plural, =1{day left} other{days left}}",
+  "@homeDaysLeftLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeEndsLabel": "Ends",
+  "homeExpired": "Expired",
+  "homeExpiredAgoLabel": "{count, plural, =1{day ago} other{days ago}}",
+  "@homeExpiredAgoLabel": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeExpiredHint": "Request a renewal and the front desk will get you back in.",
+  "homeExpiredPrefix": "Expired",
+  "homeExpiringHint": "Your plan ends soon. Request a renewal so you don't miss a day.",
+  "homeFrozen": "Frozen",
+  "homeFrozenHint": "Your membership is paused. Ask the front desk to resume it.",
+  "homeGreeting": "Hi, {name}",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeLastDay": "Last day",
+  "homeLastDayHint": "Your plan ends today.",
+  "homeLastUpdated": "Updated {time}",
+  "@homeLastUpdated": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "homeMessages": "Messages",
+  "homeMessagesSubtitle": "Notes from the gym",
+  "homeNoPlan": "No active plan",
+  "homeNoPlanHint": "Ask the front desk about a plan.",
+  "homePlanLabel": "Plan",
+  "homeRenewButton": "Request renewal",
+  "homeRenewNoMember": "We couldn't find an active membership on this account. Please contact the front desk.",
+  "homeRenewNoteLabel": "Note (optional)",
+  "homeRenewPhoneLabel": "Phone (optional)",
+  "homeRenewRequestedAt": "Requested at {time}. The front desk will call you.",
+  "@homeRenewRequestedAt": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "homeRenewRequestedButton": "Request sent",
+  "homeRenewRequestedNow": "Requested just now. The front desk will call you.",
+  "homeRenewSend": "Send request",
+  "homeRenewSending": "Sending",
+  "homeRenewSent": "Request sent. The front desk will call you.",
+  "homeRenewSheetBody": "The front desk will get your request and call you. You pay at the counter. Nothing is charged here.",
+  "homeRenewSheetTitle": "Request renewal",
+  "homeRenewTooSoon": "You asked a moment ago. The front desk already has your request.",
+  "homeSessionsLeft": "{count, plural, =1{1 session left} other{{count} sessions left}}",
+  "@homeSessionsLeft": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "homeStaleBanner": "Couldn't refresh. Showing what we had at {time}.",
+  "@homeStaleBanner": {
+    "placeholders": {
+      "time": {
+        "type": "String"
+      }
+    }
+  },
+  "homeStatusActive": "Active",
+  "homeStatusExpired": "Expired",
+  "homeStatusExpiring": "Expiring soon",
+  "homeStatusFrozen": "Frozen",
+  "homeStatusNone": "No plan",
+  "homeStatusUpcoming": "Upcoming",
+  "homeUpcomingOn": "Starts {date}",
+  "@homeUpcomingOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "homeUpcomingSoon": "Starts soon",
   "loading": "Loading",
+  "messagesChannelEmail": "Email",
+  "messagesChannelSms": "SMS",
+  "messagesChannelViber": "Viber",
+  "messagesEmpty": "No messages yet",
+  "messagesEmptyHint": "Messages from the gym will appear here.",
+  "messagesEventAnnouncement": "Announcement",
+  "messagesEventBirthdayGreeting": "Birthday greeting",
+  "messagesEventCustomMessage": "Message from the gym",
+  "messagesEventDuesCleared": "Balance cleared",
+  "messagesEventDuesReminder": "Dues reminder",
+  "messagesEventMemberWelcome": "Welcome",
+  "messagesEventMembershipRenewed": "Membership renewed",
+  "messagesEventOther": "Message from the gym",
+  "messagesEventPaymentReceived": "Payment receipt",
+  "messagesEventRenewalReminder": "Renewal reminder",
+  "messagesHoursAgo": "{count, plural, =1{1 hour ago} other{{count} hours ago}}",
+  "@messagesHoursAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "messagesJustNow": "Just now",
+  "messagesMarkAllRead": "Mark all read",
+  "messagesMinutesAgo": "{count, plural, =1{1 minute ago} other{{count} minutes ago}}",
+  "@messagesMinutesAgo": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "messagesTitle": "Messages",
+  "messagesUnread": "Unread",
   "offline": "You're offline",
   "ok": "OK",
+  "paymentsAllSettled": "All settled - nothing is due",
+  "paymentsAmountDue": "Amount due",
+  "paymentsDiscount": "Discount",
+  "paymentsDue": "Due",
+  "paymentsEmptyInvoices": "No invoices yet. They appear here when you join or renew.",
+  "paymentsEmptyPayments": "No payments yet. Payments you make at the front desk appear here.",
+  "paymentsIssuedOn": "Issued {date}",
+  "@paymentsIssuedOn": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsKindPayment": "Payment",
+  "paymentsKindRefund": "Refund",
+  "paymentsKindReversal": "Reversed",
+  "paymentsMethodBank": "Bank transfer",
+  "paymentsMethodCard": "Card",
+  "paymentsMethodCash": "Cash",
+  "paymentsMethodEsewa": "eSewa",
+  "paymentsMethodFonepay": "Fonepay",
+  "paymentsMethodKhalti": "Khalti",
+  "paymentsMethodOnDate": "{method} - {date}",
+  "@paymentsMethodOnDate": {
+    "placeholders": {
+      "method": {
+        "type": "String"
+      },
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsMonthYear": "{month, select, m1{January} m2{February} m3{March} m4{April} m5{May} m6{June} m7{July} m8{August} m9{September} m10{October} m11{November} m12{December} other{}} {year}",
+  "@paymentsMonthYear": {
+    "placeholders": {
+      "month": {
+        "type": "String"
+      },
+      "year": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsOnThisInvoice": "Payments on this invoice",
+  "paymentsPaid": "Paid",
+  "paymentsPaidAndDue": "Paid {paid} - Due {due}",
+  "@paymentsPaidAndDue": {
+    "placeholders": {
+      "paid": {
+        "type": "String"
+      },
+      "due": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsPaidOnly": "Paid {amount}",
+  "@paymentsPaidOnly": {
+    "placeholders": {
+      "amount": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsPayAtDesk": "Please pay at the front desk.",
+  "paymentsReason": "Reason: {reason}",
+  "@paymentsReason": {
+    "placeholders": {
+      "reason": {
+        "type": "String"
+      }
+    }
+  },
+  "paymentsStatusPaid": "Paid",
+  "paymentsStatusPartial": "Partly paid",
+  "paymentsStatusUnpaid": "Unpaid",
+  "paymentsStatusVoid": "Void",
+  "paymentsSubtotal": "Subtotal",
+  "paymentsTabInvoices": "Invoices",
+  "paymentsTabPayments": "Payments",
+  "paymentsTotal": "Total",
+  "paymentsTotalPaid": "Total paid",
+  "profileBranch": "Home branch",
+  "profileCardNo": "Card number",
+  "profileLanguage": "Language",
+  "profileLanguageEnglish": "English",
+  "profileLanguageNepali": "नेपाली",
+  "profileMemberCode": "Member code",
+  "profileMessages": "Messages",
+  "profileNoCard": "No card yet",
+  "profilePhone": "Phone",
+  "profileSectionAbout": "About",
+  "profileSectionDetails": "Your details",
+  "profileSectionPreferences": "Preferences",
+  "profileSignOut": "Sign out",
+  "profileSignOutConfirmBody": "You'll need your card number or phone and your PIN to sign in again.",
+  "profileSignOutConfirmTitle": "Sign out?",
+  "profileTheme": "Appearance",
+  "profileThemeDark": "Dark",
+  "profileThemeLight": "Light",
+  "profileThemeSystem": "System",
+  "profileTitle": "Profile",
+  "profileVersion": "App version",
+  "qrCheckAgain": "Check again",
+  "qrExpired": "Code expired",
+  "qrHeadline": "Show this at the door",
+  "qrLoading": "Getting your code…",
+  "qrMemberCode": "Member {code}",
+  "@qrMemberCode": {
+    "description": "Member code line under the member's name on the check-in ticket.",
+    "placeholders": {
+      "code": {
+        "type": "String"
+      }
+    }
+  },
+  "qrNotEligibleBody": "The door will turn this code away until the front desk has sorted this out. Please see the front desk and we'll get you in.",
+  "qrNotEligibleTitle": "Check-in isn't available right now",
+  "qrReconnecting": "Reconnecting…",
+  "qrReconnectingHint": "No problem. We'll keep trying and show a fresh code as soon as we're back.",
+  "qrSecondsLeft": "Refreshes in {seconds}s",
+  "@qrSecondsLeft": {
+    "description": "Countdown under the QR until the code is replaced.",
+    "placeholders": {
+      "seconds": {
+        "type": "int"
+      }
+    }
+  },
+  "qrSemanticsLabel": "Check-in QR code for {name}",
+  "@qrSemanticsLabel": {
+    "description": "Screen-reader label for the QR image.",
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "qrSemanticsLabelNoName": "Check-in QR code",
+  "qrSubtitle": "Your code refreshes by itself.",
   "retry": "Try again",
   "snackRetry": "Retry",
   "tabCheckin": "Check-in",
